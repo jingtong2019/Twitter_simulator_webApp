@@ -17,8 +17,13 @@
     "@progress/kendo-react-pdf": "^2.7.1",
     "@progress/kendo-react-ripple": "^2.7.1",
     "@progress/kendo-theme-material": "^2.3.2",
+    "body-parser": "^1.19.0",
     "bootstrap-4-grid": "^2.4.1",
+    "express": "^4.17.1",
     "hammerjs": "^2.0.8",
+    "kafka-node": "^5.0.0",
+    "mongoose": "^5.7.11",
+    "morgan": "^1.9.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-scripts": "2.1.8"
