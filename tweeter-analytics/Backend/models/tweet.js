@@ -16,4 +16,4 @@ const tweetSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId
 });
 
-module.exports = mongoose.model("Tweet", tweetSchema);
+module.exports = mongoose.model("tweet", tweetSchema);
