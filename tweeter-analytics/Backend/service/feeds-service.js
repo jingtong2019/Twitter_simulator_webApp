@@ -3,7 +3,6 @@ var assert = require("assert");
 // connect string for mongodb server running locally, connecting to a database called test
 var url = "mongodb://127.0.0.1:27017";
 const dbName = "test";
-var mongodb;
 const options1 = {
   useUnifiedTopology: true
 };
@@ -14,20 +13,55 @@ MongoClient.connect(url, options1, function(err, client) {
   db = client.db(dbName);
 });
 
-exports.getTopLikeTweet = function(req, callback) {
+// exports.getTopLikeTweet2 = function(req, callback) {
+//   console.log("In like");
+//   var userId = req.query.userId;
+//   var response = {};
+//   db.collection("twitter")
+//     .aggregate([
+//       { $match: { by: userId } },
+//       { $project: { _id: 1, num_likes: 1 } },
+//       { $limit: 10 }
+//     ])
+//     .sort({ num_likes: -1 })
+//     .toArray(function(err, result) {
+//       if (err) {
+//         callback(err, null);
+//       }
+//       let a = {};
+//       let top10Likes = [];
+//       let top10LikesNum = [];
+//       for (let i = 0; i < result.length; i++) {
+//         top10Likes.push(result[i]._id);
+//         top10LikesNum.push(result[i].num_likes);
+//       }
+//       a["_id"] = top10Likes;
+//       a["num_likes"] = top10LikesNum;
+//       console.log("here");
+//       console.log(a);
+//       // res.send(a);
+//       response.code = "200";
+//       response.value = "Successfully find messages";
+//       response.result = a;
+//       callback(null, response);
+//     });
+// };
+
+exports.getTopLikeTweet = function(req, res) {
   console.log("In like");
+  var userId = req.query.userId;
   var response = {};
   db.collection("twitter")
     .aggregate([
       { $match: { by: 2 } },
       { $project: { _id: 1, num_likes: 1 } },
+      { $sort: { num_likes: -1 } },
       { $limit: 10 }
     ])
-    .sort({ num_likes: -1 })
+
     .toArray(function(err, result) {
-      // if (err) throw err;
       if (err) {
-        return callback(err);
+        throw err;
       }
       let a = {};
       let top10Likes = [];
@@ -39,25 +73,23 @@ exports.getTopLikeTweet = function(req, callback) {
       a["_id"] = top10Likes;
       a["num_likes"] = top10LikesNum;
       console.log("here");
-      // console.log(a._id);
       console.log(a);
-      // res.send(a);
-      response.code = "200";
-      response.value = "Successfully find messages";
-      response.result = a;
-      callback(null, response);
+      res.send(a);
     });
 };
 
 exports.getTopViewTweet = function(req, res) {
-  console.log("In getUserTweet");
+  console.log("In view");
+  var userId = req.query.userId;
+  console.log(userId);
   db.collection("twitter")
+    // .sort({ views: -1 })
     .aggregate([
       { $match: { by: 2 } },
       { $project: { _id: 1, views: 1 } },
+      { $sort: { views: -1 } },
       { $limit: 10 }
     ])
-    .sort({ views: -1 })
     .toArray(function(err, result) {
       if (err) throw err;
       let a = {};
@@ -67,7 +99,6 @@ exports.getTopViewTweet = function(req, res) {
         top10Views.push(result[i]._id);
         top10ViewsNum.push(result[i].views);
       }
-      console.log("hereq");
       a["_id"] = top10Views;
       a["views"] = top10ViewsNum;
 
@@ -82,9 +113,9 @@ exports.getTopRetweetTweet = function(req, res) {
     .aggregate([
       { $match: { by: 2 } },
       { $project: { _id: 1, retweets: 1 } },
+      { $sort: { retweets: -1 } },
       { $limit: 5 }
     ])
-    .sort({ retweets: -1 })
     .toArray(function(err, result) {
       if (err) throw err;
       let a = {};
@@ -111,7 +142,12 @@ exports.getTweetByHour = function(req, res) {
       },
       {
         $project: {
-          h: { $hour: "$date" }
+          h: {
+            $hour: {
+              date: "$date",
+              timezone: "America/Los_Angeles"
+            }
+          }
         }
       },
 
@@ -122,6 +158,7 @@ exports.getTweetByHour = function(req, res) {
         }
       }
     ])
+
     .toArray(function(err, result) {
       if (err) throw err;
       let a = {};
@@ -148,7 +185,12 @@ exports.getTweetByWeek = function(req, res) {
       },
       {
         $project: {
-          w: { $dayOfWeek: "$date" }
+          w: {
+            $dayOfWeek: {
+              date: "$date",
+              timezone: "America/Los_Angeles"
+            }
+          }
         }
       },
 
@@ -184,7 +226,12 @@ exports.getTweetByDay = function(req, res) {
       },
       {
         $project: {
-          d: { $dayOfMonth: "$date" }
+          d: {
+            $dayOfMonth: {
+              date: "$date",
+              timezone: "America/Los_Angeles"
+            }
+          }
         }
       },
 
