@@ -1,16 +1,16 @@
-const userService = require('../service/user_service')
+const userService = require("../service/feeds_service");
 
 module.exports = {
-    handleRequest: function(event) {
-        switch(event.type) {
-            case 'login':
-                userService.loginUser(event.data);
-                break;
-            case 'signup':
-                userService.saveUser(event.data);
-                break;
-            default:
-                console.log('invalid event type');
-        }
+  handleRequest: function(event) {
+    switch (event.type) {
+      case "getTopLikeTweet":
+        userService.getTopLikeTweet(); //event.data)
+        break;
+      case "getTopViewTweet":
+        userService.getTopViewTweet(event.data);
+        break;
+      default:
+        console.log("invalid event type");
     }
+  }
 };

@@ -1,4 +1,16 @@
-db.twitter.insert({“content" : "CONTENT_OF_TWEET8", "by" : 1, "hashtags" : ["TAG1", "TAG2", "TAG3"], "likes" : [9, 10], "num_likes" : 2, "retweets" : 0, "num_comments" : 0, "views" : 1, "tweet_type" : "ORIGINAL", "retweet_from" : "null", "date": myDate} )
+db.twitter.insert({
+  content: "CONTENT_OF_TWEET8",
+  by: 2,
+  hashtags: ["TAG1", "TAG2", "TAG3"],
+  likes: [9, 10],
+  num_likes: 24,
+  retweets: 24,
+  num_comments: 23,
+  views: 24,
+  tweet_type: "ORIGINAL",
+  retweet_from: "null",
+  date: new Date()
+});
 
 var MongoClient = require("mongodb").MongoClient;
 

@@ -144,14 +144,20 @@ class BarChartTopViews extends React.Component {
     };
   }
   componentDidMount() {
-    axios.get("http://localhost:3002/api/getTopViewTweet").then(response => {
-      this.setState({
-        top10Views: this.state.top10Views.concat(response.data.views),
-        top10ViewsNum: this.state.top10ViewsNum.concat(response.data.views)
+    axios
+      .get("http://localhost:3002/api/getTopViewTweet", {
+        params: {
+          userId: 2
+        }
+      })
+      .then(response => {
+        this.setState({
+          top10Views: this.state.top10Views.concat(response.data.views),
+          top10ViewsNum: this.state.top10ViewsNum.concat(response.data.views)
+        });
+        console.log("top10ViewsNum");
+        console.log(this.state.top10ViewsNum);
       });
-      console.log("top10ViewsNum");
-      console.log(this.state.top10ViewsNum);
-    });
   }
   render() {
     return (
@@ -192,12 +198,20 @@ class BarChartTopLikes extends React.Component {
     console.log(this.state.top10LikesNum);
   }
   componentDidMount() {
-    axios.get("http://localhost:3002/api/getTopLikeTweet").then(response => {
-      this.setState({
-        top10Likes: this.state.top10Likes.concat(response.data.num_likes),
-        top10LikesNum: this.state.top10LikesNum.concat(response.data.num_likes)
+    axios
+      .get("http://localhost:3002/api/getTopLikeTweet", {
+        params: {
+          userId: 2
+        }
+      })
+      .then(response => {
+        this.setState({
+          top10Likes: this.state.top10Likes.concat(response.data.num_likes),
+          top10LikesNum: this.state.top10LikesNum.concat(
+            response.data.num_likes
+          )
+        });
       });
-    });
   }
   render() {
     return (

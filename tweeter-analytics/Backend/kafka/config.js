@@ -1,4 +1,5 @@
 module.exports = {
-    kafka_topic: 'grubhub-request-topic',
-    kafka_server: 'localhost:9092',
-  };
+  kafka_topic: "twitter-analytics-topic",
+  kafka_server: "localhost:2181"
+};
+//2181

@@ -6,7 +6,7 @@ module.exports = {
     var eventObj = JSON.parse(event);
     switch (eventObj.eventType) {
       case "get-user-feeds":
-        feedService.getUserTweets(eventObj.params.userId, function(err, doc) {
+        feedService.getTopLikeTweet(eventObj.params.userId, function(err, doc) {
           sendReply(eventObj, err, doc);
         });
       default:

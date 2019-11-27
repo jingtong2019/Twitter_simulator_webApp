@@ -21,8 +21,8 @@ import {
   barChartViewsPercentages,
   barChartHours,
   barChartHourlyPercentages,
-  top10Views,
-  top10ViewsNum,
+  // top10Views,
+  // top10ViewsNum,
   top5Retweets,
   top5RetweetsNum,
   top10Likes,
@@ -128,30 +128,6 @@ export const BarChartHourlyContainer = () => (
   </Chart>
 );
 
-export const BarChartTopViews = () => (
-  <Chart style={{ height: 288 }}>
-    <ChartLegend visible={false} />
-    <ChartCategoryAxis>
-      <ChartCategoryAxisItem categories={top10Views} startAngle={45} />
-    </ChartCategoryAxis>
-
-    <ChartSeries>
-      {top10ViewsNum.map((item, idx) => (
-        <ChartSeriesItem
-          key={idx}
-          type="column"
-          data={item.data}
-          name={item.name}
-          gap={0.5}
-          color="rgb(135,188,232)"
-        />
-      ))}
-    </ChartSeries>
-    <ChartValueAxis skip={4}>
-      <ChartValueAxisItem color="#888" skip={2} />
-    </ChartValueAxis>
-  </Chart>
-);
 export const BarChartTopLikes = () => (
   <Chart style={{ height: 288 }}>
     <ChartLegend visible={false} />
