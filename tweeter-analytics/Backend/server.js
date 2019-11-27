@@ -57,8 +57,11 @@ var router = express.Router();
 router.get("/", function(req, res) {
   res.json({ message: "welcome to our upload module apis" });
 });
-router.get("/getUserTweets", tweetsService.getTopLikeTweet);
-// router.get("/getUserTweets", tweetsService.getTopViewTweet);
-// router.get("/getUserTweets", tweetsService.getTopRetweetTweet);
+router.get("/getTopLikeTweet", tweetsService.getTopLikeTweet);
+router.get("/getTopViewTweet", tweetsService.getTopViewTweet);
+router.get("/getTopRetweetTweet", tweetsService.getTopRetweetTweet);
+router.get("/getTweetByHour", tweetsService.getTweetByHour);
+router.get("/getTweetByDay", tweetsService.getTweetByDay);
+router.get("/getTweetByWeek", tweetsService.getTweetByWeek);
 
 app.use("/api", router);
