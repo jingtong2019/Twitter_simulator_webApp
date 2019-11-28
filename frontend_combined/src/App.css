@@ -1,0 +1,91 @@
+.App {
+  /* text-align: center; */
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+.w-87 {
+  width: 87%;
+}
+
+.css-901oao {
+  border: 0 solid black;
+  box-sizing: border-box;
+  color: rgba(0,0,0,1.00);
+  display: inline;
+  font: 14px system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",sans-serif;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.r-ad9z0x {
+  line-height: 1.3125;
+}
+
+.r-jwli3a {
+  color: rgb(255, 255, 255);
+}
+
+.r-16dba41 {
+  font-weight: 400;
+}
+
+.r-1xvli5t {
+  height: 1.25em;
+}
+
+.r-yyyyoo {
+  fill: currentcolor;
+}
+
+.border-dark-gray {
+  border-bottom: 1px solid darkgray;
+}
+
+.twitter-avatar img {
+  width:70px;
+  height:70px;
+}
+
+.tweet-images img {
+  width:490px;
+  height:250px;
+}
+
+.dropdown-item {
+  margin-top: 15px;
+  color: white;
+}
+
+.dropdown-menu {
+  background-color: #343a40!important;
+}
+
+.dropdown-menu .pull-left {
+  left:0;
+}
