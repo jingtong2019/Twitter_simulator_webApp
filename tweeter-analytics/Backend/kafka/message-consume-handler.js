@@ -5,10 +5,39 @@ module.exports = {
   resolveToAction: function(event) {
     var eventObj = JSON.parse(event);
     switch (eventObj.eventType) {
-      case "get-user-feeds":
+      case "getTopLikeTweet":
         feedService.getTopLikeTweet(eventObj.params.userId, function(err, doc) {
           sendReply(eventObj, err, doc);
         });
+        break;
+      case "getTopViewTweet":
+        feedService.getTopViewTweet(eventObj.params.userId, function(err, doc) {
+          sendReply(eventObj, err, doc);
+        });
+        break;
+      case "getTopRetweetTweet":
+        feedService.getTopRetweetTweet(eventObj.params.userId, function(
+          err,
+          doc
+        ) {
+          sendReply(eventObj, err, doc);
+        });
+        break;
+      case "getTweetByHour":
+        feedService.getTweetByHour(eventObj.params.userId, function(err, doc) {
+          sendReply(eventObj, err, doc);
+        });
+        break;
+      case "getTweetByDay":
+        feedService.getTweetByDay(eventObj.params.userId, function(err, doc) {
+          sendReply(eventObj, err, doc);
+        });
+        break;
+      case "getTweetByWeek":
+        feedService.getTweetByWeek(eventObj.params.userId, function(err, doc) {
+          sendReply(eventObj, err, doc);
+        });
+        break;
       default:
         console.log("invalid event type");
     }

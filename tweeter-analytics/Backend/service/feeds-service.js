@@ -1,5 +1,6 @@
 var MongoClient = require("mongodb").MongoClient;
 var assert = require("assert");
+
 // connect string for mongodb server running locally, connecting to a database called test
 var url = "mongodb://127.0.0.1:27017";
 const dbName = "test";
@@ -13,55 +14,20 @@ MongoClient.connect(url, options1, function(err, client) {
   db = client.db(dbName);
 });
 
-// exports.getTopLikeTweet2 = function(req, callback) {
-//   console.log("In like");
-//   var userId = req.query.userId;
-//   var response = {};
-//   db.collection("twitter")
-//     .aggregate([
-//       { $match: { by: userId } },
-//       { $project: { _id: 1, num_likes: 1 } },
-//       { $limit: 10 }
-//     ])
-//     .sort({ num_likes: -1 })
-//     .toArray(function(err, result) {
-//       if (err) {
-//         callback(err, null);
-//       }
-//       let a = {};
-//       let top10Likes = [];
-//       let top10LikesNum = [];
-//       for (let i = 0; i < result.length; i++) {
-//         top10Likes.push(result[i]._id);
-//         top10LikesNum.push(result[i].num_likes);
-//       }
-//       a["_id"] = top10Likes;
-//       a["num_likes"] = top10LikesNum;
-//       console.log("here");
-//       console.log(a);
-//       // res.send(a);
-//       response.code = "200";
-//       response.value = "Successfully find messages";
-//       response.result = a;
-//       callback(null, response);
-//     });
-// };
-
-exports.getTopLikeTweet = function(req, res) {
+exports.getTopLikeTweet = function(req, callback) {
   console.log("In like");
   var userId = req.query.userId;
   var response = {};
   db.collection("twitter")
     .aggregate([
-      { $match: { by: 2 } },
+      { $match: { by: userId } },
       { $project: { _id: 1, num_likes: 1 } },
-      { $sort: { num_likes: -1 } },
       { $limit: 10 }
     ])
-
+    .sort({ num_likes: -1 })
     .toArray(function(err, result) {
       if (err) {
-        throw err;
+        callback(err, null);
       }
       let a = {};
       let top10Likes = [];
@@ -74,9 +40,44 @@ exports.getTopLikeTweet = function(req, res) {
       a["num_likes"] = top10LikesNum;
       console.log("here");
       console.log(a);
-      res.send(a);
+      // res.send(a);
+      response.code = "200";
+      response.value = "Successfully find messages";
+      response.result = a;
+      callback(null, response);
     });
 };
+
+// exports.getTopLikeTweet = function(req, res) {
+//   console.log("In like");
+//   var userId = req.query.userId;
+//   var response = {};
+//   db.collection("twitter")
+//     .aggregate([
+//       { $match: { by: 2 } },
+//       { $project: { _id: 1, num_likes: 1 } },
+//       { $sort: { num_likes: -1 } },
+//       { $limit: 10 }
+//     ])
+
+//     .toArray(function(err, result) {
+//       if (err) {
+//         throw err;
+//       }
+//       let a = {};
+//       let top10Likes = [];
+//       let top10LikesNum = [];
+//       for (let i = 0; i < result.length; i++) {
+//         top10Likes.push(result[i]._id);
+//         top10LikesNum.push(result[i].num_likes);
+//       }
+//       a["_id"] = top10Likes;
+//       a["num_likes"] = top10LikesNum;
+//       console.log("here");
+//       console.log(a);
+//       res.send(a);
+//     });
+// };
 
 exports.getTopViewTweet = function(req, res) {
   console.log("In view");
