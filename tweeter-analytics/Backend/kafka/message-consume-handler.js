@@ -6,7 +6,12 @@ module.exports = {
     var eventObj = JSON.parse(event);
     switch (eventObj.eventType) {
       case "getTopLikeTweet":
-        feedService.getTopLikeTweet(eventObj.params.userId, function(err, doc) {
+        console.log("dwqdwq" + eventObj);
+        feedService.getTopLikeTweetKafka(eventObj.params.userId, function(
+          err,
+          doc
+        ) {
+          console.log("sendReply getTopLikeTweet");
           sendReply(eventObj, err, doc);
         });
         break;
@@ -39,7 +44,7 @@ module.exports = {
         });
         break;
       default:
-        console.log("invalid event type");
+        console.log("invalid event type" + eventObj.eventType);
     }
   }
 };

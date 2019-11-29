@@ -1,3 +1,3 @@
 module.exports = {
-  consumerTopics: "twitter-analytics-topic"
+  consumerTopics: "twitter-analytics-topic-reply"
 };

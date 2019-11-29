@@ -19,12 +19,16 @@ module.exports = {
   produceMessage: function(topic, message, partition, callback) {
     if (!producerReady) return;
     var payloads = [{ topic: topic, messages: message, partition: partition }];
-    producer.send(payloads, function(err, data) {
-      console.info("Sent payload to Kafka: ", payload);
+    console.info("payloads Kafka: ", payloads);
+
+    producer.send(payloads, function(err, payload) {
+      console.info("Sent payload to Kafka: ", payloads);
+      console.info(payload);
+      console.info("err message to Kafka: ", err);
       if (err) {
         callback(err, null);
       } else {
-        callback(null, data);
+        callback(null, payload);
       }
     });
   }

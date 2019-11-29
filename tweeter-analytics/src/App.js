@@ -145,15 +145,17 @@ class BarChartTopViews extends React.Component {
   }
   componentDidMount() {
     axios
-      .get("http://localhost:3002/api/getTopViewTweet", {
+      .get("http://localhost:4010/api/getTopViewTweet", {
         params: {
           userId: 2
         }
       })
       .then(response => {
         this.setState({
-          top10Views: this.state.top10Views.concat(response.data.views),
-          top10ViewsNum: this.state.top10ViewsNum.concat(response.data.views)
+          top10Views: this.state.top10Views.concat(response.data.result.views),
+          top10ViewsNum: this.state.top10ViewsNum.concat(
+            response.data.result.views
+          )
         });
         console.log("top10ViewsNum");
         console.log(this.state.top10ViewsNum);
@@ -199,16 +201,20 @@ class BarChartTopLikes extends React.Component {
   }
   componentDidMount() {
     axios
-      .get("http://localhost:3002/api/getTopLikeTweet", {
+      .get("http://localhost:4010/api/getTopLikeTweet", {
         params: {
           userId: 2
         }
       })
       .then(response => {
+        console.log("response");
+        console.log(response);
         this.setState({
-          top10Likes: this.state.top10Likes.concat(response.data.num_likes),
+          top10Likes: this.state.top10Likes.concat(
+            response.data.result.num_likes
+          ),
           top10LikesNum: this.state.top10LikesNum.concat(
-            response.data.num_likes
+            response.data.result.num_likes
           )
         });
       });
@@ -252,11 +258,13 @@ class BarChartTopRetweets extends React.Component {
     console.log(this.state.top5RetweetsNum);
   }
   componentDidMount() {
-    axios.get("http://localhost:3002/api/getTopRetweetTweet").then(response => {
+    axios.get("http://localhost:4010/api/getTopRetweetTweet").then(response => {
       this.setState({
-        top5Retweets: this.state.top5Retweets.concat(response.data.retweets),
+        top5Retweets: this.state.top5Retweets.concat(
+          response.data.result.retweets
+        ),
         top5RetweetsNum: this.state.top5RetweetsNum.concat(
-          response.data.retweets
+          response.data.result.retweets
         )
       });
     });
@@ -300,10 +308,10 @@ class BarChartHourlyContainer extends React.Component {
     console.log(this.state);
   }
   componentDidMount() {
-    axios.get("http://localhost:3002/api/getTweetByHour ").then(response => {
+    axios.get("http://localhost:4010/api/getTweetByHour ").then(response => {
       this.setState({
-        hourOfDay: this.state.hourOfDay.concat(response.data.hourOfDay),
-        value: this.state.value.concat(response.data.value)
+        hourOfDay: this.state.hourOfDay.concat(response.data.result.hourOfDay),
+        value: this.state.value.concat(response.data.result.value)
       });
     });
   }
@@ -346,10 +354,10 @@ class BarChartWeeklyContainer extends React.Component {
     console.log(this.state);
   }
   componentDidMount() {
-    axios.get("http://localhost:3002/api/getTweetByWeek ").then(response => {
+    axios.get("http://localhost:4010/api/getTweetByWeek ").then(response => {
       this.setState({
-        dayOfWeek: this.state.dayOfWeek.concat(response.data.dayOfWeek),
-        value: this.state.value.concat(response.data.value)
+        dayOfWeek: this.state.dayOfWeek.concat(response.data.result.dayOfWeek),
+        value: this.state.value.concat(response.data.result.value)
       });
     });
   }
@@ -392,10 +400,12 @@ class BarChartDailyContainer extends React.Component {
     console.log(this.state);
   }
   componentDidMount() {
-    axios.get("http://localhost:3002/api/getTweetByDay ").then(response => {
+    axios.get("http://localhost:4010/api/getTweetByDay ").then(response => {
       this.setState({
-        dayOfWeek: this.state.dayOfMonth.concat(response.data.dayOfMonth),
-        value: this.state.value.concat(response.data.value)
+        dayOfWeek: this.state.dayOfMonth.concat(
+          response.data.result.dayOfMonth
+        ),
+        value: this.state.value.concat(response.data.result.value)
       });
     });
   }
@@ -439,10 +449,12 @@ class BarChartViewsContainer2 extends React.Component {
     console.log(this.state);
   }
   componentDidMount() {
-    axios.get("http://localhost:3002/api/getTweetByDay ").then(response => {
+    axios.get("http://localhost:4010/api/getTweetByDay ").then(response => {
       this.setState({
-        dayOfMonth: this.state.dayOfMonth.concat(response.data.dayOfMonth),
-        value: this.state.value.concat(response.data.value)
+        dayOfMonth: this.state.dayOfMonth.concat(
+          response.data.result.dayOfMonth
+        ),
+        value: this.state.value.concat(response.data.result.value)
       });
     });
   }

@@ -3,10 +3,12 @@ var TOPICS = require("../../kafka/topics");
 
 module.exports = function(router) {
   router.get("/getTopLikeTweet", function(req, res) {
+    console.log("USER???+ ");
+    console.log(req.query);
     kafka.make_request(
       TOPICS.TWITTER_ANALYTICS_TOPIC,
       "getTopLikeTweet",
-      req.params,
+      req.query,
       req.body,
       function(err, doc) {
         if (err) {
@@ -15,6 +17,8 @@ module.exports = function(router) {
             error: err
           });
         } else {
+          console.log("HEJKHLEHJKLEHJKL");
+          console.log(doc);
           res.status(200).json(doc);
         }
       }
@@ -25,7 +29,7 @@ module.exports = function(router) {
     kafka.make_request(
       TOPICS.TWITTER_ANALYTICS_TOPIC,
       "getTopViewTweet",
-      req.params,
+      req.body,
       req.body,
       function(err, doc) {
         if (err) {
@@ -44,7 +48,7 @@ module.exports = function(router) {
     kafka.make_request(
       TOPICS.TWITTER_ANALYTICS_TOPIC,
       "getTopRetweetTweet",
-      req.params,
+      req.query,
       req.body,
       function(err, doc) {
         if (err) {
@@ -63,7 +67,7 @@ module.exports = function(router) {
     kafka.make_request(
       TOPICS.TWITTER_ANALYTICS_TOPIC,
       "getTweetByHour",
-      req.params,
+      req.query,
       req.body,
       function(err, doc) {
         if (err) {
@@ -82,7 +86,7 @@ module.exports = function(router) {
     kafka.make_request(
       TOPICS.TWITTER_ANALYTICS_TOPIC,
       "getTweetByDay",
-      req.params,
+      req.query,
       req.body,
       function(err, doc) {
         if (err) {
@@ -101,7 +105,7 @@ module.exports = function(router) {
     kafka.make_request(
       TOPICS.TWITTER_ANALYTICS_TOPIC,
       "getTweetByWeek",
-      req.params,
+      req.query,
       req.body,
       function(err, doc) {
         if (err) {

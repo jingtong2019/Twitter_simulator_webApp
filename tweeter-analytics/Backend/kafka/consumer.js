@@ -1,5 +1,6 @@
 const kafka = require("kafka-node");
 const config = require("./config");
+const appConfig = require("../config/main");
 const mcHandler = require("./message-consume-handler");
 
 try {
@@ -16,6 +17,7 @@ try {
 
   consumer.on("message", async function(message) {
     console.log("kafka-> ", message.value.eventType);
+    console.log("kafka-> ", message);
     mcHandler.resolveToAction(message.value);
   });
 
@@ -27,7 +29,7 @@ try {
 }
 
 function getTopicsOption() {
-  let topics = config.kafka_topic.split(",");
+  let topics = appConfig.topics.split(",");
   let topicOptions = [];
   for (var topic of topics) {
     topicOptions.push({ topic: topic, partition: 0 });

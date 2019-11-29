@@ -27,14 +27,14 @@ app.listen(app.get("port"), function() {
 var router = express.Router();
 
 // test route
-router.get("/", function(req, res) {
-  res.json({ message: "welcome to our upload module apis" });
-});
-router.get("/getTopLikeTweet", tweetsService.getTopLikeTweet);
-router.get("/getTopViewTweet", tweetsService.getTopViewTweet);
-router.get("/getTopRetweetTweet", tweetsService.getTopRetweetTweet);
-router.get("/getTweetByHour", tweetsService.getTweetByHour);
-router.get("/getTweetByDay", tweetsService.getTweetByDay);
-router.get("/getTweetByWeek", tweetsService.getTweetByWeek);
+// router.get("/", function(req, res) {
+//   res.json({ message: "welcome to our upload module apis" });
+// });
+// router.get("/getTopLikeTweet", tweetsService.getTopLikeTweet);
+// router.get("/getTopViewTweet", tweetsService.getTopViewTweet);
+// router.get("/getTopRetweetTweet", tweetsService.getTopRetweetTweet);
+// router.get("/getTweetByHour", tweetsService.getTweetByHour);
+// router.get("/getTweetByDay", tweetsService.getTweetByDay);
+// router.get("/getTweetByWeek", tweetsService.getTweetByWeek);
 
-app.use("/api", router);
+// app.use("/api", router);
