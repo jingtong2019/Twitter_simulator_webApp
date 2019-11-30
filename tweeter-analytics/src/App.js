@@ -258,16 +258,22 @@ class BarChartTopRetweets extends React.Component {
     console.log(this.state.top5RetweetsNum);
   }
   componentDidMount() {
-    axios.get("http://localhost:4010/api/getTopRetweetTweet").then(response => {
-      this.setState({
-        top5Retweets: this.state.top5Retweets.concat(
-          response.data.result.retweets
-        ),
-        top5RetweetsNum: this.state.top5RetweetsNum.concat(
-          response.data.result.retweets
-        )
+    axios
+      .get("http://localhost:4010/api/getTopRetweetTweet", {
+        params: {
+          userId: 2
+        }
+      })
+      .then(response => {
+        this.setState({
+          top5Retweets: this.state.top5Retweets.concat(
+            response.data.result.retweets
+          ),
+          top5RetweetsNum: this.state.top5RetweetsNum.concat(
+            response.data.result.retweets
+          )
+        });
       });
-    });
   }
   render() {
     return (
@@ -304,16 +310,27 @@ class BarChartHourlyContainer extends React.Component {
       hourOfDay: [],
       value: []
     };
-    console.log("top5RetweeBarChartHourlyContainertsNum");
+    console.log("HourlyContainer");
     console.log(this.state);
   }
   componentDidMount() {
-    axios.get("http://localhost:4010/api/getTweetByHour ").then(response => {
-      this.setState({
-        hourOfDay: this.state.hourOfDay.concat(response.data.result.hourOfDay),
-        value: this.state.value.concat(response.data.result.value)
+    console.log("if executed");
+    axios
+      .get("http://localhost:4010/api/getTweetByHour", {
+        params: {
+          userId: 2
+        }
+      })
+      .then(response => {
+        console.log("in reponse hour");
+        console.log(response);
+        this.setState({
+          hourOfDay: this.state.hourOfDay.concat(
+            response.data.result.hourOfDay
+          ),
+          value: this.state.value.concat(response.data.result.value)
+        });
       });
-    });
   }
   render() {
     return (
@@ -354,12 +371,20 @@ class BarChartWeeklyContainer extends React.Component {
     console.log(this.state);
   }
   componentDidMount() {
-    axios.get("http://localhost:4010/api/getTweetByWeek ").then(response => {
-      this.setState({
-        dayOfWeek: this.state.dayOfWeek.concat(response.data.result.dayOfWeek),
-        value: this.state.value.concat(response.data.result.value)
+    axios
+      .get("http://localhost:4010/api/getTweetByWeek", {
+        params: {
+          userId: 2
+        }
+      })
+      .then(response => {
+        this.setState({
+          dayOfWeek: this.state.dayOfWeek.concat(
+            response.data.result.dayOfWeek
+          ),
+          value: this.state.value.concat(response.data.result.value)
+        });
       });
-    });
   }
   render() {
     return (
@@ -400,14 +425,20 @@ class BarChartDailyContainer extends React.Component {
     console.log(this.state);
   }
   componentDidMount() {
-    axios.get("http://localhost:4010/api/getTweetByDay ").then(response => {
-      this.setState({
-        dayOfWeek: this.state.dayOfMonth.concat(
-          response.data.result.dayOfMonth
-        ),
-        value: this.state.value.concat(response.data.result.value)
+    axios
+      .get("http://localhost:4010/api/getTweetByDay", {
+        params: {
+          userId: 2
+        }
+      })
+      .then(response => {
+        this.setState({
+          dayOfMonth: this.state.dayOfMonth.concat(
+            response.data.result.dayOfMonth
+          ),
+          value: this.state.value.concat(response.data.result.value)
+        });
       });
-    });
   }
   render() {
     return (
@@ -449,14 +480,18 @@ class BarChartViewsContainer2 extends React.Component {
     console.log(this.state);
   }
   componentDidMount() {
-    axios.get("http://localhost:4010/api/getTweetByDay ").then(response => {
-      this.setState({
-        dayOfMonth: this.state.dayOfMonth.concat(
-          response.data.result.dayOfMonth
-        ),
-        value: this.state.value.concat(response.data.result.value)
+    axios
+      .get("http://localhost:4010/api/getTweetByDay ", {
+        params: {
+          userId: 2
+        }
+      })
+      .then(response => {
+        this.setState({
+          dayOfMonth: this.state.dayOfMonth.concat(response.data.dayOfMonth),
+          value: this.state.value.concat(response.data.value)
+        });
       });
-    });
   }
   render() {
     return (

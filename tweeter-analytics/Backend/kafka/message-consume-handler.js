@@ -6,7 +6,7 @@ module.exports = {
     var eventObj = JSON.parse(event);
     switch (eventObj.eventType) {
       case "getTopLikeTweet":
-        console.log("dwqdwq" + eventObj);
+        console.log("dwqdddwq11" + eventObj);
         feedService.getTopLikeTweetKafka(eventObj.params.userId, function(
           err,
           doc
@@ -16,6 +16,7 @@ module.exports = {
         });
         break;
       case "getTopViewTweet":
+        console.log("dwqdddwq" + eventObj);
         feedService.getTopViewTweet(eventObj.params.userId, function(err, doc) {
           sendReply(eventObj, err, doc);
         });
@@ -29,6 +30,7 @@ module.exports = {
         });
         break;
       case "getTweetByHour":
+        console.log("Hourdwqdddwq" + eventObj);
         feedService.getTweetByHour(eventObj.params.userId, function(err, doc) {
           sendReply(eventObj, err, doc);
         });

@@ -1,3 +1,4 @@
 module.exports = {
-  consumerTopics: "twitter-analytics-topic-reply"
+  consumerTopics:
+    "twitter-analytics-topic-reply,twitter-analytics-topic-time-reply"
 };

@@ -26,10 +26,12 @@ module.exports = function(router) {
   });
 
   router.get("/getTopViewTweet", function(req, res) {
+    console.log("USERView???++ ");
+    console.log(req.query);
     kafka.make_request(
       TOPICS.TWITTER_ANALYTICS_TOPIC,
       "getTopViewTweet",
-      req.body,
+      req.query,
       req.body,
       function(err, doc) {
         if (err) {
@@ -38,6 +40,8 @@ module.exports = function(router) {
             error: err
           });
         } else {
+          console.log("getTopViewTweet HEJKHLEHJKLEHJKL");
+          console.log(doc);
           res.status(200).json(doc);
         }
       }
@@ -62,10 +66,11 @@ module.exports = function(router) {
       }
     );
   });
-
+  //getTweetByHour getTopRetweetTweet
   router.get("/getTweetByHour", function(req, res) {
+    console.log("In getTweetByHour ");
     kafka.make_request(
-      TOPICS.TWITTER_ANALYTICS_TOPIC,
+      TOPICS.TWITTER_ANALYTICS_TOPIC_TIME,
       "getTweetByHour",
       req.query,
       req.body,
@@ -84,7 +89,7 @@ module.exports = function(router) {
 
   router.get("/getTweetByDay", function(req, res) {
     kafka.make_request(
-      TOPICS.TWITTER_ANALYTICS_TOPIC,
+      TOPICS.TWITTER_ANALYTICS_TOPIC_TIME,
       "getTweetByDay",
       req.query,
       req.body,
@@ -103,7 +108,7 @@ module.exports = function(router) {
 
   router.get("/getTweetByWeek", function(req, res) {
     kafka.make_request(
-      TOPICS.TWITTER_ANALYTICS_TOPIC,
+      TOPICS.TWITTER_ANALYTICS_TOPIC_TIME,
       "getTweetByWeek",
       req.query,
       req.body,
