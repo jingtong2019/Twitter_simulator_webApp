@@ -1,0 +1,1 @@
+export const rooturl = "ec2-18-223-2-86.us-east-2.compute.amazonaws.com";
