@@ -127,7 +127,7 @@ class TweetComponent extends React.Component {
                         <img src={this.state.button_image} height="30" width="30"></img>
                     </label>
                     <input id="file-input" name = "myImage" type="file" onChange={this._handleImageChange} multiple/>
-                    <button class="btn btn-secondary" type="submit" onClick={this.onClick} >Tweet</button>
+                    <button class="btn btn-secondary button1" type="submit" onClick={this.onClick} >Tweet</button>
                 </div>
                 <br/>
             </div>

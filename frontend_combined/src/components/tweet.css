@@ -1,7 +1,7 @@
 .image-upload>input {
   display: none;
 }
-button {
-  position: absolute;
-  left: 420px;
+.button1 {
+  position: absolute !important;
+  left: 420px !important;
 }
