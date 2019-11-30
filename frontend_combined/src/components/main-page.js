@@ -8,18 +8,10 @@ export class MainPage extends React.Component {
 
   render() {
     return (
-        <div class="container-fluid w-87">
-            <div class="row">
-                
-                <div class="col-md-5 border bg-dark text-white">
-                  <div class="row">
-                      <TweetComponent />
-                      <FeedsComponent />
-                  </div>
-                </div>
-                
-            </div>
-        </div>
+      <div class="col-md-5 border bg-dark text-white">
+        <TweetComponent />
+        <FeedsComponent />
+      </div>
     );
   }
 }

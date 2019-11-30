@@ -90,18 +90,41 @@
   left:0;
 }
 
+.modal-content {
+  background-color: #343a40 !important;
+  color: white;
+}
 
-.sidenav {    text-align: left;
+.modal-header {
+  border-bottom: 1px solid gray;
+}
+
+.modal-footer {
+  border-top: 1px solid gray;
+}
+
+textarea {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background-color: #343a40;
+  border-color: gray;
+  color: white;
+}
+
+
+.sidenav {    
+  text-align: left;
   height: 100%;
-  width: 360px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
+  /* width: 360px; */
+  /* position: fixed; */
+  /* z-index: 1; */
+  /* top: 0; */
+  /* left: 0; */
   border-right: 1px solid darkkhaki;
   overflow-x: hidden;
-  padding-top: 20px;
-  padding-left: 6%;
+  /* padding-top: 20px; */
+  /* padding-left: 6%; */
 }
 .responsive {
   width: 80%;
@@ -112,7 +135,7 @@
   height: 100%;
   width: 462px;
   position: fixed;
-  z-index: 1;
+  /* z-index: 1; */
   top: 0;
   right: 0;
   
@@ -156,6 +179,7 @@
     border-top-right-radius: 9999px;
     border-color: unset;
 }
+
 .main {
   margin-left: 360px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */

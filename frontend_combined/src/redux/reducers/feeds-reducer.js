@@ -14,7 +14,7 @@ export default function profileReducer(state = initialState, action) {
         case types.GET_FEEDS_SUCCESS:
             debugger;
             console.log("GET_FEEDS_SUCCESS");
-            let feedResult = {...state.feeds};
+            var feedResult = {...state.feeds};
             feedResult.docs = feedResult.docs.concat(action.result.docs);
             feedResult.hasMore = action.result.hasMore;
             return Object.assign({}, state, {
@@ -32,17 +32,70 @@ export default function profileReducer(state = initialState, action) {
                     hasMore: true
                     }
             });
-        case types.LIKE_TWEET_SUCCESS: 
+        case types.LIKE_TWEET_SUCCESS:
+            debugger;
             console.log("LIKE_TWEET_SUCCESS");
-            feedResult = {...state.feeds};
+            var feedResult = {...state.feeds};
+            var likeCount = feedResult.docs.filter(function( obj ) {
+                return obj._id === action.result._id;
+            })[0].likeCount++;
             feedResult.docs.filter(function( obj ) {
-                return obj._id === action.tweet._id;
-            })[0].num_likes = 8;
+                return obj._id === action.result._id;
+            })[0].likes = action.result.likes;
             return Object.assign({}, state, {
                 error: "",
-                message: "GET_FEEDS_SUCCESS",
+                message: "LIKE_TWEET_SUCCESS",
                 feeds: feedResult
             });
+        case types.UNLIKE_TWEET_SUCCESS:
+                debugger;
+                console.log("UNLIKE_TWEET_SUCCESS");
+                var feedResult = {...state.feeds};
+                var likeCount = feedResult.docs.filter(function( obj ) {
+                    return obj._id === action.result._id;
+                })[0].likeCount--;
+                feedResult.docs.filter(function( obj ) {
+                    return obj._id === action.result._id;
+                })[0].likes = action.result.likes;
+                return Object.assign({}, state, {
+                    error: "",
+                    message: "UNLIKE_TWEET_SUCCESS",
+                    feeds: feedResult
+                });
+        case types.RETWEET_SUCCESS:
+                debugger;
+                console.log("RETWEET_SUCCESS");
+                var feedResult = {...state.feeds};
+                feedResult.docs.filter(function( obj ) {
+                    return obj._id === action.result._id;
+                })[0].reTweetCount++;
+                return Object.assign({}, state, {
+                    error: "",
+                    message: "RETWEET_SUCCESS",
+                    feeds: feedResult
+                });
+        case types.REPLYTO_TWEET_SUCCESS:
+                console.log("REPLYTO_TWEET_SUCCESS");
+                var feedResult = {...state.feeds};
+                feedResult.docs.filter(function( obj ) {
+                    return obj._id === action.result.tweetId;
+                })[0].comments.push(action.result);
+                return Object.assign({}, state, {
+                    error: "",
+                    message: "REPLYTO_TWEET_SUCCESS",
+                    feeds: feedResult
+                });
+        case types.CLEAR_FEEDS:
+                return Object.assign(
+                    {}, state, {
+                    error: "",
+                    message: "",
+                    feeds: {
+                        docs:[],
+                        hasMore: true
+                        }
+                    }
+                );
         case types.LOGOUT_SUCCESS:
             return Object.assign(
                 {}, state, {

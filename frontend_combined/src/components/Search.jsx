@@ -29,19 +29,18 @@ export default  class Search extends Component   {
 
   render() {
   return (
-    <div style={{ width:'78%', marginBottom:'5%',marginLeft:'11%',marginRight:'5%'}}>
-    <Autocomplete
-    id="combo-box-demo"
-    options={Allusers}
-    getOptionLabel={option => option.title }
-    
-    onChange={this.searchtext}
-    renderInput={params => ( 
-     <TextField {...params}  label="Search" variant="outlined" fullWidth />
-   )}
-   
-  />
-  </div>
+    <div class="row ml-2">
+      <Autocomplete
+      id="combo-box-demo"
+      options={Allusers}
+      getOptionLabel={option => option.title }
+      
+      onChange={this.searchtext}
+      renderInput={params => ( 
+      <TextField {...params}  label="Search" variant="outlined" fullWidth />
+    )}
+    />
+   </div>
   );
 }
 }

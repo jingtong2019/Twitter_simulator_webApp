@@ -99,8 +99,9 @@ export function getUserFeeds(userId, pageNumber, callback) {
     return function(dispatch) {
         debugger;
       return feedsApi
-        .muteFollowing(userId, tweetId)
+        .likeTweet(userId, tweetId)
         .then(response => {
+            debugger;
           console.log("Status Code : ", response.status);
           if (response.status === 200) {
             callback("SUCCESS", response.data);
@@ -186,11 +187,11 @@ export function getUserFeeds(userId, pageNumber, callback) {
     return { type: types.RETWEET_FAILURE };
   }
 
-  export function replyToTweet(userId, tweetId, body, callback) {
+  export function replyToTweet(userId, tweetId, content, userImage, callback) {
     return function(dispatch) {
         debugger;
       return feedsApi
-        .replyToTweet(userId, tweetId, body)
+        .replyToTweet(userId, tweetId, content, userImage)
         .then(response => {
           console.log("Status Code : ", response.status);
           if (response.status === 200) {
@@ -214,4 +215,9 @@ export function getUserFeeds(userId, pageNumber, callback) {
 
   export function replyToTweetFailure() {
     return { type: types.REPLYTO_TWEET_FAILURE };
+  }
+
+
+  export function clearFeeds() {
+    return { type: types.CLEAR_FEEDS };
   }
