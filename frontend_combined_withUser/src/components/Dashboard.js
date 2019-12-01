@@ -13,6 +13,8 @@ import BookmarkComponent from "./bookmark";
 import TweetComponent from "./tweet";
 import Profile from './Profile';
 import Messages from './Messages/Messages';
+import Deactivate from './Deactivate/Deactivate';
+import { Redirect } from 'react-router';
 export default class Sidebar extends Component {
   constructor(props) {
     //Call the constrictor of Super class i.e The Component
@@ -29,7 +31,9 @@ export default class Sidebar extends Component {
       profile: false,
       more: false,
       testing: false,
-      rightpane: true
+      rightpane: true,
+      deactivate:false,
+      logout:false
     };
 
     this.currentComponent = this.currentComponent.bind(this);
@@ -52,7 +56,9 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: true
+      rightpane: true,
+      deactivate:false,
+      logout:false
     });
   };
 
@@ -66,7 +72,9 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: true
+      rightpane: true,
+      deactivate:false,
+      logout:false
     });
   };
 
@@ -80,7 +88,9 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: true
+      rightpane: true,
+      deactivate:false,
+      logout:false
     });
   };
 
@@ -94,7 +104,9 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: false
+      rightpane: false,
+      deactivate:false,
+      logout:false
     });
   };
 
@@ -108,7 +120,9 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: true
+      rightpane: true,
+      deactivate:false,
+      logout:false
     });
   };
 
@@ -122,7 +136,9 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: true
+      rightpane: true,
+      deactivate:false,
+      logout:false
     });
   };
 
@@ -136,7 +152,9 @@ export default class Sidebar extends Component {
       list: true,
       profile: false,
       more: false,
-      rightpane: true
+      rightpane: true,
+      deactivate:false,
+      logout:false
     });
   };
 
@@ -150,10 +168,43 @@ export default class Sidebar extends Component {
       list: false,
       profile: true,
       more: false,
-      rightpane: true
+      rightpane: true,
+      deactivate:false,
+      logout:false
     });
   };
-
+  deactivatecheck=()=>
+  {
+    this.setState({
+      home: false,
+      explore: false,
+      notifications: false,
+      messages: false,
+      bookmarks: false,
+      list: false,
+      profile: false,
+      more: false,
+      rightpane: true,
+      deactivate:true,
+      logout:false
+    });
+  }
+   logoutcheck=()=>
+  {
+    this.setState({
+      home: false,
+      explore: false,
+      notifications: false,
+      messages: false,
+      bookmarks: false,
+      list: false,
+      profile: false,
+      more: false,
+      rightpane: false,
+      deactivate:false,
+      logout:true
+    });
+  }
   //Require map search to redux
 
   currentComponent = () => {
@@ -169,10 +220,18 @@ export default class Sidebar extends Component {
     else if (this.state.list) return <p>List Component</p>;
     //<List />
     else if (this.state.profile) return <p><Profile userid={userid} /></p>;
+    else if(this.state.deactivate) {return  <Redirect to={{ pathname: '/Deactivate'}}/>  }
+    else if(this.state.logout) { localStorage.clear();
+    return <Redirect to={{
+      pathname: '/TwitterHome'
+  }}
+  />
+    }
     else return <p>No component assigned</p>;
   };
 
   render() {
+
     var rightcomponent;
     var style = {
       color: "rgba(29,161,242,1.00)",
@@ -261,7 +320,7 @@ export default class Sidebar extends Component {
               </li>
 
               <li class="m-4 h6 font-weight-bold">
-                <a>
+                <a onClick={this.deactivatecheck}>
                   <div className="hoveritem">
                     <i class="fas fa-ruler-combined icon_pad"></i>Deactivate
                   </div>
@@ -269,9 +328,9 @@ export default class Sidebar extends Component {
               </li>
 
               <li class="m-4 h6 font-weight-bold">
-                <a>
+                <a onClick={this.logoutcheck}>
                   <div className="hoveritem">
-                    <i class="fas fa-sign-out-alt icon_pad"></i>Logout
+                 <i class="fas fa-sign-out-alt icon_pad"></i>Logout
                   </div>
                 </a>
               </li>
