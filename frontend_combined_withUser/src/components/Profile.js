@@ -16,7 +16,6 @@ class Profile extends Component {
             profilename: "",
             userhandle: "",
             Bio: "",
-           
             Website: "",
             dateofbirth: "",
             ProfileImage: "",
@@ -56,7 +55,6 @@ class Profile extends Component {
                 userhandle: this.props.profiledetails.userhandle,
                 profilename: this.props.profiledetails.profilename,
                 Bio: this.props.profiledetails.description,
-                
                 Website: this.props.profiledetails.website_url,
                 dateofbirth: date,
                 ProfileImage: this.props.profiledetails.profileimage_url,
