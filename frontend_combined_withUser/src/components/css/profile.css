@@ -1,0 +1,161 @@
+
+
+.profilename
+{
+padding-left:10px;
+font-weight:bold;
+font-size: 20px;
+padding-top:4px;
+}
+.jumbotron345
+{
+   height:25%;
+   padding-left: 0px;
+   padding-right: 0px;
+ 
+}
+.profilecircle
+{
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 0px 2px inset;
+    object-fit: cover;
+}
+.jumbo2
+{
+    padding-left:7px;
+}
+.jumbo34
+{
+    padding-left:60px;
+    font-size: 22px;
+}
+
+.para2
+{
+    padding-top:13px;
+   
+    line-height: 0px;
+    font-size:20px;
+}
+.parafirstlastname2
+{
+  
+    font-size:16px;
+    color: black;
+}
+.para3
+{
+    padding-top:13px;
+   line-height: 0px;
+   font-size:20px;
+}
+.para34
+{
+    padding-left:12px;
+    font-size:3px; 
+    width:100%; 
+}
+.para4
+{
+    padding-left:12px;
+   font-size:3px;   
+}
+.in{
+display: inline-flex;
+
+
+}
+.para6
+{
+        position: absolute;
+        right:520px;
+        color:black;
+        font-size: 17px;
+        font-size:15px; 
+}
+.parafirstlastname6
+{
+    position: absolute;
+        right:720px;
+        color:black;
+        font-size: 15px;
+       
+}
+.setModal
+ {
+    opacity:1;
+    border-top:10px;
+    padding-left:0;
+    position: fixed;
+    top: 20%;
+    right: auto;
+    left: 13%;
+    margin-top: -100px;
+
+ }
+ .item343
+ {
+     height:200px;
+ }
+ .item2
+ {
+     height:60px;
+ }
+ .Modal.Body
+ {
+     height:1000px;
+ }
+.name1
+{
+    border-left: none;
+    border-top:none;
+    border-right:none;
+  
+    width:100%;
+}
+.name123456
+{
+    width:100%;
+}
+.name34567
+{
+    padding-bottom:40px;
+    border-left: none;
+    border-top:none;
+    border-right:none;
+    width:100%;
+}
+.bioname
+{
+    padding-bottom:20px;
+    border-left: none;
+    border-top:none;
+    border-right:none;
+    width:100%; 
+}
+.bio
+{
+    border-left: none;
+    border-top:none;
+    border-right:none;
+    height:50px;
+    width:100%;
+}
+.col-md-6
+{
+font-size:12px;
+}
+.img-style
+{
+    width: 250px;
+    height:200px;
+}
+
+.img-style2
+{
+    width: 500px;
+    height:200px;
+}

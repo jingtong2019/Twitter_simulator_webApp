@@ -1,0 +1,181 @@
+.App {
+  /* text-align: center; */
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+.w-87 {
+  width: 87%;
+}
+
+.css-901oao {
+  border: 0 solid black;
+  box-sizing: border-box;
+  color: rgba(0,0,0,1.00);
+  display: inline;
+  font: 14px system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",sans-serif;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.r-ad9z0x {
+  line-height: 1.3125;
+}
+
+.r-jwli3a {
+  color: rgb(255, 255, 255);
+}
+
+.r-16dba41 {
+  font-weight: 400;
+}
+
+.r-1xvli5t {
+  height: 1.25em;
+}
+
+.r-yyyyoo {
+  fill: currentcolor;
+}
+
+.border-dark-gray {
+  border-bottom: 1px solid darkgray;
+}
+
+.twitter-avatar img {
+  width:70px;
+  height:70px;
+}
+
+.tweet-images img {
+  width:490px;
+  height:250px;
+}
+
+.dropdown-item {
+  margin-top: 15px;
+  color: white;
+}
+
+.dropdown-menu {
+  background-color: #343a40!important;
+}
+
+.dropdown-menu .pull-left {
+  left:0;
+}
+
+
+.sidenav {    text-align: left;
+  height: 100%;
+  width: 360px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  border-right: 1px solid darkkhaki;
+  overflow-x: hidden;
+  padding-top: 20px;
+  padding-left: 6%;
+}
+.responsive {
+  width: 80%;
+  height: auto;
+}
+.sidenav-right-work{
+  text-align: center;
+  height: 100%;
+  width: 462px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  
+  border-left: 1px solid darkkhaki;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+.sidenav a {
+  
+  padding: 2px 8px 10px 18px;
+  text-decoration: none;
+  font-size: 19px;
+  cursor: pointer;
+  color:black;
+  display: block;
+  font-weight: bold;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+}
+
+.hoveritem{
+  display: inline-block;
+  padding: 5px 15px 6px 13px;
+}
+.hoveritem:hover{
+  background-color: rgba(29,161,242,0.1);
+  border-radius: 20px;
+}
+
+
+.sidenav button {
+  margin-left: 9%;
+  height: 48px;
+ width: 70%;
+  text-decoration: black;
+  font-size: 15px;
+  background-color:rgb(29, 161, 242);
+  display: block;
+  border-bottom-left-radius: 9999px;
+    border-bottom-right-radius: 9999px;
+    border-top-left-radius: 9999px;
+    border-top-right-radius: 9999px;
+    border-color: unset;
+}
+.main {
+  margin-left: 360px; /* Same as the width of the sidenav */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+  margin-right: 350px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 23x;}
+}
+
+.icon_pad{
+  color: rgb(29, 161, 242);
+    font-size: 25px;
+    margin-right: 28px;
+}
+.btn-primary:hover {
+  text-decoration: black;
+  font-size: 15px;
+  background-color:rgb(29, 161, 242);
+  display: block;
+}

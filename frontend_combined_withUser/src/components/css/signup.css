@@ -1,0 +1,96 @@
+.twitterimg
+{
+   display: inline-block;
+   background: #627aac url(twitter.png) left top no-repeat;
+   height:90px;
+   width:95px;
+   border-bottom: none;
+}
+.signup
+{
+margin-top: 7px;
+margin-bottom:370px;
+margin-left: 410px;
+margin-right: 350px;
+box-shadow: 2px 2px 2px 2px rgba(0.2, 0.2, 0.2, 0.2);
+}
+
+.firstlast{
+    display: inline-flex;
+    padding-right: 20px;
+    
+    }
+    .firstlastaddress
+    {
+        display: inline-flex;   
+    }
+.firstname{
+padding-right:40px;        
+padding-bottom:2px;
+border-left: none;
+border-top:none;
+border-right:none;
+width:40%;
+        }
+.firstnameaddress
+{
+    padding-left: 5px;
+    padding-right:12px;        
+    padding-bottom:2px;
+    border-left: none;
+    border-top:none;
+    border-right:none;
+    width:40%; 
+}
+.field1234
+{
+    padding-bottom:10px;
+}
+.field1234567
+{
+    margin-left: 220px;
+}
+.name1
+{
+    padding-bottom:5px;
+    border-left: none;
+    border-top:none;
+    border-right:none;
+    width:100%;
+}
+.name34567
+{
+    padding-bottom:40px;
+    border-left: none;
+    border-top:none;
+    border-right:none;
+  
+    width:100%;
+}
+.name2
+{
+    width:25%;
+    height:58px;
+    border-left: none;
+    border-top:none;
+    border-right:none;
+    padding-right:10px;
+    padding-bottom:90px;
+}
+.overall
+{
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 120px;
+}
+.signupbutton
+{
+    color:blue;
+    text-align: center;
+    background-color: rgb(29, 161, 242);
+    
+}
+.but1{
+padding-left: 140px;
+padding-top: 30px;
+}
