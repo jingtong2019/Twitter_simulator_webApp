@@ -90,7 +90,7 @@ export class BookmarkComponent extends React.Component {
 
   render() {
     return (
-        <div class="col-md-5 border bg-dark text-white">
+        <div class="col-md-5 border">
             <InfiniteScroll
                   pageStart={1}
                   initialLoad={false}

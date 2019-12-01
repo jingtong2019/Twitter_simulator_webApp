@@ -34,6 +34,7 @@ export default  class Search extends Component   {
       id="combo-box-demo"
       options={Allusers}
       getOptionLabel={option => option.title }
+      style={{ width: 300 }}
       
       onChange={this.searchtext}
       renderInput={params => ( 

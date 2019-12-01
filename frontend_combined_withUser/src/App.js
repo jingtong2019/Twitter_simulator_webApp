@@ -12,10 +12,14 @@ import Signup from "./components/Signup";
 import Messages from "./components/Messages/Messages";
 import Deactivate from "./components/Deactivate/Deactivate";
 import DeactivatedPage from "./components/Deactivate/DeactivatedPage";
+import { Redirect } from 'react-router';
 function App() { 
   return (
     <div className="App">
       <Switch>
+      <Route exact path="/" render={() => (
+            <Redirect to="/Login"/>
+        )}/>
         <Route exact path="/dashboard" component={Dashboard}/>
         <Route exact path="/home" component={MainPage} />
         <Route exact path="/bookmark" component={BookmarkComponent} />

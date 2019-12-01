@@ -8,7 +8,7 @@ export class MainPage extends React.Component {
 
   render() {
     return (
-      <div class="col-md-5 border bg-dark text-white">
+      <div class="col-md-5 border">
         <TweetComponent />
         <FeedsComponent />
       </div>

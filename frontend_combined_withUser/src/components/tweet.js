@@ -124,7 +124,8 @@ class TweetComponent extends React.Component {
 
                 <div class="image-upload">
                     <label for="file-input">
-                        <img src={this.state.button_image} height="30" width="30"></img>
+                        {/* <img src={this.state.button_image} height="30" width="30"></img> */}
+                        <i class="fas fa-camera" style={{fontSize: "2em"}}></i>
                     </label>
                     <input id="file-input" name = "myImage" type="file" onChange={this._handleImageChange} multiple/>
                     <button class="btn btn-secondary button1" type="submit" onClick={this.onClick} >Tweet</button>

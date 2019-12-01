@@ -7,7 +7,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  /* background-color: #282c34; */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -83,7 +83,7 @@
 }
 
 .dropdown-menu {
-  background-color: #343a40!important;
+  /* background-color: #343a40!important; */
 }
 
 .dropdown-menu .pull-left {
@@ -91,8 +91,8 @@
 }
 
 .modal-content {
-  background-color: #343a40 !important;
-  color: white;
+  /* background-color: #343a40 !important; */
+  /* color: white; */
 }
 
 .modal-header {
@@ -107,9 +107,9 @@ textarea {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
-  background-color: #343a40;
+  /* background-color: #343a40; */
   border-color: gray;
-  color: white;
+  /* color: white; */
 }
 
 
