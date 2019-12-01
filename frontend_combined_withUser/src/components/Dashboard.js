@@ -158,17 +158,17 @@ export default class Sidebar extends Component {
 
   currentComponent = () => {
 
-   let userid= localStorage.getItem('cookie1');
+    let userid = localStorage.getItem('cookie1');
     if (this.state.home) return <MainPage />;
     else if (this.state.bookmarks) return <BookmarkComponent />;
     else if (this.state.explore) return <p>Explore Component</p>;
     else if (this.state.notifications) return <p>Notifications Component</p>;
-    else if (this.state.messages) return <p><Messages/></p>;
+    else if (this.state.messages) return <p><Messages /></p>;
     else if (this.state.bookmarks) return <p>Analytics component</p>;
     //analytic=s chnage
     else if (this.state.list) return <p>List Component</p>;
     //<List />
-    else if (this.state.profile) return <p><Profile userid={userid}/></p>;
+    else if (this.state.profile) return <p><Profile userid={userid} /></p>;
     else return <p>No component assigned</p>;
   };
 
@@ -259,11 +259,30 @@ export default class Sidebar extends Component {
                   </div>
                 </a>
               </li>
+
+              <li class="m-4 h6 font-weight-bold">
+                <a>
+                  <div className="hoveritem">
+                    <i class="fas fa-ruler-combined icon_pad"></i>Deactivate
+                  </div>
+                </a>
+              </li>
+
+              <li class="m-4 h6 font-weight-bold">
+                <a>
+                  <div className="hoveritem">
+                    <i class="fas fa-sign-out-alt icon_pad"></i>Logout
+                  </div>
+                </a>
+              </li>
+
+
               <li class="m-4 h6 font-weight-bold">
                 <button type="button" class="btn btn-primary">
                   Tweet
                 </button>
               </li>
+
             </ul>
           </div>
           {this.currentComponent()}
