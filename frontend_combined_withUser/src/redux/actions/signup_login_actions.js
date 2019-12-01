@@ -33,16 +33,14 @@ export const login = (data) => async (dispatch) => {
         .then(
             (response) => {
                 if (response.status === 200) {
-                    console.log("response data is "+JSON.stringify(response.data))
-                   
-                    localStorage.setItem("cookie1", response.data.cookie1);
-                    localStorage.setItem("cookie2", response.data.cookie2);
-                    localStorage.setItem("cookie3", response.data.cookie3);
-                    localStorage.setItem("token", response.data.token);
+                    localStorage.setItem("cookie1", response.data.cookies.cookie1);
+                    localStorage.setItem("cookie2", response.data.cookies.cookie2);
+                    localStorage.setItem("cookie3", response.data.cookies.cookie3);
+                    localStorage.setItem("token", response.data.cookies.token);
 
                     dispatch({
                         type: LOGIN,
-                        loginSuccess: true
+                        loginSuccess: response.data.result.result[0]
                     });
                 }
                 else {
