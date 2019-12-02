@@ -104,7 +104,7 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: false,
+      rightpane: true,
       deactivate:false,
       logout:false
     });
