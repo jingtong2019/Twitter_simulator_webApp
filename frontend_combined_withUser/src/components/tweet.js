@@ -16,7 +16,7 @@ class TweetComponent extends React.Component {
             button_image: testimage,
             files: [],
             imagesPreviewUrls: [],
-            userid: 12,
+            userid: localStorage.getItem('cookie1'),
             image: [],
             content: ""
         };

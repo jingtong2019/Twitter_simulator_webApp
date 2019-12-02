@@ -36,12 +36,18 @@ export default function profileReducer(state = initialState, action) {
             debugger;
             console.log("LIKE_TWEET_SUCCESS");
             var feedResult = {...state.feeds};
-            var likeCount = feedResult.docs.filter(function( obj ) {
-                return obj._id === action.result._id;
-            })[0].likeCount++;
-            feedResult.docs.filter(function( obj ) {
-                return obj._id === action.result._id;
-            })[0].likes = action.result.likes;
+            // var likeCount = feedResult.docs.filter(function( obj ) {
+            //     return obj._id === action.result._id;
+            // })[0].likeCount++;
+            for (var i = 0; i < feedResult.docs.length; i++) {
+                if (feedResult.docs[i]._id === action.result._id) {
+                    feedResult.docs[i].likes = action.result.likes;
+                    feedResult.docs[i].likeCount += 1;
+                }
+            }
+            // feedResult.docs.filter(function( obj ) {
+            //     return obj._id === action.result._id;
+            // })[0].likes = action.result.likes;
             return Object.assign({}, state, {
                 error: "",
                 message: "LIKE_TWEET_SUCCESS",

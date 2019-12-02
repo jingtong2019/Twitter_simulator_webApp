@@ -1,12 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router";
 import { bindActionCreators } from "redux";
-import * as feedActions from "../redux/actions/feeds-actions"; 
-import InfiniteScroll from 'react-infinite-scroller';
+import * as feedActions from "../redux/actions/feeds-actions";
+import Search from "./Search";
+import imgg from "../components/trends.png";
 import "jquery/dist/jquery.min.js";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "@fortawesome/fontawesome-free/css/all.css";
+
+var style = {
+    color: "rgba(29,161,242,1.00)",
+    fontSize: 30,
+    paddingLeft: "10px"
+  };
 
 export class FeedsComponent extends React.Component {
 
@@ -14,79 +20,72 @@ export class FeedsComponent extends React.Component {
         super(props);
     
         this.state = {
-            feeds: [],
+            tweet: {
+                images:[],
+                userName: "",
+                twitterHandle: "",
+                num_comments: 0,
+                likeCount: 0,
+                likes: [],
+                comments: []
+            },
             comment:"",
-            currentTweetId: "",
-            clickedTweetBody: ""
+            currentTweetId: ""
         };
-        this.getFeeds = this.getFeeds.bind(this);
         this.updateLikeCount = this.updateLikeCount.bind(this);
         this.reTweet = this.reTweet.bind(this);
         this.replyToTweet = this.replyToTweet.bind(this);
         this.followUser = this.followUser.bind(this);
-        this.handleTweetClick = this.handleTweetClick.bind(this);
       }
 
   componentDidMount() {
-    this.props.actions.clearFeeds();
-    this.getFeeds(1);
-  }
-
-  getFeeds(pagenumber) {
-    let userid= localStorage.getItem('cookie1');
-    this.props.actions.getUserFeeds(parseInt(userid), pagenumber, (status, feeds) => {
-      if (status === 'SUCCESS') {
-        this.setState({
-            feeds: feeds
-        });
-      } else {
-        this.setState({
-            feeds: []
-        });
-      }
+    debugger;
+    console.log(this.props);
+    console.log(this.location);
+    var path = this.props.location.pathname;
+    var id = path.replace("/tweet/", "");
+    var tweetData = this.props.feeds.feeds.docs.filter(function( obj ) {
+        return obj._id === id;
+    });
+    this.setState({
+        tweet: tweetData[0]
     });
   }
 
   handleTextareaChange = e => {
-      e.stopPropagation();
     this.setState({ comment: e.target.value });
   }
 
   updateLikeCount = e => {
-    e.stopPropagation();
       debugger;
-    let userId= parseInt(localStorage.getItem('cookie1'));
     const tweetId = e.currentTarget.getAttribute("data-tweetId");
     const likeCount = e.currentTarget.getAttribute("data-count");
     var tweetData = this.props.feeds.feeds.docs.filter(function( obj ) {
         return obj._id === tweetId;
     });
     // Replace hard coded user id to this.props.accounts.user._id
-    var isLiked = tweetData[0].likes.indexOf(userId) > -1 ? true : false;
+    var isLiked = tweetData[0].likes.indexOf(12) > -1 ? true : false;
     if (isLiked) {
-        this.props.actions.unlikeTweet(userId, tweetId, (status, data) => {
+        this.props.actions.unlikeTweet(12, tweetId, (status, data) => {
             // check status and act
 
         });
     } else {
-        this.props.actions.likeTweet(userId, tweetId, (status, data) => {
+        this.props.actions.likeTweet(12, tweetId, (status, data) => {
             // check status and act
         });
     }
   }
 
   reTweet = e => {
-    e.stopPropagation();
     const tweetId = e.currentTarget.getAttribute("data-tweetId");
-    let userId= parseInt(localStorage.getItem('cookie1'));
     const reTweetCount = e.currentTarget.getAttribute("data-count");
-    this.props.actions.reTweet(userId, tweetId, (status, data) => {
+    this.props.actions.reTweet(12, tweetId, (status, data) => {
         // check status and act
     });
   }
 
   getCurrentTweetId = e => {
-    e.stopPropagation();
     const tweetId = e.currentTarget.getAttribute("data-tweetId");
     this.setState({
         currentTweetId: tweetId
@@ -94,11 +93,10 @@ export class FeedsComponent extends React.Component {
   }
 
   replyToTweet = e => {
-    e.stopPropagation();
     // get message content from popup modal
     debugger;
     var content = this.state.comment;
-    let userId= parseInt(localStorage.getItem('cookie1'));
+    var userId = 12;
     var userImage = "https://picsum.photos/id/1/200/200";
     this.props.actions.replyToTweet(userId, this.state.currentTweetId, content, userImage, (status,data) => {
         // check status and act
@@ -106,54 +104,113 @@ export class FeedsComponent extends React.Component {
   }
 
   followUser = e => {
-    e.stopPropagation();
-    const userId = parseInt(e.currentTarget.getAttribute("data-userId"));
+    const userId = e.currentTarget.getAttribute("data-userId");
     this.props.actions.followUser("this.props.accounts.user._id", userId, status => {
 
     });
   }
 
-  handleTweetClick = e => {
-    e.stopPropagation();
-    const tweetId = e.currentTarget.getAttribute("data-tweetId");
-    this.setState({
-        clickedTweetBody: tweetId
-    })
+  dashboardNavigate = e => {
+      e.stopPropagation();
+      this.props.history.push("/dashboard");
   }
-
   getImage = (url) => {
     return "https://picsum.photos/id/1/200/200";
   }
 
   render() {
-      if (this.state.clickedTweetBody.length > 0)
-        return <Redirect to={`/tweet/${this.state.clickedTweetBody}`} tweetId={this.state.clickedTweetBody}/> 
-      debugger;
     return (
-        // <div class="col-md-5 border bg-dark text-white">
-        <div>
-            <InfiniteScroll
-                  pageStart={1}
-                  initialLoad={false}
-                  threshold={500}
-                  loadMore={this.getFeeds.bind(this)}
-                  hasMore={this.props.feeds.feeds.hasMore}
-                  loader={<div className="loader" key={0}>Loading ...</div>}
-                  useWindow={true}
-                  >
-            {this.props.feeds.feeds.docs.map((value, index) => {
-                debugger;
-            return (
+        <div class="container-fluid w-87">
+            <div class="row">
+            <div class="col-md-3 border">
+            <ul class="list-unstyled">
+              <li class="m-4 h6 font-weight-bold">
+                <a>
+                  <span style={style}>
+                    {" "}
+                    <i class="fab fa-twitter"></i>{" "}
+                  </span>{" "}
+                </a>
+              </li>
+              <li class="m-4 h6 font-weight-bold">
+                <a onClick={this.homecheck}>
+                  <div className="hoveritem">
+                    <i class="fas fa-home icon_pad"></i>Home
+                  </div>
+                </a>
+              </li>
+              <li class="m-4 h6 font-weight-bold">
+                <a onClick={this.explorecheck}>
+                  <div className="hoveritem">
+                    <i class="fas fa-hashtag icon_pad"></i> Explore
+                  </div>
+                </a>
+              </li>
+              <li class="m-4 h6 font-weight-bold">
+                <a onClick={this.notificationcheck}>
+                  <div className="hoveritem">
+                    <i class="far fa-bell icon_pad"></i>Notifications
+                  </div>
+                </a>
+              </li>
+              <li class="m-4 h6 font-weight-bold">
+                <a onClick={this.messagescheck}>
+                  <div className="hoveritem">
+                    <i class="far fa-envelope icon_pad"></i>Messages
+                  </div>
+                </a>
+              </li>
+              <li class="m-4 h6 font-weight-bold">
+                <a onClick={this.bookmarkscheck}>
+                  <div className="hoveritem">
+                    <i class="far fa-bookmark icon_pad"></i>Bookmarks
+                  </div>
+                </a>
+              </li>
+              <li class="m-4 h6 font-weight-bold">
+                <a onClick={this.listcheck}>
+                  <div className="hoveritem">
+                    <i class="far fa-list-alt icon_pad"></i>Lists
+                  </div>
+                </a>
+              </li>
+              <li class="m-4 h6 font-weight-bold">
+                <a onClick={this.profilecheck}>
+                  <div className="hoveritem">
+                    <i class="fas fa-user-circle icon_pad"></i>Profile
+                  </div>
+                </a>
+              </li>
+              <li class="m-4 h6 font-weight-bold">
+                <a>
+                  <div className="hoveritem">
+                    <i class="far fa-chart-bar icon_pad"></i>Analytics
+                  </div>
+                </a>
+              </li>
+              <li class="m-4 h6 font-weight-bold">
+                <button type="button" class="btn btn-primary">
+                  Tweet
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-5 border">
+          <div class="row ml-4 mt-2" onClick={this.dashboardNavigate}>
+                <i class="fas fa-long-arrow-alt-left d-inline-block" style={{fontSize: "3em"}}></i>
+                <h3 class="mt-2 ml-4">Tweet</h3>
+          </div>
+            <hr/>
                 <div class="row border-bottom-1 border-dark-gray mt-2">
                     <div class="row">
-                        <div class="col-md-2" onClick={this.handleTweetClick} data-tweetId={value._id}>
+                        <div class="col-md-2">
                             <div class="mt-2 twitter-avatar">
-                                <img src={this.getImage(value.images[0])} class="rounded-circle" />
+                                <img src={this.getImage(this.state.tweet.images[0])} class="rounded-circle" />
                             </div>
                         </div>
                         <div class="col-md-9">
                             <div class="row d-inline-block w-100">
-                                <div class="twitter-name d-inline-block">{value.userName}</div>
+                                <div class="twitter-name d-inline-block">{this.state.tweet.userName}</div>
                                 <div class="twitter-tick ml-1 d-inline-block">
                                     <div dir="auto" class="css-901oao r-jwli3a r-18u37iz r-1q142lx r-1qd0xha r-a023e6 r-16dba41 r-ad9z0x r-bcqeeo r-qvutc0"><svg viewBox="0 0 24 24" aria-label="Verified account" class="r-jwli3a r-4qtqp9 r-yyyyoo r-1xvli5t r-9cviqr r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
                                             <g>
@@ -161,7 +218,7 @@ export class FeedsComponent extends React.Component {
                                             </g>
                                         </svg></div>
                                 </div>
-                                <div class="twitter-handle ml-2 d-inline-block">{value.twitterHandle}</div>
+                                <div class="twitter-handle ml-2 d-inline-block">{this.state.tweet.twitterHandle}</div>
                                 <div class="dot-separator ml-2 mr-2 d-inline-block"><span class="">.</span></div>
                                 <div class="tweet-time d-inline-block">40m</div>
                                 <div class="dropdown d-inline-block float-right">
@@ -175,40 +232,40 @@ export class FeedsComponent extends React.Component {
                                             <i class="fas fa-code"></i> 
                                             <span class="ml-2 mt-2">Embed Tweet</span>
                                         </a>
-                                        <a class="dropdown-item" href="#" data-userId={value.userId} onClick={this.followUser}>
+                                        <a class="dropdown-item" href="#" data-userId={this.state.tweet.userId} onClick={this.followUser}>
                                             <i class="fas fa-user-plus"></i>
-                                            <span class="ml-2 mt-2">Follow {value.twitterHandle}</span>                                  
+                                            <span class="ml-2 mt-2">Follow {this.state.tweet.twitterHandle}</span>                                  
                                         </a>
-                                        <a class="dropdown-item" href="#" data-userId={value.userId}>
+                                        <a class="dropdown-item" href="#" data-userId={this.state.tweet.userId}>
                                             <i class="fas fa-volume-mute"></i>
-                                            <span class="ml-2 mt-2">Mute {value.twitterHandle}</span>
+                                            <span class="ml-2 mt-2">Mute {this.state.tweet.twitterHandle}</span>
                                         </a>
-                                        <a class="dropdown-item" href="#" data-userId={value.userId}>
+                                        <a class="dropdown-item" href="#" data-userId={this.state.tweet.userId}>
                                             <i class="fas fa-ban"></i>
-                                            <span class="ml-2 mt-2">Block {value.twitterHandle}</span>  
+                                            <span class="ml-2 mt-2">Block {this.state.tweet.twitterHandle}</span>  
                                         </a>
-                                        <a class="dropdown-item" href="#" data-tweetId={value.tweetId}>
+                                        <a class="dropdown-item" href="#" data-tweetId={this.state.tweet.tweetId}>
                                             <i class="far fa-flag"></i>
                                             <span class="ml-2 mt-2">Report Tweet</span>
                                         </a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mt-2">{value.content}</div>
-                            { value.images.length > 0 ? <div class="row mt-2 tweet-images"><img src={value.images[0]} class="rounded" /></div> : '' }
+                            <div class="row mt-2">{this.state.tweet.content}</div>
+                            { this.state.tweet.images.length > 0 ? <div class="row mt-2 tweet-images"><img src={this.state.tweet.images[0]} class="rounded" /></div> : '' }
                             <div class="row d-inline-block w-100 mt-3 mb-2">
                                 <div class="row">
-                                    <div class="col-md-3" onClick={this.getCurrentTweetId} data-tweetId={value._id} data-count={value.num_comments}>
-                                        <i href="#myModal" role="button" data-toggle="modal" class="far fa-comment"></i>
-                                        <span class="comment-count ml-1">{value.num_comments}</span>
+                                    <div class="col-md-3" onClick={this.getCurrentTweetId}>
+                                        <i href="#myModal" role="button" data-toggle="modal" class="far fa-comment" data-tweetId={this.state.tweet._id} data-count={this.state.tweet.num_comments}></i>
+                                        <span class="comment-count ml-1">{this.state.tweet.num_comments}</span>
                                     </div>
-                                    <div class="col-md-3" onClick={this.reTweet} data-tweetId={value._id} data-count={value.reTweetCount}>
-                                        <i class="fas fa-retweet"></i>
-                                        <span class="retweet-count ml-1">{value.reTweetCount}</span>
+                                    <div class="col-md-3" onClick={this.reTweet}>
+                                        <i class="fas fa-retweet" data-tweetId={this.state.tweet._id} data-count={this.state.tweet.reTweetCount}></i>
+                                        <span class="retweet-count ml-1">{this.state.tweet.reTweetCount}</span>
                                     </div>
-                                    <div class="col-md-3" onClick={this.updateLikeCount} data-tweetId={value._id} data-count={value.likeCount}>
-                                        <i class={value.likes.indexOf(parseInt(localStorage.getItem('cookie1'))) > -1 ? "fas fa-heart" : "far fa-heart"}></i>
-                                        <span class="like-count ml-1">{value.likeCount}</span>
+                                    <div class="col-md-3" onClick={this.updateLikeCount}>
+                                        <i class={this.state.tweet.likes.indexOf(12) > -1 ? "fas fa-heart" : "far fa-heart"} data-tweetId={this.state.tweet._id} data-count={this.state.tweet.likeCount}></i>
+                                        <span class="like-count ml-1">{this.state.tweet.likeCount}</span>
                                     </div>
                                     <div class="col-md-3">
                                         <i class="far fa-share-square"></i>
@@ -217,7 +274,7 @@ export class FeedsComponent extends React.Component {
                             </div>
                         </div>
                     </div>
-                    {value.comments.map((com, idx) => {
+                    {this.state.tweet.comments.map((com, idx) => {
                         return (
                     <div class="row">
                         <div class="col-md-2">
@@ -226,7 +283,7 @@ export class FeedsComponent extends React.Component {
                             </div>
                         </div>
                         <div class="col-md-10">
-                            <textarea cols="55" rows="3" readonly="true">{com.content}</textarea>
+                            <textarea cols="55" rows="3" readonly>{com.content}</textarea>
                             <div class="row">
                                 <div class="col-md-3">
                                     <i class="far fa-comment"></i>
@@ -249,9 +306,15 @@ export class FeedsComponent extends React.Component {
                         );
                     })}
                 </div>
-                );
-            })}
-            </InfiniteScroll>
+                </div>
+                <div class="col-md-3 border">
+                    <div class="mt-2">
+                    <Search />
+                    <div class="row mt-4 ml-3">
+                        <img src={imgg} class="responsive"></img>
+                    </div>
+                    </div>
+                </div>
             <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -269,6 +332,7 @@ export class FeedsComponent extends React.Component {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     );
   }

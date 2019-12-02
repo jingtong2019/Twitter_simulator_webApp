@@ -9,6 +9,7 @@ import TwitterHome from "./components/TwitterHome";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
 import Signup from "./components/Signup";
+import IndividiualTweetView from "./components/IndividiualTweetView";
 import Messages from "./components/Messages/Messages";
 import Deactivate from "./components/Deactivate/Deactivate";
 import DeactivatedPage from "./components/Deactivate/DeactivatedPage";
@@ -21,6 +22,7 @@ function App() {
             <Redirect to="/Login"/>
         )}/>
         <Route exact path="/dashboard" component={Dashboard}/>
+        <Route path="/tweet/:tweetId" component={IndividiualTweetView} />
         <Route exact path="/home" component={MainPage} />
         <Route exact path="/bookmark" component={BookmarkComponent} />
         <Route path="/TwitterHome" component={TwitterHome} />

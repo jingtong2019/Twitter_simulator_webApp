@@ -13,8 +13,6 @@ import BookmarkComponent from "./bookmark";
 import TweetComponent from "./tweet";
 import Profile from './Profile';
 import Messages from './Messages/Messages';
-import Deactivate from './Deactivate/Deactivate';
-import { Redirect } from 'react-router';
 export default class Sidebar extends Component {
   constructor(props) {
     //Call the constrictor of Super class i.e The Component
@@ -31,9 +29,7 @@ export default class Sidebar extends Component {
       profile: false,
       more: false,
       testing: false,
-      rightpane: true,
-      deactivate:false,
-      logout:false
+      rightpane: true
     };
 
     this.currentComponent = this.currentComponent.bind(this);
@@ -56,9 +52,7 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: true,
-      deactivate:false,
-      logout:false
+      rightpane: true
     });
   };
 
@@ -72,9 +66,7 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: true,
-      deactivate:false,
-      logout:false
+      rightpane: true
     });
   };
 
@@ -88,9 +80,7 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: true,
-      deactivate:false,
-      logout:false
+      rightpane: true
     });
   };
 
@@ -104,9 +94,7 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: true,
-      deactivate:false,
-      logout:false
+      rightpane: false
     });
   };
 
@@ -120,9 +108,7 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: true,
-      deactivate:false,
-      logout:false
+      rightpane: true
     });
   };
 
@@ -136,9 +122,7 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: true,
-      deactivate:false,
-      logout:false
+      rightpane: true
     });
   };
 
@@ -152,9 +136,7 @@ export default class Sidebar extends Component {
       list: true,
       profile: false,
       more: false,
-      rightpane: true,
-      deactivate:false,
-      logout:false
+      rightpane: true
     });
   };
 
@@ -168,70 +150,29 @@ export default class Sidebar extends Component {
       list: false,
       profile: true,
       more: false,
-      rightpane: true,
-      deactivate:false,
-      logout:false
+      rightpane: true
     });
   };
-  deactivatecheck=()=>
-  {
-    this.setState({
-      home: false,
-      explore: false,
-      notifications: false,
-      messages: false,
-      bookmarks: false,
-      list: false,
-      profile: false,
-      more: false,
-      rightpane: true,
-      deactivate:true,
-      logout:false
-    });
-  }
-   logoutcheck=()=>
-  {
-    this.setState({
-      home: false,
-      explore: false,
-      notifications: false,
-      messages: false,
-      bookmarks: false,
-      list: false,
-      profile: false,
-      more: false,
-      rightpane: false,
-      deactivate:false,
-      logout:true
-    });
-  }
+
   //Require map search to redux
 
   currentComponent = () => {
 
-    let userid = localStorage.getItem('cookie1');
+   let userid= localStorage.getItem('cookie1');
     if (this.state.home) return <MainPage />;
     else if (this.state.bookmarks) return <BookmarkComponent />;
     else if (this.state.explore) return <p>Explore Component</p>;
     else if (this.state.notifications) return <p>Notifications Component</p>;
-    else if (this.state.messages) return <p><Messages /></p>;
+    else if (this.state.messages) return <p><Messages/></p>;
     else if (this.state.bookmarks) return <p>Analytics component</p>;
     //analytic=s chnage
     else if (this.state.list) return <p>List Component</p>;
     //<List />
-    else if (this.state.profile) return <p><Profile userid={userid} /></p>;
-    else if(this.state.deactivate) {return  <Redirect to={{ pathname: '/Deactivate'}}/>  }
-    else if(this.state.logout) { localStorage.clear();
-    return <Redirect to={{
-      pathname: '/TwitterHome'
-  }}
-  />
-    }
+    else if (this.state.profile) return <Profile userid={userid}/>;
     else return <p>No component assigned</p>;
   };
 
   render() {
-
     var rightcomponent;
     var style = {
       color: "rgba(29,161,242,1.00)",
@@ -240,9 +181,9 @@ export default class Sidebar extends Component {
     };
     if (this.state.rightpane)
       rightcomponent = (
-        <div class="mt-2">
+        <div class="mt-2" style={{position: "fixed"}}>
           <Search />
-          <div class="row mt-4 ml-3">
+          <div class="row mt-4">
             <img src={imgg} class="responsive"></img>
           </div>
         </div>
@@ -253,7 +194,7 @@ export default class Sidebar extends Component {
       <div class="container-fluid w-87">
         <div class="row">
           <div class="col-md-3 border">
-            <ul class="list-unstyled">
+            <ul class="list-unstyled" style={{position: "fixed"}}>
               <li class="m-4 h6 font-weight-bold">
                 <a>
                   <span style={style}>
@@ -318,30 +259,11 @@ export default class Sidebar extends Component {
                   </div>
                 </a>
               </li>
-
-              <li class="m-4 h6 font-weight-bold">
-                <a onClick={this.deactivatecheck}>
-                  <div className="hoveritem">
-                    <i class="fas fa-ruler-combined icon_pad"></i>Deactivate
-                  </div>
-                </a>
-              </li>
-
-              <li class="m-4 h6 font-weight-bold">
-                <a onClick={this.logoutcheck}>
-                  <div className="hoveritem">
-                 <i class="fas fa-sign-out-alt icon_pad"></i>Logout
-                  </div>
-                </a>
-              </li>
-
-
               <li class="m-4 h6 font-weight-bold">
                 <button type="button" class="btn btn-primary">
                   Tweet
                 </button>
               </li>
-
             </ul>
           </div>
           {this.currentComponent()}

@@ -42,21 +42,21 @@ export class BookmarkComponent extends React.Component {
   }
 
   updateLikeCount = e => {
-    const tweetId = e.currentTarget.getAttribute("data-tweetId");
-    const likeCount = e.currentTarget.getAttribute("data-count");
-    var tweetData = this.props.feeds.feeds.docs.filter(function( obj ) {
-        return obj._id === tweetId;
-    });
-    var isLiked = tweetData.likes.indexOf(this.props.accounts.user._id) > -1 ? true : false;
-    if (isLiked) {
-        this.props.actions.unlikeTweet("this.props.accounts.user._id", tweetId, status => {
-            // check status and act
-        });
-    } else {
-        this.props.actions.likeTweet("this.props.accounts.user._id", tweetId, status => {
-            // check status and act
-        });
-    }
+    // const tweetId = e.currentTarget.getAttribute("data-tweetId");
+    // const likeCount = e.currentTarget.getAttribute("data-count");
+    // var tweetData = this.props.feeds.feeds.docs.filter(function( obj ) {
+    //     return obj._id === tweetId;
+    // });
+    // var isLiked = tweetData.likes.indexOf(this.props.accounts.user._id) > -1 ? true : false;
+    // if (isLiked) {
+    //     this.props.actions.unlikeTweet("this.props.accounts.user._id", tweetId, status => {
+    //         // check status and act
+    //     });
+    // } else {
+    //     this.props.actions.likeTweet("this.props.accounts.user._id", tweetId, status => {
+    //         // check status and act
+    //     });
+    // }
   }
 
   reTweet = e => {

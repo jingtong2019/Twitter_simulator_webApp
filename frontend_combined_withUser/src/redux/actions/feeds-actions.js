@@ -109,6 +109,7 @@ export function getUserFeeds(userId, pageNumber, callback) {
           }
         })
         .catch(error => {
+          debugger;
           if (error.message === "Network Error") {
             dispatch(networkConnectionError());
           } else {

@@ -79,7 +79,7 @@
 
 .dropdown-item {
   margin-top: 15px;
-  color: white;
+  /* color: white; */
 }
 
 .dropdown-menu {
@@ -127,7 +127,7 @@ textarea {
   /* padding-left: 6%; */
 }
 .responsive {
-  width: 80%;
+  width: 60%;
   height: auto;
 }
 .sidenav-right-work{
