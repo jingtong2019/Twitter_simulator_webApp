@@ -4,7 +4,7 @@ import "./../App.css";
 import "./../../node_modules/@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all";
 import Search from "./Search";
-//import List from "./List";
+import List from "./List";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import imgg from "../components/trends.png";
@@ -217,8 +217,8 @@ export default class Sidebar extends Component {
     else if (this.state.messages) return <p><Messages /></p>;
     else if (this.state.bookmarks) return <p>Analytics component</p>;
     //analytic=s chnage
-    else if (this.state.list) return <p>List Component</p>;
-    //<List />
+    else if (this.state.list) return <List />;
+    
     else if (this.state.profile) return <p><Profile userid={userid} /></p>;
     else if(this.state.deactivate) {return  <Redirect to={{ pathname: '/Deactivate'}}/>  }
     else if(this.state.logout) { localStorage.clear();
