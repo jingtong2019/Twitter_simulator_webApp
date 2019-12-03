@@ -35,3 +35,33 @@ import * as tweetApi from "../../api/tweet";
   export function tweetFailure() {
     return { type: types.TWEET_FAILURE };
   }
+
+  export function unfollow(userId, unfollowedUserId, callback) {
+    return function(dispatch) {
+        debugger;
+      return tweetApi
+        .unfollowUser(userId, unfollowedUserId)
+        .then(response => {
+          console.log("Status Code : ", response.status);
+          if (response.status === 200) {
+            callback("SUCCESS", response.data);
+            dispatch(unfollowSuccess(response.data));
+          }
+        })
+        .catch(error => {
+          // if (error.message === "Network Error") {
+          //   dispatch(networkConnectionError());
+          // } else {
+            dispatch(unfollowFailure());
+          // }
+        });
+    };
+  }
+
+  export function unfollowSuccess(result) {
+    return { type: types.UNFOLLOW_SUCCESS, result };
+  }
+
+  export function unfollowFailure() {
+    return { type: types.UNFOLLOW_FAILURE };
+  }

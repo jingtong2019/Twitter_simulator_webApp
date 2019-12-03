@@ -9,7 +9,7 @@ const initialState = {
   message: ""
 };
 
-export default function profileReducer(state = initialState, action) {
+export default function feedsReducer(state = initialState, action) {
     switch (action.type) {
         case types.GET_FEEDS_SUCCESS:
             debugger;
@@ -45,7 +45,9 @@ export default function profileReducer(state = initialState, action) {
                     feedResult.docs[i].likeCount += 1;
                 }
             }
-            
+            // feedResult.docs.filter(function( obj ) {
+            //     return obj._id === action.result._id;
+            // })[0].likes = action.result.likes;
             return Object.assign({}, state, {
                 error: "",
                 message: "LIKE_TWEET_SUCCESS",

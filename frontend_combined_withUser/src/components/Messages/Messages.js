@@ -104,7 +104,7 @@ class Messages extends Component {
                         <div className="row">
                             <br/>
                             <div className="col-sm-6 float-left">
-                            <div className="displaybold"> {record.from}</div>
+                            <div className="displaybold"> From: {record.from}</div>
                                {time}
                             </div>
                             <br />
@@ -132,7 +132,7 @@ class Messages extends Component {
                         <div className="row">
                             <br/>
                             <div className="col-sm-6 float-left">
-                               <div className="displaybold"> {record.to}</div>
+                               <div className="displaybold"> To: {record.to}</div>
                                 {time}
                             </div><br />
                             <div className="col-sm-6 float-right">
@@ -163,8 +163,8 @@ class Messages extends Component {
                         </nav>
                         <div className="row">
                             
-                            <div className="col-sm-4">
-                                <h4 style={{  marginLeft:"24px" }}className="h2-id">Messaging</h4>
+                            <div className="col-sm-3">
+                                <h3 style={{  marginLeft:"28px" }}className="h2-id">Messaging</h3>
 
                                 <Row>
                                     <button className="btn btn-primary" style={{ marginTop: "10px", marginLeft:"30px" }} data-toggle="modal" data-target="#composeMessage">
@@ -172,17 +172,17 @@ class Messages extends Component {
                                         </i>Message</button><br /><br />
                                     <ComposeMessage />
                                 </Row><br/>
-                                <li className="removelist" style={{  marginLeft:"28px" }} onClick={InboxClick} >Inbox</li><br />
-                                <li className="removelist" style={{  marginLeft:"28px" }} onClick={SentMsgsClick} >Sent</li><br />
+                                <li className="removelist" style={{  marginLeft:"28px" }} onClick={InboxClick} ><Link to="/Message">Inbox</Link></li><br />
+                                <li className="removelist" style={{  marginLeft:"28px" }} onClick={SentMsgsClick} ><Link to="/Message">Sent</Link></li><br />
 
                             </div>
-                            <div className="col-sm-8">
+                            <div className="col-sm-9">
                                 {!this.state.hide_inboxMsgs && <div>
-                                    <h5>Inbox Messages</h5>
+                                    <h3>Inbox Messages</h3>
                                     {inboxDiv}
                                 </div>}
                                 {!this.state.hide_sentMsgs && <div >
-                                    <h5>Sent Messages</h5>
+                                    <h3>Sent Messages</h3>
                                     {sentboxDiv}
                                 </div>}
                             </div>

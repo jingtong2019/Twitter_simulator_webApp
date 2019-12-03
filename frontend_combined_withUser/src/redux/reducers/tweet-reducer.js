@@ -19,6 +19,18 @@ export default function profileReducer(state = initialState, action) {
                 error: "",
                 message: "TWEET_SUCCESS"
             });
+        case types.UNFOLLOW_SUCCESS:
+                console.log("UNFOLLOW_SUCCESS");
+                return Object.assign({}, state, {
+                    error: "",
+                    message: "UNFOLLOW_SUCCESS"
+                });
+        case types.UNFOLLOW_FAILURE: 
+            console.log("UNFOLLOW_FAILURE");
+            return Object.assign({}, state, {
+                error: "UNFOLLOW_FAILURE",
+                message: ""
+            });
         default:
             return state;
     }

@@ -2,7 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
 import { bindActionCreators } from "redux";
-import * as feedActions from "../redux/actions/feeds-actions"; 
+import * as feedActions from "../redux/actions/feeds-actions";
+import * as tweetActions from "../redux/actions/tweet-actions";
+import * as bookmarkActions from "../redux/actions/bookmark-actions"; 
 import InfiniteScroll from 'react-infinite-scroller';
 import "jquery/dist/jquery.min.js";
 import "bootstrap/dist/js/bootstrap.min.js";
@@ -17,13 +19,14 @@ export class FeedsComponent extends React.Component {
             feeds: [],
             comment:"",
             currentTweetId: "",
-            clickedTweetBody: ""
+            clickedTweetBody: "",
+            profileIdToView: -1
         };
         this.getFeeds = this.getFeeds.bind(this);
         this.updateLikeCount = this.updateLikeCount.bind(this);
         this.reTweet = this.reTweet.bind(this);
         this.replyToTweet = this.replyToTweet.bind(this);
-        this.followUser = this.followUser.bind(this);
+        this.unfollowUser = this.unfollowUser.bind(this);
         this.handleTweetClick = this.handleTweetClick.bind(this);
       }
 
@@ -33,7 +36,9 @@ export class FeedsComponent extends React.Component {
   }
 
   getFeeds(pagenumber) {
-    let userid= localStorage.getItem('cookie1');
+      debugger;
+    // let userid= localStorage.getItem('cookie1');
+    var userid= this.props.signin.loginSuccess.userid;
     this.props.actions.getUserFeeds(parseInt(userid), pagenumber, (status, feeds) => {
       if (status === 'SUCCESS') {
         this.setState({
@@ -54,7 +59,6 @@ export class FeedsComponent extends React.Component {
 
   updateLikeCount = e => {
     e.stopPropagation();
-      debugger;
     let userId= parseInt(localStorage.getItem('cookie1'));
     const tweetId = e.currentTarget.getAttribute("data-tweetId");
     const likeCount = e.currentTarget.getAttribute("data-count");
@@ -96,7 +100,6 @@ export class FeedsComponent extends React.Component {
   replyToTweet = e => {
     e.stopPropagation();
     // get message content from popup modal
-    debugger;
     var content = this.state.comment;
     let userId= parseInt(localStorage.getItem('cookie1'));
     var userImage = "https://picsum.photos/id/1/200/200";
@@ -105,10 +108,12 @@ export class FeedsComponent extends React.Component {
     });
   }
 
-  followUser = e => {
+  unfollowUser = e => {
     e.stopPropagation();
-    const userId = parseInt(e.currentTarget.getAttribute("data-userId"));
-    this.props.actions.followUser("this.props.accounts.user._id", userId, status => {
+    debugger;
+    const unfollowedUserId = parseInt(e.currentTarget.getAttribute("data-userId"));
+    let userId= parseInt(localStorage.getItem('cookie1'));
+    this.props.actions.unfollowUser(userId, unfollowedUserId, status => {
 
     });
   }
@@ -121,14 +126,32 @@ export class FeedsComponent extends React.Component {
     })
   }
 
+  bookmarkTweet = e => {
+    e.stopPropagation();
+    const tweetId = e.currentTarget.getAttribute("data-tweetId");
+    let userId= parseInt(localStorage.getItem('cookie1'));
+    this.props.actions.bookmarkTweet(userId, tweetId, (status, data) => {
+        // check status and act
+    });
+  }
+
+  triggerProfileView = e => {
+    const userId = e.currentTarget.getAttribute("data-userId");
+    this.setState({
+        profileIdToView: parseInt(userId)
+    })
+  }
+
   getImage = (url) => {
     return "https://picsum.photos/id/1/200/200";
   }
 
   render() {
-      if (this.state.clickedTweetBody.length > 0)
-        return <Redirect to={`/tweet/${this.state.clickedTweetBody}`} tweetId={this.state.clickedTweetBody}/> 
       debugger;
+      if (this.state.clickedTweetBody.length > 0)
+        return <Redirect to={`/tweet/${this.state.clickedTweetBody}`} tweetId={this.state.clickedTweetBody}/>
+      if (this.state.profileIdToView > -1)
+        return <Redirect to={`/profile/${this.state.profileIdToView}`} userId={this.state.profileIdToView}/>
     return (
         // <div class="col-md-5 border bg-dark text-white">
         <div>
@@ -142,7 +165,6 @@ export class FeedsComponent extends React.Component {
                   useWindow={true}
                   >
             {this.props.feeds.feeds.docs.map((value, index) => {
-                debugger;
             return (
                 <div class="row border-bottom-1 border-dark-gray mt-2">
                     <div class="row">
@@ -153,7 +175,7 @@ export class FeedsComponent extends React.Component {
                         </div>
                         <div class="col-md-9">
                             <div class="row d-inline-block w-100">
-                                <div class="twitter-name d-inline-block">{value.userName}</div>
+                                <div class="twitter-name d-inline-block" data-userId={value.by} onClick={this.triggerProfileView}><a href="">{value.userName}</a></div>
                                 <div class="twitter-tick ml-1 d-inline-block">
                                     <div dir="auto" class="css-901oao r-jwli3a r-18u37iz r-1q142lx r-1qd0xha r-a023e6 r-16dba41 r-ad9z0x r-bcqeeo r-qvutc0"><svg viewBox="0 0 24 24" aria-label="Verified account" class="r-jwli3a r-4qtqp9 r-yyyyoo r-1xvli5t r-9cviqr r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
                                             <g>
@@ -175,9 +197,9 @@ export class FeedsComponent extends React.Component {
                                             <i class="fas fa-code"></i> 
                                             <span class="ml-2 mt-2">Embed Tweet</span>
                                         </a>
-                                        <a class="dropdown-item" href="#" data-userId={value.userId} onClick={this.followUser}>
+                                        <a class="dropdown-item" href="#" data-userId={value.by} onClick={this.unfollowUser}>
                                             <i class="fas fa-user-plus"></i>
-                                            <span class="ml-2 mt-2">Follow {value.twitterHandle}</span>                                  
+                                            <span class="ml-2 mt-2">Unfollow {value.twitterHandle}</span>                                  
                                         </a>
                                         <a class="dropdown-item" href="#" data-userId={value.userId}>
                                             <i class="fas fa-volume-mute"></i>
@@ -195,7 +217,7 @@ export class FeedsComponent extends React.Component {
                                 </div>
                             </div>
                             <div class="row mt-2">{value.content}</div>
-                            { value.images.length > 0 ? <div class="row mt-2 tweet-images"><img src={value.images[0]} class="rounded" /></div> : '' }
+                            { value.images.length > 0 ? <div class="row mt-2 tweet-images"><img src={value.images[0]} class="rounded" /></div> : <br></br> }
                             <div class="row d-inline-block w-100 mt-3 mb-2">
                                 <div class="row">
                                     <div class="col-md-3" onClick={this.getCurrentTweetId} data-tweetId={value._id} data-count={value.num_comments}>
@@ -211,8 +233,19 @@ export class FeedsComponent extends React.Component {
                                         <span class="like-count ml-1">{value.likeCount}</span>
                                     </div>
                                     <div class="col-md-3">
-                                        <i class="far fa-share-square"></i>
+                                        <div class="dropdown">
+                                        <a  type="text" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="far fa-share-square"></i>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#" data-tweetId={value._id} onClick={this.bookmarkTweet}>
+                                                <i class="far fa-bookmark"></i>
+                                                <span class="ml-2">Add to bookmark</span>  
+                                            </a>
+                                        </div>
                                     </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -276,7 +309,9 @@ export class FeedsComponent extends React.Component {
 
 function mapStateToProps(state) {
     return {
-      feeds: state.feeds
+      feeds: state.feeds,
+      bookmark: state.bookmark,
+      signin: state.signin
     };
   }
   
@@ -290,7 +325,9 @@ function mapStateToProps(state) {
         unlikeTweet: bindActionCreators(feedActions.unlikeTweet, dispatch),
         reTweet: bindActionCreators(feedActions.reTweet, dispatch),
         replyToTweet: bindActionCreators(feedActions.replyToTweet, dispatch),
-        clearFeeds: bindActionCreators(feedActions.clearFeeds, dispatch)
+        clearFeeds: bindActionCreators(feedActions.clearFeeds, dispatch),
+        bookmarkTweet: bindActionCreators(bookmarkActions.bookmarkTweet, dispatch),
+        unfollowUser: bindActionCreators(tweetActions.unfollow, dispatch)
       }
     };
   }

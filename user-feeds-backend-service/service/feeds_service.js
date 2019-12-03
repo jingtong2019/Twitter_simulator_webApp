@@ -199,7 +199,7 @@ module.exports = {
 			}
 		});
 	},
-	getProfileViews: function(userId, duration, callback) {
+	getProfileViews2: function(userId, duration, callback) {
 		const redisKey = 'getProfileViews:' + userId + ":" + duration;
 		return client.get(redisKey, (err, profileViews) => {
 			if (profileViews && appConfig.useRedisCache) {
@@ -232,6 +232,45 @@ module.exports = {
 					})
 			}
 		});
+	},
+	getProfileViews: function(userId, duration, callback) {
+		var start = new Date();
+				start.setHours(0,0,0,0);
+				var end = new Date();
+				end.setHours(0,0,0,0);
+				end.setDate(end.getDate() - duration);
+				const qry = {
+					userId: userId,
+					ts: {
+						$gt:  end,
+        				$lte:  start
+					}
+				}
+		ProfileView.find(qry)
+			.exec()
+			.then(docs => {
+				callback(null, docs);
+			})
+			.catch(err => {
+				callback(err, null);
+			})
+	},
+	updateProfileViews: function(userId, callback) {
+		var today = new Date();
+		today.setHours(0,0,0,0);
+		var query = {
+			userId: userId,
+			ts: today
+		},
+			update = { $inc: {views: 1} },
+			options = { upsert: true, new: true, setDefaultsOnInsert: true };
+			ProfileView.findOneAndUpdate(query, update, options, function(err, doc) {
+				if (err) {
+					callback(err, null);
+				} else {
+					callback(null, doc);
+				}
+			});
 	}
 };
 
@@ -316,7 +355,7 @@ function generateFakeProfileViewsData() {
 	}
 	ProfileView.collection.insert(tenKProfileViews, function(err, docs) {
 		if (err) {
-			console.log('error in inserting bublk data');
+			console.log('error in inserting bulk data');
 		} else {
 			console.log('success');
 		}

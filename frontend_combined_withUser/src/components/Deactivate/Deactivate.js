@@ -63,7 +63,8 @@ class Deactivate extends Component {
                     <div className="field1234567890" style={{ color: "red" }}>{this.state.IncorrectCredentials}</div><br />
                     <form onSubmit={this.onDeactivate} method="post" autoComplete="off">
                         <div className="form-group">
-                         <input className="field12" onChange={this.handleChange} type="password" name="password" placeholder="Password" required />
+
+                            <input className="field12" onChange={this.handleChange} type="password" name="password" placeholder="Password" required />
                         </div>
                         <br></br>
                         <div className="but">
