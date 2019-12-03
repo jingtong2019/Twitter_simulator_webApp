@@ -6,11 +6,15 @@ import signuploginReducer  from './signuploginReducer';
 import profileReducer from './profileReducer';
 import messageReducer from './messageReducer';
 import imageReducer from './imageReducer';
+import list from "./list-reducer";
+import search from "./search-reducer"
 
 const rootReducer = combineReducers({
     feeds,
     tweet,
     bookmark,
+    list,
+    search,
     signin: signuploginReducer,
     profile: profileReducer,
     inbox: messageReducer,

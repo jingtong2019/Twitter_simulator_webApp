@@ -27,7 +27,17 @@ export const TWEET_FAILURE = "TWEET_FAILURE";
 export const GET_BOOKMARKS_SUCCESS = "GET_BOOKMARKS_SUCCESS";
 export const GET_BOOKMARKS_FAILURE = "GET_BOOKMARKS_FAILURE";
 
+export const GET_LIST_SUCCESS = "GET_LIST_SUCCESS";
+export const GET_LIST_FAILURE = "GET_LIST_FAILURE";
+
+export const GET_USER_LIST = "GET_USER_LIST";
+
+export const SEARCH_USER="SEARCH_USER";
+export const SEARCH_HASHTAG="SEARCH_HASHTAG";
+export const VIEW_LIST="VIEW_LIST";
+
 export const CLEAR_FEEDS = "CLEAR_FEEDS";
+export const CLEAR_CHECKS = "CLEAR_CHECKS";
 
 export const SIGNUP ='SIGNUP';
 export const LOGIN ='LOGIN';
@@ -48,3 +58,4 @@ export const UNFOLLOW='UNFOLLOW';
 
 export const FOLLOWERSDATA='FOLLOWERSDATA';
 export const FOLLOWINGDATA='FOLLOWINGDATA';
+

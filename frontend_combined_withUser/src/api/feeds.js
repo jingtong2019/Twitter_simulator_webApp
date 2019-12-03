@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const host = "http://localhost:4010/api";
-const host = "http://ec2-35-161-86-90.us-west-2.compute.amazonaws.com:4010/api";
+const host = "http://localhost:4010/api";
+//const host = "http://ec2-35-161-86-90.us-west-2.compute.amazonaws.com:4010/api";
 
 export function getUserFeeds(userId, pageNumber) {
   // axios.defaults.withCredentials = true;

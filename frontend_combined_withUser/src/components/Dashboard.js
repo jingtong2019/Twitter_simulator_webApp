@@ -11,15 +11,22 @@ import imgg from "../components/trends.png";
 import MainPage from "./main-page";
 import BookmarkComponent from "./bookmark";
 import TweetComponent from "./tweet";
+import Hashtagfeed from "./Hashtagfeed"
 import Profile from './Profile';
 import Messages from './Messages/Messages';
-export default class Sidebar extends Component {
+import * as searchActions from "../redux/actions/search-actions"; 
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+
+class Sidebar extends Component {
   constructor(props) {
     //Call the constrictor of Super class i.e The Component
     super(props);
     //maintain the state required for this component
 
     this.state = {
+     
       home: true,
       explore: false,
       notifications: false,
@@ -29,8 +36,10 @@ export default class Sidebar extends Component {
       profile: false,
       more: false,
       testing: false,
-      rightpane: true
-    };
+      rightpane: true,
+      hashtagfeed:false
+};
+
 
     this.currentComponent = this.currentComponent.bind(this);
     this.listcheck = this.listcheck.bind(this);
@@ -40,6 +49,8 @@ export default class Sidebar extends Component {
     this.messagescheck = this.messagescheck.bind(this);
     this.bookmarkscheck = this.bookmarkscheck.bind(this);
     this.profilecheck = this.profilecheck.bind(this);
+    this.hashtagcheck= this.hashtagcheck.bind(this);
+    
   }
 
   homecheck = () => {
@@ -52,7 +63,11 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: true
+      rightpane: true,
+      hashtagfeed:false,
+
+    });
+    this.props.actions.clearchecks( (status, feeds) => {
     });
   };
 
@@ -66,7 +81,9 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: true
+      rightpane: true,
+      hashtagfeed:false,
+
     });
   };
 
@@ -80,7 +97,11 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: true
+      rightpane: true,
+      hashtagfeed:false,
+
+    });
+    this.props.actions.clearchecks( (status, feeds) => {
     });
   };
 
@@ -94,7 +115,11 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: false
+      rightpane: false,
+      hashtagfeed:false,
+
+    });
+    this.props.actions.clearchecks( (status, feeds) => {
     });
   };
 
@@ -108,23 +133,15 @@ export default class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: true
+      rightpane: true,
+      hashtagfeed:false,
+
+    });
+    this.props.actions.clearchecks( (status, feeds) => {
     });
   };
 
-  bookmarkscheck = () => {
-    this.setState({
-      home: false,
-      explore: false,
-      notifications: false,
-      messages: false,
-      bookmarks: true,
-      list: false,
-      profile: false,
-      more: false,
-      rightpane: true
-    });
-  };
+
 
   listcheck = () => {
     this.setState({
@@ -136,8 +153,13 @@ export default class Sidebar extends Component {
       list: true,
       profile: false,
       more: false,
-      rightpane: true
+      rightpane: true,
+      hashtagfeed:false,
+
     });
+    this.props.actions.clearchecks( (status, feeds) => {
+    });
+  
   };
 
   profilecheck = () => {
@@ -150,29 +172,78 @@ export default class Sidebar extends Component {
       list: false,
       profile: true,
       more: false,
-      rightpane: true
+      rightpane: true,
+      hashtagfeed:false
+
+    });
+    this.props.actions.clearchecks( (status, feeds) => {
     });
   };
+
+  hashtagcheck = () => {
+    this.setState({
+      home: false,
+      explore: false,
+      notifications: false,
+      messages: false,
+      bookmarks: false,
+      list: false,
+      profile: false,
+      more: false,
+      rightpane: true,
+      hashtagfeed:true
+
+    });
+  };
+
+  componentWillMount=()=>{
+     localStorage.setItem('searchuserid',localStorage.getItem('userid'));
+     localStorage.setItem('searchuserhandle',localStorage.getItem('userhandle'));
+  }
 
   //Require map search to redux
 
   currentComponent = () => {
 
-   let userid= localStorage.getItem('cookie1');
-    if (this.state.home) return <MainPage />;
-    else if (this.state.bookmarks) return <BookmarkComponent />;
+    let userid= localStorage.getItem('cookie1');
+   
+    if(this.props.profile)
+    // {{localStorage.getItem('searchuserid')
+     { return    <Profile userid={localStorage.getItem('searchuserid')}/>
+            
+    }
+    else if(this.props.list)
+    {
+         return    <List userid={localStorage.getItem('searchuserid')}/>
+    }
+    // {localStorage.getItem('hashtag')
+    else if(this.props.hashtagfeed)
+    {
+        return    <Hashtagfeed userid='#TAG1'/>
+    }
+
+  else  if (this.state.home ) return <MainPage />;
+    else if (this.state.bookmarks ) return <BookmarkComponent />;
     else if (this.state.explore) return <p>Explore Component</p>;
     else if (this.state.notifications) return <p>Notifications Component</p>;
     else if (this.state.messages) return <p><Messages/></p>;
-    else if (this.state.bookmarks) return <p>Analytics component</p>;
+   // else if (this.state.bookmarks) return <p>Analytics component</p>;
     //analytic=s chnage
-    else if (this.state.list) return <p>List Component</p>;
+    else if (this.state.list) return <List />;
     //<List />
-    else if (this.state.profile) return <Profile userid={userid}/>;
-    else return <p>No component assigned</p>;
+     else if (this.state.profile) return  <Profile userid={localStorage.getItem('userid')}/>; 
+  //   <Profile userid={localStorage.getItem('userid')}/>
+    else if(this.state.hashtagfeed) return <Hashtagfeed  hashtag={localStorage.getItem('hashtag')}/>
+    else return <MainPage />;
   };
 
+
+
+  
+
   render() {
+
+  
     var rightcomponent;
     var style = {
       color: "rgba(29,161,242,1.00)",
@@ -273,3 +344,30 @@ export default class Sidebar extends Component {
     );
   }
 }
+
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: {
+      clearchecks:bindActionCreators(searchActions.clearcheck, dispatch),
+    }
+  };
+}
+
+
+
+function mapStateToProps(state) {
+  return {
+  
+    list: state.search.list,
+    profile: state.search.profile,
+    hashtagfeed:state.search.hashtagfeed
+  };
+}
+
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+) (Sidebar);

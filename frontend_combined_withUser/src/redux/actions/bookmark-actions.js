@@ -1,11 +1,6 @@
 import * as types from "./action-types";
 import * as bookmarkApi from "../../api/bookmark";
 
-
-// export function networkConnectionError() {
-// 	return { type: types.NETWORK_CONNECTION_ERROR };
-// }
-
   export function getBookmarks(data, config, callback) {
     return function(dispatch) {
         debugger;
