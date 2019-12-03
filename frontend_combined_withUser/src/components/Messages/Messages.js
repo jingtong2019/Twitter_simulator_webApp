@@ -132,7 +132,7 @@ class Messages extends Component {
                         <div className="row">
                             <br/>
                             <div className="col-sm-6 float-left">
-                               <div className="displaybold">  {record.to}</div>
+                               <div className="displaybold"> {record.to}</div>
                                 {time}
                             </div><br />
                             <div className="col-sm-6 float-right">
@@ -163,7 +163,7 @@ class Messages extends Component {
                         </nav>
                         <div className="row">
                             
-                            <div className="col-sm-3">
+                            <div className="col-sm-4">
                                 <h4 style={{  marginLeft:"24px" }}className="h2-id">Messaging</h4>
 
                                 <Row>
@@ -172,8 +172,8 @@ class Messages extends Component {
                                         </i>Message</button><br /><br />
                                     <ComposeMessage />
                                 </Row><br/>
-                                <li className="removelist" style={{  marginLeft:"24px" }} onClick={InboxClick} >Inbox</li><br />
-                                <li className="removelist" style={{  marginLeft:"24px" }} onClick={SentMsgsClick} >Sent</li><br />
+                                <li className="removelist" style={{  marginLeft:"28px" }} onClick={InboxClick} >Inbox</li><br />
+                                <li className="removelist" style={{  marginLeft:"28px" }} onClick={SentMsgsClick} >Sent</li><br />
 
                             </div>
                             <div className="col-sm-8">
