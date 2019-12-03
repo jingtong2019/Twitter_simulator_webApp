@@ -8,6 +8,7 @@ import messageReducer from './messageReducer';
 import imageReducer from './imageReducer';
 import list from "./list-reducer";
 import search from "./search-reducer"
+import followingfollowerreducer from './followingfollowerreducer';
 
 const rootReducer = combineReducers({
     feeds,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
     signin: signuploginReducer,
     profile: profileReducer,
     inbox: messageReducer,
-    image: imageReducer
+    image: imageReducer,
+    followingfollower: followingfollowerreducer
 });
 
 export default rootReducer;
