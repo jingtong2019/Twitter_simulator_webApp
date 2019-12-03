@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { getfollowers, getfollowing } from '../redux/actions/followerfollowing-actions';
 import { Link } from 'react-router-dom';
 import Pagination from './pagination/Pagination';
-import Leftpane from './Leftpane';
 
 class followers extends Component {
     constructor(props) {
@@ -104,7 +103,7 @@ class followers extends Component {
         return (
             <div className="row">
                 <div className="col-md-4">
-                    <Leftpane/>
+                   
                 </div>
                 <div className="col-md-4">
                     <div >
