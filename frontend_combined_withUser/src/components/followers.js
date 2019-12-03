@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { getfollowers, getfollowing } from '../redux/actions/followerfollowing-actions';
 import { Link } from 'react-router-dom';
 import Pagination from './pagination/Pagination';
+import Search from "./Search";
+import imgg from "../components/trends.png";
 
 class followers extends Component {
     constructor(props) {
@@ -20,9 +22,7 @@ class followers extends Component {
          
         }
     }
- 
-
-    async componentDidMount() {
+  async componentDidMount() {
         let username = localStorage.getItem('cookie2');
         let userhandle = localStorage.getItem('cookie3');
         this.setState(
@@ -56,6 +56,10 @@ class followers extends Component {
         }
         
   }
+  dashboardNavigate = (e) => {
+    e.stopPropagation();
+    this.props.history.push("/dashboard");
+}
     render() {
         let followersclick = (e) => {
             this.setState(
@@ -98,15 +102,97 @@ class followers extends Component {
             )
 
         }
+        var style = {
+            color: "rgba(29,161,242,1.00)",
+            fontSize: 30,
+            paddingLeft: "10px"
+        };
         const followdata = this.state.followerdata;
         const followingdata= this.state.followingdata;
         return (
+            <div class="container-fluid w-87">
             <div className="row">
-                <div className="col-md-4">
-                   
+                
+                <div class="col-md-3 border">
+                        <ul class="list-unstyled" style={{ position: "fixed" }}>
+                            <li class="m-4 h6 font-weight-bold">
+                                <a>
+                                    <span style={style}>
+                                        {" "}
+                                        <i class="fab fa-twitter"></i>{" "}
+                                    </span>{" "}
+                                </a>
+                            </li>
+                            <li class="m-4 h6 font-weight-bold">
+                                <a onClick={this.homecheck}>
+                                    <div className="hoveritem">
+                                        <i class="fas fa-home icon_pad"></i>Home
                 </div>
-                <div className="col-md-4">
-                    <div >
+                                </a>
+                            </li>
+                            <li class="m-4 h6 font-weight-bold">
+                                <a onClick={this.explorecheck}>
+                                    <div className="hoveritem">
+                                        <i class="fas fa-hashtag icon_pad"></i> Explore
+                </div>
+                                </a>
+                            </li>
+                            <li class="m-4 h6 font-weight-bold">
+                                <a onClick={this.notificationcheck}>
+                                    <div className="hoveritem">
+                                        <i class="far fa-bell icon_pad"></i>Notifications
+                </div>
+                                </a>
+                            </li>
+                            <li class="m-4 h6 font-weight-bold">
+                                <a onClick={this.messagescheck}>
+                                    <div className="hoveritem">
+                                        <i class="far fa-envelope icon_pad"></i>Messages
+                </div>
+                                </a>
+                            </li>
+                            <li class="m-4 h6 font-weight-bold">
+                                <a onClick={this.bookmarkscheck}>
+                                    <div className="hoveritem">
+                                        <i class="far fa-bookmark icon_pad"></i>Bookmarks
+                </div>
+                                </a>
+                            </li>
+                            <li class="m-4 h6 font-weight-bold">
+                                <a onClick={this.listcheck}>
+                                    <div className="hoveritem">
+                                        <i class="far fa-list-alt icon_pad"></i>Lists
+                </div>
+                                </a>
+                            </li>
+                            <li class="m-4 h6 font-weight-bold">
+                                <a onClick={this.profilecheck}>
+                                    <div className="hoveritem">
+                                        <i class="fas fa-user-circle icon_pad"></i>Profile
+                </div>
+                                </a>
+                            </li>
+                            <li class="m-4 h6 font-weight-bold">
+                                <a>
+                                    <div className="hoveritem">
+                                        <i class="far fa-chart-bar icon_pad"></i>Analytics
+                </div>
+                                </a>
+                            </li>
+                            <li class="m-4 h6 font-weight-bold">
+                                <button type="button" class="btn btn-primary">
+                                    Tweet
+              </button>
+                            </li>
+                        </ul>
+                    </div>
+             
+                <div className="col-md-5">
+                <div class="row ml-4 mt-2" onClick={this.dashboardNavigate}>
+                                    <i class="fas fa-long-arrow-alt-left d-inline-block" style={{ fontSize: "3em" }}></i>
+                                    <h3 class="mt-2 ml-4">Tweet</h3>
+                                </div>
+                    <div>
                         <p className="para2">{this.state.username}</p>
                         <p className="para3">{this.state.userhandle}</p><br />
                     </div>
@@ -169,10 +255,17 @@ class followers extends Component {
 
                     </div>
                 </div>
-                <div className="col-md-4">
-
+                <div class="col-md-3 border">
+                    <div class="mt-2">
+                    <Search />
+                    <div class="row mt-4 ml-3">
+                        <img src={imgg} class="responsive"></img>
+                    </div>
+                    </div>
                 </div>
+              
 
+            </div>
             </div>
         )
     }
