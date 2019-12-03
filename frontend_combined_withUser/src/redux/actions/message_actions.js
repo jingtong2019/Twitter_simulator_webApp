@@ -11,7 +11,7 @@ export const postMessage = (data) => async (dispatch) => {
             'Content-Type': 'application/json'
         }
     };
-    axios.defaults.withCredentials = true;
+
     await axios.post('http://'+rooturl+':5000/newmessage',data,config)
     .then(async (response) => {
         if (response.status === 200) {
@@ -32,7 +32,7 @@ export const getInboxMessages = (email1) => async (dispatch) => {
             'Content-Type': 'application/json'
         }
     };
-    axios.defaults.withCredentials = true;
+   
     let email={
         "email":email1
     }

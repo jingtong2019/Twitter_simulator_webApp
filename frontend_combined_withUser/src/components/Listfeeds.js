@@ -96,9 +96,15 @@ export class ListfeedComponent extends React.Component {
   }
 
   render() {
-   
+    let  subscribe
+      if(localStorage.getItem('searchuserhandle')!==localStorage.getItem('userhandle'))
+      subscribe=<button>Subscribe</button>
+       else
+       subscribe=null
     return (
         <div class="col-md-12 border bg-dark text-white">
+           <subscribe/>
+
             <InfiniteScroll
                   pageStart={1}
                   initialLoad={false}
@@ -267,7 +273,7 @@ export class ListfeedComponent extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+  function mapStateToProps(state) {
     return {
       feeds: state.list
     };

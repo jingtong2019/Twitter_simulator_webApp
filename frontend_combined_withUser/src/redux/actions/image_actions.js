@@ -13,7 +13,7 @@ export const imageDownload = (image1) => async (dispatch) => {
             'Content-Type': 'application/json'
         }
     };  
-    axios.defaults.withCredentials = true;
+  
     await axios.post('http://'+rooturl+':5000/download-file/', image,config)
         .then(async (response) => {
            dispatch({
@@ -24,7 +24,6 @@ export const imageDownload = (image1) => async (dispatch) => {
 }
 export const imageUpload = (data) => async (dispatch) => {
  
-   axios.defaults.withCredentials = true;
    await axios.post('http://'+rooturl+':5000/image-upload', data) 
    .then(async (response) => {
       dispatch({

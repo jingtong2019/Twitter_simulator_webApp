@@ -7,6 +7,7 @@ import * as searchActions from "../redux/actions/search-actions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 //var url='http://localhost:3001';
+import { Redirect } from 'react-router';
 var url = "http://54.153.73.30:3001";
 
 
@@ -18,10 +19,18 @@ var url = "http://54.153.73.30:3001";
      this.state = {
       searchuserid:"",
       searchuserhandle:"",
-      allUsers:[]
+      searchclick:false,
+      allUsers:[],
+      hashtag:"",
+      profileredirect:false,
+      userid:""
     };
       this.searchtext=this.searchtext.bind(this);
       this.searchclick=this.searchclick.bind(this);
+      this.hashtagclick=this.hashtagclick.bind(this);
+      this.hashtagtext=this.hashtagtext.bind(this);
+      
+
 }
 
 componentWillMount() {
@@ -74,39 +83,73 @@ searchtext=(e,k)=>
   if(k!=null)
  { this.setState(
     {
-      searchuserhandle:k.userhandle
+      searchuserhandle:k.userhandle,
+      searchclick:false
     }
   )
  }
+ else
+ {
+     this.setState(
+      {
+        searchuserhandle:null,
+        searchclick:false
+      }
+  ) 
+ }
 }
 
-
- searchclick=()=>
+searchclick=()=>
   {
      let handle=this.state.searchuserhandle;
      console.log("option value",handle)
-     if(handle.includes("@"))
-     { 
+   
+      
      let user=this.getUserInformation(handle);
-     localStorage.setItem('searchuserhandle', user.handle);
+     console.log(user);
+     if(user !=null)
+    { localStorage.setItem('searchuserhandle', user.handle);
      localStorage.setItem('searchuserid', user.id);
-     this.props.actions.userSearch( (status, feeds) => {
-    });
-     //dispatch action to display profile
+        this.setState(
+          {
+            searchclick:true,
+            userid:user.id
+          }
+        )
     }
-    else
-    {
-      if(handle.includes("#"))
-      {
-       localStorage.setItem('hashtag', handle);
-       this.props.actions.hashtagSearch( (status, feeds) => {
-      });
-    }
-    }
+   
+  
+  
+   
  }
 
 
+
+ hashtagclick=(e)=>
+ {
+  
+    
+    {
+     localStorage.setItem('hashtag',this.state.hashtag );
+     this.props.actions.hashtagSearch( (status, feeds) => {
+    });
+  
+  
+ }
+}
+
+hashtagtext=(e)=>
+{
+  this.setState({
+   hashtag:e.target.value
+    
+  })
+  
+}
+
   render() {
+
+
   return (
     <div class="row ml-2">
       <Autocomplete
@@ -117,11 +160,17 @@ searchtext=(e,k)=>
       
       onChange={this.searchtext}
       renderInput={params => ( 
-      <TextField {...params}  label="Search" variant="outlined" fullWidth />
+      <TextField {...params}  label="Search user" variant="outlined" fullWidth />
     )}
     />
 
-    <button onClick={()=>{this.searchclick()}}>Search</button>
+    <button onClick={()=>this.searchclick()}>Search</button>
+
+{this.state.searchclick} && {this.state.searchuserhandle !==null} && <Redirect to={{ pathname: '/profile/'+this.state.userid}}/>
+
+    <TextField onChange={this.hashtagtext}  label="Search hashtags" variant="outlined" fullWidth />
+    <button onClick={()=>{this.hashtagclick()}}>Search</button>
+
    </div>
   );
 }

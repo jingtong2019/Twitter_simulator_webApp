@@ -120,11 +120,17 @@ getlists() {
 
   render() {
     
+    let  subscribe
+    if(localStorage.getItem('searsearchuserhandle')!==localStorage.getItem('userhandle'))
+    subscribe=null
+     else
+     subscribe=<Dialog/>
+
     var display
-    if (!this.state.displaylistofuser) {
+    if (!this.state.displaylistofuser ) {
       display = <div>
         <div><p>List </p></div>
-        <Dialog />
+        {subscribe}
         <div class="">
 
   <br></br>
