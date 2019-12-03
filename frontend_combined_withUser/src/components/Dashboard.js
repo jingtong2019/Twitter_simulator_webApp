@@ -253,7 +253,7 @@ class Sidebar extends Component {
     // {localStorage.getItem('hashtag')
     else if(this.props.hashtagfeed)
     {
-        return    <Hashtagfeed userid='#TAG1'/>
+        return    <Hashtagfeed/>
     }
 
   else  if (this.state.home ) return <MainPage />;
