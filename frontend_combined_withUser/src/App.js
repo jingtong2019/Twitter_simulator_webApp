@@ -13,6 +13,7 @@ import IndividiualTweetView from "./components/IndividiualTweetView";
 import Messages from "./components/Messages/Messages";
 import Deactivate from "./components/Deactivate/Deactivate";
 import DeactivatedPage from "./components/Deactivate/DeactivatedPage";
+import followers from "./components/followers";
 import { Redirect } from 'react-router';
 function App() { 
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/Message" component={Messages} />
         <Route path="/Deactivate" component={Deactivate} />
         <Route path="/DeactivatedPage" component={DeactivatedPage} />
+         <Route path="/followers" component={followers} />
       </Switch>
     </div>
   );
