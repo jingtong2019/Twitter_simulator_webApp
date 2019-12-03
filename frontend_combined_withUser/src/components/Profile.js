@@ -7,7 +7,6 @@ import axios from 'axios';
 import { imageDownload, imageUpload } from '../redux/actions/image_actions';
 import { Redirect } from 'react-router';
 import { isfollowing, follow, unfollow} from '../redux/actions/follow-actions';
-import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { followingCount, followerCount } from '../redux/actions/followerfollowing-actions';
 
