@@ -55,7 +55,7 @@ class Profile extends Component {
         if (id !== localStorage.getItem('cookie1')) {
             let data = {
                 "userid": localStorage.getItem('cookie1'),
-                "userid_is_follow": this.state.userid
+                "userid_is_follow": id
 
             }
             await this.props.isfollowing(data);
