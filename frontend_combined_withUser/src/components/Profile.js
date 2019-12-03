@@ -68,15 +68,16 @@ class Profile extends Component {
                 )
             }
         }
+        console.log("user data is ",id);
   let post =
         {
-            "userid": this.state.userid
+            "userid": id
         }
         await this.props.profileaction(post);
         if (this.props.profiledetails) {
 
-          await this.props.followingCount(this.props.userid);
-          await this.props.followerCount(this.props.userid);
+          await this.props.followingCount(id);
+          await this.props.followerCount(id);
 
           if (this.props.follower_no) {
             this.setState(
@@ -155,12 +156,18 @@ class Profile extends Component {
         let isValid = this.onValidate();
         if (isValid) {
             var data = {};
-            let userid = this.state.userid;
+       
+            var path = this.props.location.pathname;
+        
+            
+    
+            var id = path.replace("/profile/", "");
+            
          
             if (this.state.ProfileImage) {
               
                 data = {
-                    userID: userid,
+                    userID: id,
                     userhandle: "@" + this.state.username,
                     username: this.state.username,
                     Bio: this.state.Bio,
@@ -177,7 +184,7 @@ class Profile extends Component {
             else {
               
                 data = {
-                    userID: userid,
+                    userID: id,
                     userhandle: "@" + this.state.username,
                     username: this.state.username,
                     Bio: this.state.Bio,
