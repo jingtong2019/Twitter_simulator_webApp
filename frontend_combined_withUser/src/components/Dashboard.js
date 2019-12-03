@@ -268,7 +268,7 @@ class Sidebar extends Component {
      
   //   <Profile userid={localStorage.getItem('userid')}/>
     else if(this.state.hashtagfeed) return <Hashtagfeed  hashtag={localStorage.getItem('hashtag')}/>
-    else if (this.state.profile) return <p><Profile userid={localStorage.getItem('cookie1')}/></p>;
+    else if (this.state.profile)  return <Redirect to={{ pathname: '/profile/'+userid}}/> 
     else if(this.state.deactivate) {return  <Redirect to={{ pathname: '/Deactivate'}}/>  }
     else if(this.state.logout) { localStorage.clear();
     return <Redirect to={{

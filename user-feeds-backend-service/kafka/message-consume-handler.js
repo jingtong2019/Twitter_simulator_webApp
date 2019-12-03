@@ -31,6 +31,11 @@ module.exports = {
                     sendReply(eventObj, err, doc);
                 });
                 break;
+            case 'update-profile-views':
+                feedService.updateProfileViews(eventObj.params.userId, function(err, doc) {
+                    sendReply(eventObj, err, doc);
+                });
+                break;
             case 'block-user-following':
                 feedActionService.blockFollowing(eventObj.params.userId, eventObj.params.followingUserId, function(err, doc) {
                     sendReply(eventObj, err, doc);

@@ -8,3 +8,11 @@ export function tweet(data, config) {
   axios.defaults.withCredentials = true;
   return axios.post(host + "/tweet", data, config);
 }
+
+export function unfollowUser(userId, unfollowedUserId) {
+  var data = {
+    userid: userId,
+    userid_to_unfollow: unfollowedUserId
+  }
+  return axios.post(host + "/unfollow", data);
+}

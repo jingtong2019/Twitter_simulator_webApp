@@ -27,6 +27,7 @@ class Login extends Component {
                 username: this.state.username,
                 password: this.state.password,
             }
+            debugger;
             await this.props.login(post);
             if (this.props.loginSuccess) {
                 window.location.replace('/Dashboard');

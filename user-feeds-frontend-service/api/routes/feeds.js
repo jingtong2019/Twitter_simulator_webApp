@@ -55,6 +55,19 @@ module.exports = function (router) {
         });
     })
 
+    router.post('/updateProfileViews/:userId/', function (req, res) {
+        kafka.make_request(TOPICS.PROFILE_VIEWS_REQUEST_TOPIC, 'update-profile-views', req.params, req.body, function(err,doc){
+            if (err){
+                res.status(500).json({
+                    message: 'Error updating profile views for this user',
+                    error: err
+                })
+            }else{
+                res.status(200).json(doc);
+                }
+        });
+    })
+
     router.post('/updateUserFollowers/:userId/:followerId', function (req, res) {
         kafka.make_request(TOPICS.FOLLOWER_REQUEST_TOPIC, 'update-user-followers', req.params, req.body, function(err,doc){
             if (err){

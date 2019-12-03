@@ -10,7 +10,7 @@ const initialState = {
     userlist:[]
 };
 
-export default function profileReducer(state = initialState, action) {
+export default function listReducer(state = initialState, action) {
     switch (action.type) {
         case types.GET_LIST_SUCCESS:
             debugger;
