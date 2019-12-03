@@ -6,6 +6,7 @@ import signuploginReducer  from './signuploginReducer';
 import profileReducer from './profileReducer';
 import messageReducer from './messageReducer';
 import imageReducer from './imageReducer';
+import followingfollowerreducer from './followingfollowerreducer';
 
 const rootReducer = combineReducers({
     feeds,
