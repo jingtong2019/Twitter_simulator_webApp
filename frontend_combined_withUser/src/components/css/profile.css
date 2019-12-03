@@ -65,24 +65,78 @@ padding-top:4px;
 }
 .in{
 display: inline-flex;
-
-
+}
+.padright
+{
+    padding-right: 10px;
+}
+.addborderdown
+{
+    border-bottom: black solid;
+    
+}
+.increasefont
+{
+    font-size: 15px;
 }
 .para6
 {
         position: absolute;
-        right:520px;
+        right:160px;
         color:black;
         font-size: 17px;
         font-size:15px; 
 }
+.para234
+{
+    position: absolute;
+    right:280px;
+    color:black;
+    font-size: 17px;
+    font-size:15px;  
+}
+.displayleft
+{
+    left:50px;
+}
+.followtoggle
+{
+   
+    color:black;
+    font-size: 17px;
+    font-size:15px;   
+}
+.para7
+{
+    position: absolute;
+    right:150px;
+    color:black;
+    font-size: 17px;
+    font-size:15px; 
+}
 .parafirstlastname6
 {
     position: absolute;
-        right:720px;
+        right:200px;
         color:black;
         font-size: 15px;
        
+}
+.parafirstlastname5
+{
+    position: absolute;
+    right:100px;
+    color:black;
+    font-size: 15px;
+
+}
+.parafirstlastname4
+{
+    position: absolute;
+    right:240px;
+    color:black;
+    font-size: 15px;
+
 }
 .setModal
  {
@@ -150,8 +204,8 @@ font-size:12px;
 }
 .img-style
 {
-    width: 250px;
-    height:200px;
+    width: 220px;
+    height:170px;
 }
 
 .img-style2
