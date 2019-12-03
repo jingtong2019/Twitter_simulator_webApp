@@ -17,7 +17,7 @@ import Messages from './Messages/Messages';
 import * as searchActions from "../redux/actions/search-actions"; 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
+import { Redirect } from 'react-router';
 
 class Sidebar extends Component {
   constructor(props) {
@@ -37,7 +37,9 @@ class Sidebar extends Component {
       more: false,
       testing: false,
       rightpane: true,
-      hashtagfeed:false
+      hashtagfeed:false,
+      logout:false,
+      deactivate:false
 };
 
 
@@ -115,7 +117,7 @@ class Sidebar extends Component {
       list: false,
       profile: false,
       more: false,
-      rightpane: false,
+      rightpane: true,
       hashtagfeed:false,
 
     });
@@ -195,6 +197,38 @@ class Sidebar extends Component {
 
     });
   };
+  deactivatecheck=()=>
+  {
+    this.setState({
+      home: false,
+      explore: false,
+      notifications: false,
+      messages: false,
+      bookmarks: false,
+      list: false,
+      profile: false,
+      more: false,
+      rightpane: true,
+      deactivate:true,
+      logout:false
+    });
+  }
+   logoutcheck=()=>
+  {
+    this.setState({
+      home: false,
+      explore: false,
+      notifications: false,
+      messages: false,
+      bookmarks: false,
+      list: false,
+      profile: false,
+      more: false,
+      rightpane: false,
+      deactivate:false,
+      logout:true
+    });
+  }
 
   componentWillMount=()=>{
      localStorage.setItem('searchuserid',localStorage.getItem('userid'));
@@ -231,9 +265,17 @@ class Sidebar extends Component {
     //analytic=s chnage
     else if (this.state.list) return <List />;
     //<List />
-     else if (this.state.profile) return  <Profile userid={localStorage.getItem('userid')}/>; 
+     
   //   <Profile userid={localStorage.getItem('userid')}/>
     else if(this.state.hashtagfeed) return <Hashtagfeed  hashtag={localStorage.getItem('hashtag')}/>
+    else if (this.state.profile) return <p><Profile userid={localStorage.getItem('cookie1')}/></p>;
+    else if(this.state.deactivate) {return  <Redirect to={{ pathname: '/Deactivate'}}/>  }
+    else if(this.state.logout) { localStorage.clear();
+    return <Redirect to={{
+      pathname: '/TwitterHome'
+  }}
+  />
+    }
     else return <MainPage />;
   };
 
@@ -327,6 +369,21 @@ class Sidebar extends Component {
                 <a>
                   <div className="hoveritem">
                     <i class="far fa-chart-bar icon_pad"></i>Analytics
+                  </div>
+                </a>
+              </li>
+              <li class="m-4 h6 font-weight-bold">
+                <a onClick={this.deactivatecheck}>
+                  <div className="hoveritem">
+                    <i class="fas fa-ruler-combined icon_pad"></i>Deactivate
+                  </div>
+                </a>
+              </li>
+
+              <li class="m-4 h6 font-weight-bold">
+                <a onClick={this.logoutcheck}>
+                  <div className="hoveritem">
+                 <i class="fas fa-sign-out-alt icon_pad"></i>Logout
                   </div>
                 </a>
               </li>
