@@ -1,16 +1,19 @@
 var kafka = require('kafka-node');
+const appConfig = require('../config/main')
 
 function ConnectionProvider() {
     this.getConsumer = function(topic_name) {
         // if (!this.kafkaConsumerConnection) {
 
-            this.client = new kafka.KafkaClient("localhost:2181");
+            this.client = new kafka.KafkaClient("ec2-52-89-163-164.us-west-2.compute.amazonaws.com:2181");
+            // this.client = new kafka.KafkaClient("localhost:2181");
             /*this.client.refreshMetadata([{topic: topic_name}], (err) => {
                 if (err) {
                     console.warn('Error refreshing kafka metadata', err);
                 }
             });*/
-            this.kafkaConsumerConnection = new kafka.Consumer(this.client,[ { topic: topic_name, partition: 0 }]);
+            // this.kafkaConsumerConnection = new kafka.Consumer(this.client,[ { topic: topic_name, partition: 0 }]);
+            this.kafkaConsumerConnection = new kafka.Consumer(this.client,getTopicsOption());
             this.client.on('ready', function () { console.log('client ready!') })
         // }
         return this.kafkaConsumerConnection;
@@ -20,7 +23,8 @@ function ConnectionProvider() {
     this.getProducer = function() {
 
         if (!this.kafkaProducerConnection) {
-            this.client = new kafka.KafkaClient("localhost:2181");
+            this.client = new kafka.KafkaClient("ec2-52-89-163-164.us-west-2.compute.amazonaws.com:2181");
+            // this.client = new kafka.KafkaClient("localhost:2181");
             /*this.client.refreshMetadata([{topic: topic_name}], (err) => {
                 if (err) {
                     console.warn('Error refreshing kafka metadata', err);
@@ -34,4 +38,14 @@ function ConnectionProvider() {
         return this.kafkaProducerConnection;
     };
 }
+
+function getTopicsOption() {
+    let topics = appConfig.consumerTopics.split(',');
+    let topicOptions = [];
+    for (var topic of topics) {
+      topicOptions.push({ topic: topic, partition: 0});
+    }
+    return topicOptions;
+  }
+
 exports = module.exports = new ConnectionProvider;

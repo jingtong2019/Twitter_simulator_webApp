@@ -9,7 +9,12 @@ export class MainPage extends React.Component {
   render() {
     return (
       <div class="col-md-5 border">
+        <div class="row ml-4 mt-2">
+            <h3>Home</h3>
+        </div>
+        <hr />
         <TweetComponent />
+        <hr />
         <FeedsComponent />
       </div>
     );

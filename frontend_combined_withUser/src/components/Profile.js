@@ -16,6 +16,7 @@ class Profile extends Component {
             profilename: "",
             userhandle: "",
             Bio: "",
+           
             Website: "",
             dateofbirth: "",
             ProfileImage: "",
@@ -55,6 +56,7 @@ class Profile extends Component {
                 userhandle: this.props.profiledetails.userhandle,
                 profilename: this.props.profiledetails.profilename,
                 Bio: this.props.profiledetails.description,
+                
                 Website: this.props.profiledetails.website_url,
                 dateofbirth: date,
                 ProfileImage: this.props.profiledetails.profileimage_url,
@@ -204,7 +206,6 @@ class Profile extends Component {
                 [name]: value
             });
         }
-
     }
     render() {
 
@@ -219,7 +220,7 @@ class Profile extends Component {
         }
 
         return (
-            <div>
+            <div class="col-md-5">
                 {redirectVar}
                 <div>
                    <div>

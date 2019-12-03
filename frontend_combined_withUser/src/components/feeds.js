@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router";
 import { bindActionCreators } from "redux";
 import * as feedActions from "../redux/actions/feeds-actions"; 
 import InfiniteScroll from 'react-infinite-scroller';
@@ -15,13 +16,15 @@ export class FeedsComponent extends React.Component {
         this.state = {
             feeds: [],
             comment:"",
-            currentTweetId: ""
+            currentTweetId: "",
+            clickedTweetBody: ""
         };
         this.getFeeds = this.getFeeds.bind(this);
         this.updateLikeCount = this.updateLikeCount.bind(this);
         this.reTweet = this.reTweet.bind(this);
         this.replyToTweet = this.replyToTweet.bind(this);
         this.followUser = this.followUser.bind(this);
+        this.handleTweetClick = this.handleTweetClick.bind(this);
       }
 
   componentDidMount() {
@@ -30,7 +33,8 @@ export class FeedsComponent extends React.Component {
   }
 
   getFeeds(pagenumber) {
-    this.props.actions.getUserFeeds(1, pagenumber, (status, feeds) => {
+    let userid= localStorage.getItem('cookie1');
+    this.props.actions.getUserFeeds(parseInt(userid), pagenumber, (status, feeds) => {
       if (status === 'SUCCESS') {
         this.setState({
             feeds: feeds
@@ -44,39 +48,45 @@ export class FeedsComponent extends React.Component {
   }
 
   handleTextareaChange = e => {
+      e.stopPropagation();
     this.setState({ comment: e.target.value });
   }
 
   updateLikeCount = e => {
+    e.stopPropagation();
       debugger;
+    let userId= parseInt(localStorage.getItem('cookie1'));
     const tweetId = e.currentTarget.getAttribute("data-tweetId");
     const likeCount = e.currentTarget.getAttribute("data-count");
     var tweetData = this.props.feeds.feeds.docs.filter(function( obj ) {
         return obj._id === tweetId;
     });
     // Replace hard coded user id to this.props.accounts.user._id
-    var isLiked = tweetData[0].likes.indexOf(12) > -1 ? true : false;
+    var isLiked = tweetData[0].likes.indexOf(userId) > -1 ? true : false;
     if (isLiked) {
-        this.props.actions.unlikeTweet(12, tweetId, (status, data) => {
+        this.props.actions.unlikeTweet(userId, tweetId, (status, data) => {
             // check status and act
 
         });
     } else {
-        this.props.actions.likeTweet(12, tweetId, (status, data) => {
+        this.props.actions.likeTweet(userId, tweetId, (status, data) => {
             // check status and act
         });
     }
   }
 
   reTweet = e => {
+    e.stopPropagation();
     const tweetId = e.currentTarget.getAttribute("data-tweetId");
+    let userId= parseInt(localStorage.getItem('cookie1'));
     const reTweetCount = e.currentTarget.getAttribute("data-count");
-    this.props.actions.reTweet(12, tweetId, (status, data) => {
+    this.props.actions.reTweet(userId, tweetId, (status, data) => {
         // check status and act
     });
   }
 
   getCurrentTweetId = e => {
+    e.stopPropagation();
     const tweetId = e.currentTarget.getAttribute("data-tweetId");
     this.setState({
         currentTweetId: tweetId
@@ -84,10 +94,11 @@ export class FeedsComponent extends React.Component {
   }
 
   replyToTweet = e => {
+    e.stopPropagation();
     // get message content from popup modal
     debugger;
     var content = this.state.comment;
-    var userId = 12;
+    let userId= parseInt(localStorage.getItem('cookie1'));
     var userImage = "https://picsum.photos/id/1/200/200";
     this.props.actions.replyToTweet(userId, this.state.currentTweetId, content, userImage, (status,data) => {
         // check status and act
@@ -95,10 +106,19 @@ export class FeedsComponent extends React.Component {
   }
 
   followUser = e => {
-    const userId = e.currentTarget.getAttribute("data-userId");
+    e.stopPropagation();
+    const userId = parseInt(e.currentTarget.getAttribute("data-userId"));
     this.props.actions.followUser("this.props.accounts.user._id", userId, status => {
 
     });
+  }
+
+  handleTweetClick = e => {
+    e.stopPropagation();
+    const tweetId = e.currentTarget.getAttribute("data-tweetId");
+    this.setState({
+        clickedTweetBody: tweetId
+    })
   }
 
   getImage = (url) => {
@@ -106,6 +126,8 @@ export class FeedsComponent extends React.Component {
   }
 
   render() {
+      if (this.state.clickedTweetBody.length > 0)
+        return <Redirect to={`/tweet/${this.state.clickedTweetBody}`} tweetId={this.state.clickedTweetBody}/> 
       debugger;
     return (
         // <div class="col-md-5 border bg-dark text-white">
@@ -124,7 +146,7 @@ export class FeedsComponent extends React.Component {
             return (
                 <div class="row border-bottom-1 border-dark-gray mt-2">
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-2" onClick={this.handleTweetClick} data-tweetId={value._id}>
                             <div class="mt-2 twitter-avatar">
                                 <img src={this.getImage(value.images[0])} class="rounded-circle" />
                             </div>
@@ -173,21 +195,19 @@ export class FeedsComponent extends React.Component {
                                 </div>
                             </div>
                             <div class="row mt-2">{value.content}</div>
-                            <div class="row mt-2 tweet-images">
-                                <img src={value.images[0]} class="rounded" />
-                            </div>
+                            { value.images.length > 0 ? <div class="row mt-2 tweet-images"><img src={value.images[0]} class="rounded" /></div> : '' }
                             <div class="row d-inline-block w-100 mt-3 mb-2">
                                 <div class="row">
-                                    <div class="col-md-3" onClick={this.getCurrentTweetId}>
-                                        <i href="#myModal" role="button" data-toggle="modal" class="far fa-comment" data-tweetId={value._id} data-count={value.num_comments}></i>
+                                    <div class="col-md-3" onClick={this.getCurrentTweetId} data-tweetId={value._id} data-count={value.num_comments}>
+                                        <i href="#myModal" role="button" data-toggle="modal" class="far fa-comment"></i>
                                         <span class="comment-count ml-1">{value.num_comments}</span>
                                     </div>
-                                    <div class="col-md-3" onClick={this.reTweet}>
-                                        <i class="fas fa-retweet" data-tweetId={value._id} data-count={value.reTweetCount}></i>
+                                    <div class="col-md-3" onClick={this.reTweet} data-tweetId={value._id} data-count={value.reTweetCount}>
+                                        <i class="fas fa-retweet"></i>
                                         <span class="retweet-count ml-1">{value.reTweetCount}</span>
                                     </div>
-                                    <div class="col-md-3" onClick={this.updateLikeCount}>
-                                        <i class={value.likes.indexOf(12) > -1 ? "fas fa-heart" : "far fa-heart"} data-tweetId={value._id} data-count={value.likeCount}></i>
+                                    <div class="col-md-3" onClick={this.updateLikeCount} data-tweetId={value._id} data-count={value.likeCount}>
+                                        <i class={value.likes.indexOf(parseInt(localStorage.getItem('cookie1'))) > -1 ? "fas fa-heart" : "far fa-heart"}></i>
                                         <span class="like-count ml-1">{value.likeCount}</span>
                                     </div>
                                     <div class="col-md-3">
@@ -197,7 +217,7 @@ export class FeedsComponent extends React.Component {
                             </div>
                         </div>
                     </div>
-                    {/* {value.comments.map((com, idx) => {
+                    {value.comments.map((com, idx) => {
                         return (
                     <div class="row">
                         <div class="col-md-2">
@@ -206,7 +226,7 @@ export class FeedsComponent extends React.Component {
                             </div>
                         </div>
                         <div class="col-md-10">
-                            <textarea cols="55" rows="3" readonly>{com.content}</textarea>
+                            <textarea cols="55" rows="3" readonly="true">{com.content}</textarea>
                             <div class="row">
                                 <div class="col-md-3">
                                     <i class="far fa-comment"></i>
@@ -227,7 +247,7 @@ export class FeedsComponent extends React.Component {
                         </div>
                     </div>
                         );
-                    })} */}
+                    })}
                 </div>
                 );
             })}

@@ -4,8 +4,26 @@ const morgan = require('morgan') // logger
 const appConfig = require('./config/main');
 const kafkaConfig = require('./kafka/config');
 var kafka = require('kafka-node');
+const consumer = require('./kafka/consumer')
+const mongoose = require('mongoose')
 
-app.set('port', (process.env.PORT || 3002))
+const jsonServer = require('json-server')
+const server = jsonServer.create()
+const router = jsonServer.router('db.json')
+const middlewares = jsonServer.defaults()
+server.use(middlewares)
+
+server.get('/echo', (req, res) => {
+	res.jsonp(req.query)
+  })
+
+server.use(jsonServer.bodyParser);
+server.use(router);
+server.listen(3001, () => {
+	console.log('Mock Server is running')
+  });
+
+app.set('port', (process.env.PORT || 4020))
 
 app.use(express.static('static'))
 
@@ -15,18 +33,27 @@ app.use(function (req, res) {
 	const err = new Error('Not Found')
 	err.status = 404
 	res.json(err)
-})
+});
 
 //  MongoDB connection 
-const mongoose = require('mongoose')
-mongoose.connect(appConfig.database, { useNewUrlParser: true })
-const db = mongoose.connection
-db.on('error', console.error.bind(console, 'connection error:'))
-db.once('open', function () {
-	console.log('Connected to MongoDB')
+if (!appConfig.useConnectionPooling) {
+	mongoose.connect(appConfig.database, { useNewUrlParser: true })
+	const db = mongoose.connection
+	db.on('error', console.error.bind(console, 'connection error:'))
+	db.once('open', function () {
+		console.log('Connected to MongoDB')
+		app.listen(app.get('port'), function () {
+			console.log('API Server Listening on port ' + app.get('port') + '!')
+		});
+	});
+} else {
 	app.listen(app.get('port'), function () {
 		console.log('API Server Listening on port ' + app.get('port') + '!')
 	});
+}
+
+mongoose.connect("mongodb://user1:user1password@ec2-52-53-158-214.us-west-1.compute.amazonaws.com:27017/mydb", function(err, db) {
+	console.log("123");
 });
 
 // async function initKafkaAndStartApp() {

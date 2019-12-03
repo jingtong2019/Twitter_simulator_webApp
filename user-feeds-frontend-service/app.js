@@ -5,14 +5,14 @@ const morgan = require('morgan') // logger
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
-app.set('port', (process.env.PORT || 3001))
+app.set('port', (process.env.PORT || 4010))
 
 app.use(bodyParser({limit: '10mb'}))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-
+// app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors());
 app.use('/api', api)
 app.use(express.static('static'))
 

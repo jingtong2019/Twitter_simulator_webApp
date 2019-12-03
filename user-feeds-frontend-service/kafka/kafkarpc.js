@@ -14,7 +14,7 @@ function KafkaRPC(){
     this.producer = this.connection.getProducer();
 }
 
-KafkaRPC.prototype.makeRequest = function(topic_name, eventType, params, content, callback){
+KafkaRPC.prototype.makeRequest = function(topic, eventType, params, content, callback){
 
     self = this;
     //generate a unique correlation id for this call
@@ -40,16 +40,16 @@ KafkaRPC.prototype.makeRequest = function(topic_name, eventType, params, content
     self.requests[correlationId]=entry;
 
     //make sure we have a response topic
-    self.setupResponseQueue(self.producer,topic_name,function(){
+    self.setupResponseQueue(self.producer,topic,function(){
         console.log('in response');
         //put the request on a topic
 
         var payloads = [
             { 
-                topic: topic_name, messages: JSON.stringify({
+                topic: topic.name, messages: JSON.stringify({
                 correlationId:correlationId,
                 eventType: eventType,
-                replyTo:'grubhub-response-topic',
+                replyTo: topic.mappedTo,
                 params: params,
                 data:content
             }),
@@ -68,7 +68,7 @@ KafkaRPC.prototype.makeRequest = function(topic_name, eventType, params, content
 };
 
 
-KafkaRPC.prototype.setupResponseQueue = function(producer,topic_name, next){
+KafkaRPC.prototype.setupResponseQueue = function(producer,topic, next){
     //don't mess around if we have a queue
     if(this.response_queue) return next();
 
@@ -77,7 +77,7 @@ KafkaRPC.prototype.setupResponseQueue = function(producer,topic_name, next){
     self = this;
 
     //subscribe to messages
-    var consumer = self.connection.getConsumer('grubhub-response-topic');
+    var consumer = self.connection.getConsumer(topic.mappedTo);
     consumer.on('message', function (message) {
         try {
             console.log('msg received');
