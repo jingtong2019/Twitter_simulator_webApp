@@ -2,8 +2,10 @@ var MongoClient = require("mongodb").MongoClient;
 var assert = require("assert");
 
 // connect string for mongodb server running locally, connecting to a database called test
-var url = "mongodb://127.0.0.1:27017";
-const dbName = "test";
+var url =
+  // "mongodb://user1:user1password@ec2-52-53-158-214.us-west-1.compute.amazonaws.com:27017/mydb";
+  "mongodb://127.0.0.1:27017";
+// const dbName = "test";
 const options1 = {
   useUnifiedTopology: true
 };
@@ -11,7 +13,7 @@ var db;
 MongoClient.connect(url, options1, function(err, client) {
   assert.equal(null, err);
   console.log("Connected correctly to MongoDB server.");
-  db = client.db(dbName);
+  db = client.db("mydb");
 });
 
 exports.getTopLikeTweetKafka = function(userId, callback) {
@@ -116,10 +118,16 @@ exports.getTweetByHour = function(userId, callback) {
   var response = {};
   console.log("In Hour");
   console.log(userId);
+  query = {
+    date: {
+      // 60 minutes ago (from now)
+      $gt: new Date(ISODate().getTime() - 1000 * 60 * 60)
+    }
+  };
   db.collection("twitter")
     .aggregate([
       {
-        $match: { by: parseInt(userId) }
+        $match: { query }
       },
       {
         $project: {
@@ -131,6 +139,7 @@ exports.getTweetByHour = function(userId, callback) {
           }
         }
       },
+      { $sort: { date: 1 } },
       {
         $group: {
           _id: { hour: "$h" },

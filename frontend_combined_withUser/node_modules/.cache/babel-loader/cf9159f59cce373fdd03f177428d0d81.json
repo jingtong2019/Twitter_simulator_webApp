@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { drawing } from '@progress/kendo-drawing';\nimport { COORD_PRECISION } from './constants';\nexport default function interpolateValue(start, end, progress) {\n  return drawing.util.round(start + (end - start) * progress, COORD_PRECISION);\n}","map":null,"metadata":{},"sourceType":"module"}

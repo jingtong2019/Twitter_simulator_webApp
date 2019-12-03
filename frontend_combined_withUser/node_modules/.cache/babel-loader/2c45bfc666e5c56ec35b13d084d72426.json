@@ -1,0 +1,1 @@
+{"ast":null,"code":"import toTime from './to-time';\nexport default function dateEquals(a, b) {\n  if (a && b) {\n    return toTime(a) === toTime(b);\n  }\n\n  return a === b;\n}","map":null,"metadata":{},"sourceType":"module"}

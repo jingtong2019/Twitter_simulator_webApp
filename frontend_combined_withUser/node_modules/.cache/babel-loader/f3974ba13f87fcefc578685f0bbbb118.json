@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function clockwise(angle1, angle2) {\n  // True if angle2 is clockwise of angle1\n  // assuming angles grow in clock-wise direction\n  // (as in the pie and radar charts)\n  return -angle1.x * angle2.y + angle1.y * angle2.x < 0;\n}","map":null,"metadata":{},"sourceType":"module"}

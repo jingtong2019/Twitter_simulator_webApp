@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function dateDiff(a, b) {\n  return a.getTime() - b;\n}","map":null,"metadata":{},"sourceType":"module"}

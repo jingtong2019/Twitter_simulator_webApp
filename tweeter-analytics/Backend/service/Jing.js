@@ -1,16 +1,4 @@
-db.twitter.insert({
-  content: "CONTENT_OF_TWEET8",
-  by: 2,
-  hashtags: ["TAG1", "TAG2", "TAG3"],
-  likes: [9, 10],
-  num_likes: 24,
-  retweets: 24,
-  num_comments: 23,
-  views: 24,
-  tweet_type: "ORIGINAL",
-  retweet_from: "null",
-  date: new Date()
-});
+//db.twitter.insert({content: "CONTENT_OF_TWEET8", by: 2, hashtags: ["TAG1", "TAG2", "TAG3"],likes: [9, 10],num_likes: 24,retweets: 24,num_comments: 23,views: 24,tweet_type: "ORIGINAL",retweet_from: "null",date: new Date()})
 
 var MongoClient = require("mongodb").MongoClient;
 
@@ -100,3 +88,17 @@ function handle_request(msg, callback) {
 }
 
 exports.handle_request = handle_request;
+module.exports = {
+  secret: "Passphrase for encryption should be 45-50 char long",
+  mongodb: "mongodb://localhost:27017",
+  dbname: "LOCAL_DB_NAME",
+  mongodb1: "mongodb://localhost:27017/LOCAL_DB_NAME",
+  mongodb2:
+    "mongodb://user1:user1password@ec2-52-53-158-214.us-west-1.compute.amazonaws.com:27017/mydb",
+  mongodb3:
+    "mongodb+srv://saitwitter:saitwitter@saiprithipa-cluster-fz95b.mongodb.net",
+  dbname3: "saitwitter",
+  dbsetting: { useNewUrlParser: true, poolSize: 10 },
+  redisSetting: "off",
+  kafka_address: "localhost:2181"
+};

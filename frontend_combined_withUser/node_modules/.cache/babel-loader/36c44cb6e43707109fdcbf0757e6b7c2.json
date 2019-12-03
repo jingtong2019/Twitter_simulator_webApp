@@ -1,0 +1,1 @@
+{"ast":null,"code":"import isNumber from './is-number';\nimport isString from './is-string';\nexport default function convertableToNumber(value) {\n  return isNumber(value) || isString(value) && isFinite(value);\n}","map":null,"metadata":{},"sourceType":"module"}

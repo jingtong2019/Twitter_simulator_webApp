@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function inArray(value, array) {\n  if (array) {\n    return array.indexOf(value) !== -1;\n  }\n}","map":null,"metadata":{},"sourceType":"module"}

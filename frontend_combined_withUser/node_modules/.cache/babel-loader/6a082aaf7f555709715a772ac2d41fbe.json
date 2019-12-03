@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function appendIfNotNull(array, element) {\n  if (element !== null) {\n    array.push(element);\n  }\n}","map":null,"metadata":{},"sourceType":"module"}

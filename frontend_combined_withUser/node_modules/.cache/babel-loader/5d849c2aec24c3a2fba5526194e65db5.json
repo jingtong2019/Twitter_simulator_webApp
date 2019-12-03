@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { STRING } from './constants';\nexport default function isString(value) {\n  return typeof value === STRING;\n}","map":null,"metadata":{},"sourceType":"module"}

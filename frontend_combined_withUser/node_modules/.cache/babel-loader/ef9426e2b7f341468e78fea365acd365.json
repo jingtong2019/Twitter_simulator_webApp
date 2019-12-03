@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function equalsIgnoreCase(a, b) {\n  if (a && b) {\n    return a.toLowerCase() === b.toLowerCase();\n  }\n\n  return a === b;\n}","map":null,"metadata":{},"sourceType":"module"}

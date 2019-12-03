@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function addTicks(date, ticks) {\n  return new Date(date.getTime() + ticks);\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,4 +1,5 @@
 // https://stackoverflow.com/questions/23293082/mongodb-group-by-hour
+//ec2-18-144-7-68.us-west-1.compute.amazonaws.com
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
@@ -145,11 +146,14 @@ class BarChartTopViews extends React.Component {
   }
   componentDidMount() {
     axios
-      .get("http://localhost:4010/api/getTopViewTweet", {
-        params: {
-          userId: 2
+      .get(
+        "http://ec2-13-52-238-151.us-west-1.compute.amazonaws.com:4010/api/getTopViewTweet",
+        {
+          params: {
+            userId: 1
+          }
         }
-      })
+      )
       .then(response => {
         this.setState({
           top10Views: this.state.top10Views.concat(response.data.result.views),
@@ -201,11 +205,14 @@ class BarChartTopLikes extends React.Component {
   }
   componentDidMount() {
     axios
-      .get("http://localhost:4010/api/getTopLikeTweet", {
-        params: {
-          userId: 2
+      .get(
+        "http://ec2-13-52-238-151.us-west-1.compute.amazonaws.com:4010/api/getTopLikeTweet",
+        {
+          params: {
+            userId: 1
+          }
         }
-      })
+      )
       .then(response => {
         console.log("response");
         console.log(response);
@@ -259,11 +266,14 @@ class BarChartTopRetweets extends React.Component {
   }
   componentDidMount() {
     axios
-      .get("http://localhost:4010/api/getTopRetweetTweet", {
-        params: {
-          userId: 2
+      .get(
+        "http://ec2-13-52-238-151.us-west-1.compute.amazonaws.com:4010/api/getTopRetweetTweet",
+        {
+          params: {
+            userId: 1
+          }
         }
-      })
+      )
       .then(response => {
         this.setState({
           top5Retweets: this.state.top5Retweets.concat(
@@ -316,11 +326,14 @@ class BarChartHourlyContainer extends React.Component {
   componentDidMount() {
     console.log("if executed");
     axios
-      .get("http://localhost:4010/api/getTweetByHour", {
-        params: {
-          userId: 2
+      .get(
+        "http://ec2-13-52-238-151.us-west-1.compute.amazonaws.com:4010/api/getTweetByHour",
+        {
+          params: {
+            userId: 1
+          }
         }
-      })
+      )
       .then(response => {
         console.log("in reponse hour");
         console.log(response);
@@ -372,11 +385,14 @@ class BarChartWeeklyContainer extends React.Component {
   }
   componentDidMount() {
     axios
-      .get("http://localhost:4010/api/getTweetByWeek", {
-        params: {
-          userId: 2
+      .get(
+        "http://ec2-13-52-238-151.us-west-1.compute.amazonaws.com:4010/api/getTweetByWeek",
+        {
+          params: {
+            userId: 1
+          }
         }
-      })
+      )
       .then(response => {
         this.setState({
           dayOfWeek: this.state.dayOfWeek.concat(
@@ -426,11 +442,14 @@ class BarChartDailyContainer extends React.Component {
   }
   componentDidMount() {
     axios
-      .get("http://localhost:4010/api/getTweetByDay", {
-        params: {
-          userId: 2
+      .get(
+        "http://ec2-13-52-238-151.us-west-1.compute.amazonaws.com:4010/api/getTweetByDay",
+        {
+          params: {
+            userId: 1
+          }
         }
-      })
+      )
       .then(response => {
         this.setState({
           dayOfMonth: this.state.dayOfMonth.concat(
@@ -481,11 +500,14 @@ class BarChartViewsContainer2 extends React.Component {
   }
   componentDidMount() {
     axios
-      .get("http://localhost:4010/api/getTweetByDay ", {
-        params: {
-          userId: 2
+      .get(
+        "http://ec2-13-52-238-151.us-west-1.compute.amazonaws.com:4010/api/getTweetByDay ",
+        {
+          params: {
+            userId: 1
+          }
         }
-      })
+      )
       .then(response => {
         this.setState({
           dayOfMonth: this.state.dayOfMonth.concat(response.data.dayOfMonth),

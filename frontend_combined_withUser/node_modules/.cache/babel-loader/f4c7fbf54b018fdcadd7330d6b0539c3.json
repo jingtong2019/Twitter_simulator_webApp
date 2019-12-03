@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { COORDINATE_LIMIT } from '../constants';\nexport default function limitCoordinate(value) {\n  return Math.max(Math.min(value, COORDINATE_LIMIT), -COORDINATE_LIMIT);\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { DEFAULT_PRECISION } from '../../common/constants';\nimport { round } from '../../common';\nexport default function floor(value, step) {\n  return round(Math.floor(value / step) * step, DEFAULT_PRECISION);\n}","map":null,"metadata":{},"sourceType":"module"}

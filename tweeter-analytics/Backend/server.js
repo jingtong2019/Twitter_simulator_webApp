@@ -4,7 +4,7 @@ const morgan = require("morgan"); // logger
 const appConfig = require("./config/main");
 const kafkaConfig = require("./kafka/config");
 var kafka = require("kafka-node");
-var tweetsService = require("./service/feeds-service");
+var tweetsService = require("./service/test");
 var bodyParser = require("body-parser");
 app.set("port", process.env.PORT || 3002);
 app.use(express.static("static"));
@@ -25,3 +25,8 @@ app.listen(app.get("port"), function() {
 });
 
 var router = express.Router();
+router.get("/getTweetByDay2", tweetsService.getTweetByDay2);
+router.get("/getTweetByHour", tweetsService.getTweetByHour);
+router.get("/getTweetByWeek", tweetsService.getTweetByWeek);
+
+app.use("/api", router);

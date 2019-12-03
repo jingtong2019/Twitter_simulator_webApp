@@ -1,0 +1,1 @@
+{"ast":null,"code":"import isNumber from './is-number';\nexport default function styleValue(value) {\n  if (isNumber(value)) {\n    return value + \"px\";\n  }\n\n  return value;\n}","map":null,"metadata":{},"sourceType":"module"}

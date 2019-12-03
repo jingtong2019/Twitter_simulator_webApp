@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { DEFAULT_PRECISION } from '../../common/constants';\nimport { round } from '../../common';\nexport default function ceil(value, step) {\n  return round(Math.ceil(value / step) * step, DEFAULT_PRECISION);\n}","map":null,"metadata":{},"sourceType":"module"}

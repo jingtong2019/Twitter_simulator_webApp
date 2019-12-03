@@ -1,0 +1,1 @@
+{"ast":null,"code":"import addDuration from './add-duration';\nimport toDate from './to-date';\nexport default function floorDate(date, unit, weekStartDay) {\n  return addDuration(toDate(date), 0, unit, weekStartDay);\n}","map":null,"metadata":{},"sourceType":"module"}

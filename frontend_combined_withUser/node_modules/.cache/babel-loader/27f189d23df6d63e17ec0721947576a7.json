@@ -1,0 +1,1 @@
+{"ast":null,"code":"import countNumbers from './count-numbers';\nexport default function areNumbers(values) {\n  return countNumbers(values) === values.length;\n}","map":null,"metadata":{},"sourceType":"module"}
