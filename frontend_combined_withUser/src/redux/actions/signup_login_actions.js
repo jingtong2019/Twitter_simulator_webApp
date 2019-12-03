@@ -4,7 +4,7 @@ import { rooturl } from '../config/settings';
 
 export const signup = (data) => async (dispatch) => {
 
-    axios.defaults.withCredentials = true;
+    
     await axios.post('http://' + rooturl + ':5000/signup', data)
         .then(
             (response) => {
@@ -28,7 +28,7 @@ export const signup = (data) => async (dispatch) => {
 }
 export const login = (data) => async (dispatch) => {
 
-    axios.defaults.withCredentials = true;
+    
     await axios.post('http://' + rooturl + ':5000/login', data)
         .then(
             (response) => {
@@ -42,7 +42,7 @@ export const login = (data) => async (dispatch) => {
 
                     dispatch({
                         type: LOGIN,
-                        loginSuccess: true
+                        loginSuccess: response.data.result.result[0]
                     });
                 }
                 else {
@@ -58,7 +58,7 @@ export const login = (data) => async (dispatch) => {
 }
 export const deleteuser = (data) => async (dispatch) => {
 
-    axios.defaults.withCredentials = true;
+ 
     await axios.post('http://' + rooturl + ':5000/delete', data)
         .then(
             (response) => {
