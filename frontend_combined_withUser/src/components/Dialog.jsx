@@ -115,7 +115,7 @@ class ListDialog extends Component {
                 subscribers:[]
             }
 
-              axios.post('http://localhost:3001/createnewlist/', data)
+              axios.post(url+'/createnewlist/', data)
                 .then(response => {
                     if (response.status === 200) {
                         console.log("List added Successfully");
@@ -225,7 +225,7 @@ class ListDialog extends Component {
                             Cancel
             </Button>
                         <Button onClick={this.handleClose} color="primary">
-                            Subscribe
+                            Create List
             </Button>
                     </DialogActions>
                 </Dialog>
