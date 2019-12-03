@@ -4,7 +4,6 @@ import { rooturl } from '../config/settings';
 
 export const profileaction = (data) => async (dispatch) => {
     
-    axios.defaults.withCredentials = true;
     await axios.post('http://' + rooturl + ':5000/getProfileDetails', data)
         .then(
             async (response) => {
@@ -19,8 +18,7 @@ export const profileaction = (data) => async (dispatch) => {
         )
 }
 export const updateProfile = (data) => async (dispatch) => {
-   
-    axios.defaults.withCredentials = true;
+
     await axios.post('http://' + rooturl + ':5000/updateprofile', data)
         .then(
             async (response) => {
