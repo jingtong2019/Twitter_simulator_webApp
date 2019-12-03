@@ -7,7 +7,7 @@ import { Input } from "@progress/kendo-react-inputs";
 import { Button } from "@progress/kendo-react-buttons";
 import { Ripple } from "@progress/kendo-react-ripple";
 import { savePDF } from "@progress/kendo-react-pdf";
-
+import { Link } from "react-router-dom";
 // import { DonutChartContainer } from "./components/DonutChartContainer";
 import "@progress/kendo-theme-material/dist/all.css";
 import "./Analytics.css";
@@ -26,12 +26,16 @@ import {
 class AnalyticsPage extends React.Component {
   constructor(props) {
     super(props);
+    this.routeChange = this.routeChange.bind(this);
     this.appContainer = React.createRef();
     this.state = {
       showDialog: false
     };
   }
-
+  routeChange() {
+    let path = "/profile";
+    this.props.history.push(path);
+  }
   handlePDFExport = () => {
     this.props.dispatch({ type: "handlePDFExport" });
     savePDF(ReactDOM.findDOMNode(this.appContainer), { paperSize: "auto" });
@@ -64,6 +68,14 @@ class AnalyticsPage extends React.Component {
                     Share
                   </Button>
                   <Button onClick={this.handlePDFExport}>Export to PDF</Button>
+
+                  <Button
+                    color="primary"
+                    className="px-4"
+                    onClick={this.routeChange}
+                  >
+                    Home
+                  </Button>
                 </div>
               </div>
             </div>
@@ -138,7 +150,8 @@ class BarChartTopViews extends React.Component {
     super(props);
     this.state = {
       top10Views: [],
-      top10ViewsNum: []
+      top10ViewsNum: [],
+      list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     };
   }
   componentDidMount() {
@@ -167,10 +180,7 @@ class BarChartTopViews extends React.Component {
       <Chart style={{ height: 288 }} zoomable={false}>
         <ChartLegend visible={false} />
         <ChartCategoryAxis>
-          <ChartCategoryAxisItem
-            categories={this.state.top10Views}
-            startAngle={45}
-          />
+          <ChartCategoryAxisItem categories={this.state.list} startAngle={45} />
         </ChartCategoryAxis>
 
         <ChartSeries>
@@ -195,7 +205,8 @@ class BarChartTopLikes extends React.Component {
     super(props);
     this.state = {
       top10Likes: [],
-      top10LikesNum: []
+      top10LikesNum: [],
+      list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     };
     console.log("top10LikesNum");
     console.log(this.state.top10LikesNum);
@@ -226,10 +237,7 @@ class BarChartTopLikes extends React.Component {
       <Chart style={{ height: 288 }} zoomable={false}>
         <ChartLegend visible={false} />
         <ChartCategoryAxis>
-          <ChartCategoryAxisItem
-            categories={this.state.top10Likes}
-            startAngle={45}
-          />
+          <ChartCategoryAxisItem categories={this.state.list} startAngle={45} />
         </ChartCategoryAxis>
 
         <ChartSeries>
@@ -254,7 +262,8 @@ class BarChartTopRetweets extends React.Component {
     super(props);
     this.state = {
       top5Retweets: [],
-      top5RetweetsNum: []
+      top5RetweetsNum: [],
+      list: [1, 2, 3, 4, 5]
     };
     console.log("top5RetweetsNum");
     console.log(this.state.top5RetweetsNum);
@@ -285,10 +294,7 @@ class BarChartTopRetweets extends React.Component {
       <Chart style={{ height: 288 }} zoomable={false}>
         <ChartLegend visible={false} />
         <ChartCategoryAxis>
-          <ChartCategoryAxisItem
-            categories={this.state.top5Retweets}
-            startAngle={45}
-          />
+          <ChartCategoryAxisItem categories={this.state.list} startAngle={45} />
         </ChartCategoryAxis>
 
         <ChartSeries>
@@ -446,6 +452,8 @@ class BarChartDailyContainer extends React.Component {
         }
       )
       .then(response => {
+        console.log("response ss");
+        console.log(response);
         this.setState({
           dayOfMonth: this.state.dayOfMonth.concat(
             response.data.result.dayOfMonth
@@ -503,20 +511,33 @@ class BarChartViewsContainer extends React.Component {
           }
         }
       )
+
       .then(response => {
+        let values = [];
+        let daysOfMonth = [];
+        console.log("response char");
+        // for (const items in response.data) {
+        for (let i = response.data.length - 1; i > 0; i--) {
+          values.push(response.data[i].views);
+          daysOfMonth.push(response.data[i].ts.toString().substr(8, 2));
+        }
+        console.log(response.data[0].views);
+        console.log("values");
+        console.log(values);
         this.setState({
-          dayOfMonth: this.state.dayOfMonth.concat(response.data.ts),
-          value: this.state.value.concat(response.data.views)
+          dayOfMonth: this.state.dayOfMonth.concat(daysOfMonth),
+          value: this.state.value.concat(values)
         });
       });
   }
   render() {
     return (
-      <Chart style={{ height: 288 }} zoomable={false}>
+      <Chart style={({ height: 288 }, { width: 1000 })} zoomable={false}>
         <ChartLegend visible={false} />
         <ChartCategoryAxis>
           <ChartCategoryAxisItem
             categories={this.state.dayOfMonth}
+            // categories={this.state.list}
             startAngle={45}
           />
         </ChartCategoryAxis>
