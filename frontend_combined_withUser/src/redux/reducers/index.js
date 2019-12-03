@@ -14,7 +14,8 @@ const rootReducer = combineReducers({
     signin: signuploginReducer,
     profile: profileReducer,
     inbox: messageReducer,
-    image: imageReducer
+    image: imageReducer,
+    followingfollower: followingfollowerreducer
 });
 
 export default rootReducer;
