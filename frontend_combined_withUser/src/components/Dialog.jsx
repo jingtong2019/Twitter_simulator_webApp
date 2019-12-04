@@ -13,7 +13,7 @@ import axios from 'axios';
 import * as listActions from "../redux/actions/list-actions"; 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-//var url='http://localhost:3001';
+//var url='http://localhost:3002';
 var url = "http://54.153.73.30:3001";
 
 class ListDialog extends Component {

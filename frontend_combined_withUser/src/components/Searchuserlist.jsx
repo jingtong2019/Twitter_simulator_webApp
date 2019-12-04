@@ -24,7 +24,7 @@ export default class searchuserlist extends Component {
       displaylistmembers: [],
     }
        this.gettweets=this.gettweets.bind(this);
-       this.subscribe=this.subscribe.bind(this);
+       //this.subscribe=this.subscribe.bind(this);
    
   }
 
@@ -35,7 +35,7 @@ export default class searchuserlist extends Component {
 
 
     const data = {
-      userhandle: localStorage.getItem('searchuserhandle')
+      userhandle: localStorage.getItem('searchnewhandle')
     }
 
 
@@ -94,12 +94,12 @@ export default class searchuserlist extends Component {
 //   }
     
 
-subscribe=(val)=>{
-
+subscribe=(event)=>{
+console.log(event.target.id);
 const data={
 
 
-       list_id:  val,
+       list_id:  event.target.id,
        user_id:localStorage.getItem('cookie1'),
        name:localStorage.getItem('cookie2'),
        handle:localStorage.getItem('cookie3')
@@ -144,8 +144,8 @@ const data={
   render() {
 
     console.log(this.props);
-    if(localStorage.getItem('searchuserhandle'))
-    localStorage.setItem('searchuserhandle',localStorage.getItem('cookie3'))
+    // if(localStorage.getItem('searchuserhandle'))
+    // localStorage.setItem('searchuserhandle',localStorage.getItem('cookie3'))
     let current;
     console.log('this.state.userList');
     console.log(this.state.userList)
@@ -162,7 +162,7 @@ const data={
     <div style={{display:'flex'}}>
     <p style={{marginRight:'10%'}}>members:{listitem.members.length}</p>
     <p>subscibers:{listitem.subscribers.length}</p>
-    <button onClick={() => {this.subscibe(listitem._id)}}>  Subscribe </button>
+    <button id={listitem._id} onClick={this.subscribe}>  Subscribe </button>
     </div>
   </li>
  
@@ -205,7 +205,8 @@ if(this.state.subscriberList!=='Mongo Connection Error' && this.state.subscriber
   </ul>
 
  
-  <div class="tab-content">
+ 
+ <div class="tab-content">
     <div id="owned" class=" tab-pane active">
     <React.Fragment>
      <ul className="list-group" style={{listStyleType:'none',color:'black',background:'white'}}>

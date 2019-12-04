@@ -275,9 +275,11 @@ class Profile extends Component {
 
     dashboardNavigate1 = (e) => {
         this.props.viewList( (status, feeds) => {})
+        localStorage.setItem('searchnewhandle',localStorage.getItem('searchuserhandle'))
         e.stopPropagation();
         localStorage.setItem('listcheck','true');
-        localStorage.setItem('searchuserhandle',this.state.userdetails.userhandle)
+//        localStorage.setItem('searchnewhandle',this.state.userdetails.userhandle)
+
         
         this.props.history.push("/dashboard");
     }
@@ -398,7 +400,7 @@ class Profile extends Component {
                                                 <div style={{color:'black',fontSize:'18px'}}> {this.state.followDisplay && <button onClick={this.onFollow}>Follow</button>}</div>
 
                                                 
-                                                {this.state.followDisplay  && <button style={{color:'black',fontSize:'18px'}} onClick={this.dashboardNavigate1 }>View List</button>}
+                                                 <button style={{color:'black',fontSize:'18px'}} onClick={this.dashboardNavigate1 }>View List</button>
                                                 
                                            
                                             </div>
