@@ -20,11 +20,8 @@ function handle_request(msg, callback){
     let query = {
         content: msg.content,
         images: msg.images,
-        UserName: msg.UserName,
-        UserHandle: msg.UserHandle,
         by: parseInt(msg.userid),
         hashtags: msg.hashtags,
-        hyperlinks: msg.hyperlinks,
         likes: [],
         num_likes: 0,
         retweets: 0,
@@ -54,3 +51,54 @@ exports.handle_request = handle_request;
 
 
 
+
+
+
+const tweetSchema = new mongoose.Schema({
+    images: {
+        type: Array
+    },
+    content: {
+        type: String
+    },
+    by: {
+        type: Number
+    },
+    hashtags: {
+        type: Array
+    },
+    likes: {
+        type: Array
+    },
+    num_likes: {
+        type: Number
+    },
+    retweets: {
+        type: Number
+    },
+    num_comments: {
+        type: Number
+    },
+    views: {
+        type: Number
+    },
+    tweet_type: {
+        type: String
+    },
+    retweet_from: {
+        type: ObjectId
+    },
+    date: {
+        type: Date
+    }
+});
+
+
+const bookmarkSchema = new mongoose.Schema({
+    userId: {
+        type: Number
+    },
+    tweetId: {
+        type: Array
+    }
+});

@@ -14,7 +14,6 @@ MongoClient.connect(config.mongodb2, config.dbsetting, function(err, db) {
     mydb = db;
 });
 
-
 function handle_request(msg, callback){
     console.log("In handle request:"+ JSON.stringify(msg));
     var response = {};
@@ -27,25 +26,29 @@ function handle_request(msg, callback){
     }
     else {
         let bookmark = mydb.collection('bookmark');
-        let tweet = mydb.collection('tweet');
-    
-        bookmark.find({userId: parseInt(msg.userid) }, {_id: 0, tweetId: 1}).toArray(function(err,result){
+        
+        bookmark.find({userId: parseInt(msg.userid)}).toArray(function(err,result){
             if (!err) {
-                //console.log("result========", result[0].tweetId);
-                tweet.find({_id: {$in: result[0].tweetId} }).toArray(function(err,res){
-                    if (!err) {
-                        response.code = "200";
-                        response.value = "Successfully get bookmarks";
-                        response.result = res;
-                        callback(null,response);
-                    }
-                });
+                console.log("result==========", result);
+                if (result.length === 0) {
+                    bookmark.insertOne({userId: parseInt(msg.userid), tweetId: []}, function(err,result){
+                        if (!err) {
+                            response.code = "200";
+                            response.value = "Successfully inserted";
+                            callback(null,response);
+                        }
+                    });
+                }
+                else {
+                    response.code = "200";
+                    response.value = "Already exists";
+                    callback(null,response);
+                }
                 
             }
+            
         });
-        
     }
-
 
 }
 

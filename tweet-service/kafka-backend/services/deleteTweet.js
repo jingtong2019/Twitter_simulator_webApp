@@ -19,24 +19,25 @@ function handle_request(msg, callback){
     console.log("In handle request:"+ JSON.stringify(msg));
     var response = {};
 
-    if (!msg.hasOwnProperty('userid') || !msg.hasOwnProperty('tweetid') || !Number.isInteger(parseInt(msg.userid))) {
+    if (!msg.hasOwnProperty('tweetid')) {
         response.code = "202";
         response.value = "wrong req body";
 
         callback(null,response);
     }
     else {
-        let bookmark = mydb.collection('bookmark');
+        let tweet = mydb.collection('tweet');
 
-        bookmark.update({userId: parseInt(msg.userid)}, { $pull: { tweetId: ObjectID(msg.tweetid) }}, function(err,result){
+        tweet.deleteOne({_id: ObjectID(msg.tweetid)}, function(err,result){
             if (!err) {
                 response.code = "200";
-                response.value = "Successfully unbookmark";
+                response.value = "Successfully delete a tweet";
         
                 callback(null,response);
             }
         });
     }
+
     
 }
 

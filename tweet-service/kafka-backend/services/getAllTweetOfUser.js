@@ -18,20 +18,25 @@ MongoClient.connect(config.mongodb2, config.dbsetting, function(err, db) {
 function handle_request(msg, callback){
     console.log("In handle request:"+ JSON.stringify(msg));
     var response = {};
-    let tweet = mydb.collection('tweet');
 
+    if (!msg.hasOwnProperty('userid') || !Number.isInteger(parseInt(msg.userid))) {
+        response.code = "202";
+        response.value = "wrong req body";
 
-    tweet.find({by: msg.userid, tweet_type: { $ne: "COMMENT" } }).sort({"date": -1}).toArray(function(err,result){
-        if (!err) {
-            response.code = "200";
-            response.value = "Successfully get all tweets of user";
-            response.result = result;
-            callback(null,response);
-        }
-    });
-    
-        
-            
+        callback(null,response);
+    }
+    else {
+        let tweet = mydb.collection('tweet');
+
+        tweet.find({by: parseInt(msg.userid), tweet_type: { $ne: "COMMENT" } }).sort({"date": -1}).toArray(function(err,result){
+            if (!err) {
+                response.code = "200";
+                response.value = "Successfully get all tweets of user";
+                response.result = result;
+                callback(null,response);
+            }
+        });
+    }
     
 
 }
