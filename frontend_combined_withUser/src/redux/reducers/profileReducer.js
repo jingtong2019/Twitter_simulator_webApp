@@ -1,4 +1,4 @@
-import { GET_PROFILE, UPDATE_PROFILE, GET_USER_TWEET_SUCCESS, GET_USER_TWEET_FAILURE } from "../actions/action-types";
+import { GET_PROFILE, UPDATE_PROFILE, GET_USER_TWEET_SUCCESS, GET_USER_TWEET_FAILURE, DELETE_TWEET_SUCCESS } from "../actions/action-types";
 const initialState = {
   userTweets: {
     docs: []
@@ -37,6 +37,13 @@ export default function(state = initialState, action) {
         message: "",
         userTweets: state.userTweets
       });
+    case DELETE_TWEET_SUCCESS:
+        console.log("DELETE_TWEET_SUCCESS");
+        return Object.assign({}, state, {
+          error: "",
+          message: "DELETE_TWEET_SUCCESS",
+          userTweets: state.userTweets
+        });
     default:
       return state;
   }

@@ -1,11 +1,11 @@
 import * as types from "./action-types";
 import * as listApi from "../../api/list";
 
-export function getlisttweets(data, config, callback) {
+export function getlisttweets(userIds, config, callback) {
     return function(dispatch) {
         debugger;
       return listApi
-        .getlisttweets(data, config)
+        .getlisttweets(userIds, config)
         .then(response => {
           console.log("Status Code : ", response.status);
           if (response.status === 200) {

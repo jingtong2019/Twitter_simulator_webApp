@@ -205,7 +205,7 @@ export class FeedsComponent extends React.Component {
                     <div class="row">
                         <div class="col-md-2">
                             <div class="mt-2 twitter-avatar">
-                                <img src={this.getImage(this.state.tweet.images[0])} class="rounded-circle" />
+                                <img src={JSON.parse(localStorage.getItem("allUsers"))[this.state.tweet.by]} class="rounded-circle" />
                             </div>
                         </div>
                         <div class="col-md-9">

@@ -124,7 +124,7 @@ getlists() {
   render() {
 
        let current;
-
+      debugger;
       if(this.props.userList!=='Mongo Connection Error' && this.props.userList.length !== 0)
     {current=this.props.userList.map(listitem => (
       <li key={listitem._id} style={{borderBottom:'1px solid black',borderTop:'1px solid black'}} onClick={() => this.gettweets(listitem.members)} >
@@ -229,6 +229,7 @@ getlists() {
 
 
 function mapStateToProps(state) {
+  debugger;
   return {
     userList: state.list.userlist
   };

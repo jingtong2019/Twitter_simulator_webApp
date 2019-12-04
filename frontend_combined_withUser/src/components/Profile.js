@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { profileaction, updateProfile, getLoggedInUserTweets } from '../redux/actions/profile';
+import { profileaction, updateProfile, getLoggedInUserTweets, deleteTweet } from '../redux/actions/profile';
 import {  viewList , clearcheck } from '../redux/actions/search-actions'
 import { connect } from 'react-redux';
 import './css/profile.css';
@@ -280,11 +280,9 @@ class Profile extends Component {
 
     dashboardNavigate1 = (e) => {
         this.props.viewList( (status, feeds) => {})
-        localStorage.setItem('searchnewhandle',localStorage.getItem('searchuserhandle'))
+        localStorage.setItem('searchnewhandle',localStorage.getItem('searchuserhandle'));
         e.stopPropagation();
         localStorage.setItem('listcheck','true');
-//        localStorage.setItem('searchnewhandle',this.state.userdetails.userhandle)
-
         
         this.props.history.push("/dashboard");
     }
@@ -308,7 +306,10 @@ onFollow = async () => {
     }
 
     deleteTweet = e => {
-        
+        const tweetId = e.currentTarget.getAttribute("data-tweetId");
+        this.props.deleteTweet(tweetId, (status, data) => {
+            // handle error
+        });
     }
      
     render() {
@@ -426,7 +427,7 @@ onFollow = async () => {
                                                 <div style={{color:'black',fontSize:'18px'}}> {this.state.followDisplay && <button onClick={this.onFollow}>Follow</button>}</div>
 
                                                 
-                                                 <button style={{color:'black',fontSize:'18px'}} onClick={this.dashboardNavigate1 }>View List</button>
+                                                <button style={{color:'black',fontSize:'18px'}} onClick={this.dashboardNavigate1 }>View List</button>
                                                 
                                            
                                             </div>
@@ -500,7 +501,7 @@ onFollow = async () => {
                     <div class="row">
                         <div class="col-md-2" onClick={this.handleTweetClick} data-tweetId={value._id}>
                             <div class="mt-2 twitter-avatar">
-                                <img src={this.getImage(value.images[0])} class="rounded-circle" />
+                                <img src={JSON.parse(localStorage.getItem("allUsers"))[value.by]} class="rounded-circle" />
                             </div>
                         </div>
                         <div class="col-md-9">
@@ -599,5 +600,5 @@ const mapStateToProps = (state) => {
 }
 export default connect(
     mapStateToProps,
-    { viewList,clearcheck ,profileaction, getLoggedInUserTweets, updateProfile, imageDownload, imageUpload, isfollowing, follow, followingCount, followerCount, unfollow }
+    { viewList,clearcheck ,profileaction, getLoggedInUserTweets, deleteTweet, updateProfile, imageDownload, imageUpload, isfollowing, follow, followingCount, followerCount, unfollow }
 )(Profile);

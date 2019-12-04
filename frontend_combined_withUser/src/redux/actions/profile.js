@@ -66,3 +66,32 @@ export function getLoggedInUserTweets(userId, callback) {
     return { type: types.GET_USER_TWEET_FAILURE };
   }
 
+  export function deleteTweet(tweetId, callback) {
+    return function(dispatch) {
+        debugger;
+      return tweetApi
+        .deleteTweet(tweetId)
+        .then(response => {
+          console.log("Status Code : ", response.status);
+          if (response.status === 200) {
+            callback("SUCCESS", response.data);
+            dispatch(deleteTweetSuccess(response.data.result));
+          }
+        })
+        .catch(error => {
+          // if (error.message === "Network Error") {
+          //   dispatch(networkConnectionError());
+          // } else {
+            dispatch(deleteTweetFailure());
+          // }
+        });
+    };
+  }
+
+  export function deleteTweetSuccess(result) {
+    return { type: types.DELETE_TWEET_SUCCESS, result };
+  }
+
+  export function deleteTweetFailure() {
+    return { type: types.DELETE_TWEET_FAILURE };
+  }

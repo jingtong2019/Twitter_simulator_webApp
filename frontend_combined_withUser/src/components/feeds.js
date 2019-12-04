@@ -20,7 +20,8 @@ export class FeedsComponent extends React.Component {
             comment:"",
             currentTweetId: "",
             clickedTweetBody: "",
-            profileIdToView: -1
+            profileIdToView: -1,
+            userImages: {}
         };
         this.getFeeds = this.getFeeds.bind(this);
         this.updateLikeCount = this.updateLikeCount.bind(this);
@@ -169,7 +170,7 @@ export class FeedsComponent extends React.Component {
                     <div class="row">
                         <div class="col-md-2" onClick={this.handleTweetClick} data-tweetId={value._id}>
                             <div class="mt-2 twitter-avatar">
-                                <img src={this.getImage(value.images[0])} class="rounded-circle" />
+                                <img src={JSON.parse(localStorage.getItem("allUsers"))[value.by]} class="rounded-circle" />
                             </div>
                         </div>
                         <div class="col-md-9">

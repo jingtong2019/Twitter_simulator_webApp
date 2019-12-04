@@ -319,7 +319,7 @@ class Sidebar extends Component {
 
     else if(this.props.hashtagfeed)
     {   console.log("Hashtag is here");
-       return  <Redirect to={{ pathname: '/Newcomponentforsearch'}}/> 
+        return  <Redirect to={{ pathname: '/Newcomponentforsearch'}}/>
     }
     else if(this.state.searchlist) return <Searchuserlist/>;
     else if (this.state.home ) return <MainPage />;

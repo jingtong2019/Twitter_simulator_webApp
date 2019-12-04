@@ -23,3 +23,10 @@ export function getLoggedInUserTweets(userId) {
   }
   return axios.post(host + "/getAllTweetOfUser", data);
 }
+
+export function deleteTweet(tweetId) {
+  var data = {
+    tweetid: tweetId
+  }
+  return axios.post(host + "/deleteTweet", data);
+}

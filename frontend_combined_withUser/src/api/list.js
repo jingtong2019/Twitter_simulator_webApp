@@ -2,7 +2,7 @@ import axios from "axios";
 
 //const host = "http://localhost:3001";
 const host = "http://54.153.73.30:3001";
-
+const jing_host = "http://ec2-54-67-17-39.us-west-1.compute.amazonaws.com:3001";
 
 
 export function subscibeList(userhandle, list_id) {
@@ -15,14 +15,13 @@ export function subscibeList(userhandle, list_id) {
   return axios.get(host + "/subscibeList", data);
 }
 
-export function getlisttweets(userId, pageNumber) {
+export function getlisttweets(userIds, pageNumber) {
   console.log("getlisttweets")
   //axios.defaults.withCredentials = true;
   let data = {
-  	userhandle: userId,
-  	pageNumber: pageNumber
+  	id: userIds
   };
-  return axios.get(host + "/getAllUserTweets", data);
+  return axios.post(jing_host + "/getAllUserTweets", data);
 }
 
 export function getUserlists() {

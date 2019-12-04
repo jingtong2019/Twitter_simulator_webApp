@@ -18,13 +18,11 @@ export default function listReducer(state = initialState, action) {
             console.log("GET_LIST_SUCCESS");
             //   console.log(action.result)
             let feedResult = { ...state.feeds };
-            let listResult ={ ...state.userlist}
-            feedResult.docs = action.result;
+            let listResult =[ ...state.userlist]
+            feedResult.docs = action.result.result;
             //  feedResult.docs = feedResult.docs.concat(action.result);
             console.log("feedResult");
             console.log(feedResult);
-
-            feedResult.hasMore = action.result.hasMore;
             return Object.assign({}, state, {
                 error: "",
                 message: "GET_LIST_SUCCESS",
@@ -39,9 +37,9 @@ export default function listReducer(state = initialState, action) {
                 message: "",
                 feeds: {
                     docs: [],
-                    hasMore: true,
-                    userlist:[]
-                }
+                    hasMore: true
+                },
+                userlist:[]
             });
         case types.LIKE_TWEET_SUCCESS:
             // console.log("LIKE_TWEET_SUCCESS");
@@ -78,15 +76,15 @@ export default function listReducer(state = initialState, action) {
                     message: "",
                     feeds: {
                         docs: [],
-                        hasMore: true,
-                        userlist:[]
-
-                    }
+                        hasMore: true
+                    },
+                    userlist:[]
                 }
             );
             
         case types.GET_USER_LIST:
                //feedResult = { ...state.feeds };
+               debugger;
                 console.log('GET_USER_LIST')
                 console.log('action.result')
                 console.log(action.payload)
@@ -94,9 +92,8 @@ export default function listReducer(state = initialState, action) {
                         {}, state, {
                             error: "",
                             message: "",
-                            feeds: "",
+                            feeds: state.feeds,
                             userlist:action.payload
-
                         }
                     );   
         default:

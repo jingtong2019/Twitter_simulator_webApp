@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { login } from '../redux/actions/signup_login_actions';
 import { connect } from 'react-redux';
 import './css/login.css';
+import * as userDataApi from "../api/userData";
 
 class Login extends Component {
     constructor() {
@@ -22,6 +23,7 @@ class Login extends Component {
         )
     }
     onLogin = async (e) => {
+        this.cacheUserData();
         e.preventDefault();
         let post = {
                 username: this.state.username,
@@ -40,6 +42,21 @@ class Login extends Component {
             }
         
     }
+    cacheUserData = () => {
+        debugger;
+        var cache = {};
+        userDataApi.getAllUsersDetails()
+        .then(resp => {
+            resp.data.result.forEach(element => {
+                cache[element.userid] = element.profileimage_url;
+            });
+            localStorage.setItem("allUsers", JSON.stringify(cache));
+        })
+        .catch(err => {
+            console.log("user cache api error");
+        });
+    }
+
     render() {
         return (
             <div >
