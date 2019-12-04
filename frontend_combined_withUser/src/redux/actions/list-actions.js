@@ -31,7 +31,7 @@ export function getlisttweets(data, config, callback) {
     return { type: types.CLEAR_FEEDS };
   }
 
-  export function getUserlists(data, config, callback) {
+  export function getUserlists( callback) {
     return function(dispatch) {
         debugger;
       return listApi
@@ -42,16 +42,15 @@ export function getlisttweets(data, config, callback) {
             console.log('response data for list')
             console.log(response.data)
             callback("SUCCESS", response.data);
-            dispatch(getlists(response.data));
-           
+            dispatch({type:types.GET_USER_LIST,payload: response.data});
             }
         })
         .catch(error => {
-          //callback("FAILURE", null);
+          //callback("FAILURE", null);  
        });
     };
   }
 
   export function getlists(result) {
-    return  {type:types.GET_USER_LIST, result};
+    return  {type:types.GET_USER_LIST,payload: result};
   }

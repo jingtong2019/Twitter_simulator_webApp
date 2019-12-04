@@ -19,11 +19,9 @@ var url = "http://54.153.73.30:3001";
      this.state = {
       searchuserid:"",
       searchuserhandle:"",
-      searchclick:false,
       allUsers:[],
       hashtag:"",
-      profileredirect:false,
-      userid:""
+      profileredirect:false
     };
       this.searchtext=this.searchtext.bind(this);
       this.searchclick=this.searchclick.bind(this);
@@ -83,47 +81,33 @@ searchtext=(e,k)=>
   if(k!=null)
  { this.setState(
     {
-      searchuserhandle:k.userhandle,
-      searchclick:false
+      searchuserhandle:k.userhandle
     }
   )
  }
- else
- {
-     this.setState(
-      {
-        searchuserhandle:null,
-        searchclick:false
-      }
-  ) 
- }
 }
 
-searchclick=()=>
+
+ searchclick=()=>
   {
      let handle=this.state.searchuserhandle;
      console.log("option value",handle)
    
       
      let user=this.getUserInformation(handle);
-     console.log(user);
+console.log(user);
      if(user !=null)
     { localStorage.setItem('searchuserhandle', user.handle);
      localStorage.setItem('searchuserid', user.id);
-        this.setState(
-          {
-            searchclick:true,
-            userid:user.id
-          }
-        )
+     this.props.actions.userSearch( (status, feeds) => {
+    });
+     
     }
-   
+     //dispatch action to display profile
   
   
    
  }
-
-
 
  hashtagclick=(e)=>
  {
@@ -164,10 +148,9 @@ hashtagtext=(e)=>
     )}
     />
 
-    <button onClick={()=>this.searchclick()}>Search</button>
-
-{this.state.searchclick} && {this.state.searchuserhandle !==null} && <Redirect to={{ pathname: '/profile/'+this.state.userid}}/>
-
+    <button onClick={this.searchclick()}>Search</button>
+   
+    
     <TextField onChange={this.hashtagtext}  label="Search hashtags" variant="outlined" fullWidth />
     <button onClick={()=>{this.hashtagclick()}}>Search</button>
 

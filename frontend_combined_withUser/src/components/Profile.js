@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { profileaction, updateProfile } from '../redux/actions/profile';
+import {  viewList , clearcheck } from '../redux/actions/search-actions'
 import { connect } from 'react-redux';
 import './css/profile.css';
 import { Modal, Button } from 'react-bootstrap';
@@ -42,6 +43,8 @@ class Profile extends Component {
     }
     async componentDidMount() {
         var path = this.props.location.pathname;
+
+       
 
         console.log("THE PATH IS IN PROFILE", path);
 
@@ -269,6 +272,17 @@ class Profile extends Component {
         e.stopPropagation();
         this.props.history.push("/dashboard");
     }
+
+    dashboardNavigate1 = (e) => {
+        this.props.viewList( (status, feeds) => {})
+        e.stopPropagation();
+        localStorage.setItem('listcheck','true');
+        localStorage.setItem('searchuserhandle',this.state.userdetails.userhandle)
+        
+        this.props.history.push("/dashboard");
+    }
+
+     
     render() {
         let redirectVar = null;
         if (!localStorage.getItem('cookie2')) {
@@ -378,11 +392,15 @@ class Profile extends Component {
                                             <div className="in">
                                                 <p className="para2">{this.state.userdetails.profilename}</p>
 
-                                                <button onClick={this.profileedit} className="para6">Edit Profile</button>
+                                                
+                                                <button onClick={this.profileedit} style={{color:'black',fontSize:'18px'}}>Edit Profile</button>
 
-                                                <div className="followtoggle para234"> {this.state.followDisplay && <button onClick={this.onFollow}>Follow</button>}</div>
+                                                <div style={{color:'black',fontSize:'18px'}}> {this.state.followDisplay && <button onClick={this.onFollow}>Follow</button>}</div>
 
-
+                                                
+                                                {this.state.followDisplay  && <button style={{color:'black',fontSize:'18px'}} onClick={this.dashboardNavigate1 }>View List</button>}
+                                                
+                                           
                                             </div>
                                             <p className="para3">{this.state.userdetails.userhandle}</p><br />
                                             <div className="in">
@@ -471,7 +489,6 @@ const mapStateToProps = (state) => {
         isfollowingvalue: state.followingfollower.isfollowing,
         followvalue: state.followingfollower.follow,
         unfollowvalue: state.followingfollower.unfollow,
-
         follower_no: state.followingfollower.followerCount,
         following_no: state.followingfollower.followingCount
 
@@ -479,5 +496,5 @@ const mapStateToProps = (state) => {
 }
 export default connect(
     mapStateToProps,
-    { profileaction, updateProfile, imageDownload, imageUpload, isfollowing, follow, followingCount, followerCount, unfollow }
+    { viewList,clearcheck ,profileaction, updateProfile, imageDownload, imageUpload, isfollowing, follow, followingCount, followerCount, unfollow }
 )(Profile);

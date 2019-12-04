@@ -10,6 +10,7 @@ const initialState = {
     userlist:[]
 };
 
+
 export default function listReducer(state = initialState, action) {
     switch (action.type) {
         case types.GET_LIST_SUCCESS:
@@ -70,8 +71,7 @@ export default function listReducer(state = initialState, action) {
             );
         case types.CLEAR_FEEDS:
                 
-               
-            return Object.assign(
+           return Object.assign(
                 {}, state, {
                     error: "",
                     message: "",
@@ -83,14 +83,18 @@ export default function listReducer(state = initialState, action) {
                     }
                 }
             );
+            
         case types.GET_USER_LIST:
-                feedResult = { ...state.feeds };
+               //feedResult = { ...state.feeds };
+                console.log('GET_USER_LIST')
+                console.log('action.result')
+                console.log(action.payload)
                     return Object.assign(
                         {}, state, {
                             error: "",
                             message: "",
-                            feeds: feedResult,
-                            userlist:action.result
+                            feeds: "",
+                            userlist:action.payload
 
                         }
                     );   

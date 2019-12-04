@@ -4,6 +4,7 @@ import "./../App.css";
 import "./../../node_modules/@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all";
 import Search from "./Search";
+import Searchuserlist from "./Searchuserlist";
 import List from "./List";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -18,6 +19,7 @@ import * as searchActions from "../redux/actions/search-actions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Redirect } from 'react-router';
+
 
 class Sidebar extends Component {
   constructor(props) {
@@ -39,7 +41,8 @@ class Sidebar extends Component {
       rightpane: true,
       hashtagfeed:false,
       logout:false,
-      deactivate:false
+      deactivate:false,
+      searchlist:false
 };
 
 
@@ -52,8 +55,7 @@ class Sidebar extends Component {
     this.bookmarkscheck = this.bookmarkscheck.bind(this);
     this.profilecheck = this.profilecheck.bind(this);
     this.hashtagcheck= this.hashtagcheck.bind(this);
-    
-  }
+}
 
   homecheck = () => {
     this.setState({
@@ -67,6 +69,7 @@ class Sidebar extends Component {
       more: false,
       rightpane: true,
       hashtagfeed:false,
+      searchlist:false
 
     });
     this.props.actions.clearchecks( (status, feeds) => {
@@ -85,6 +88,7 @@ class Sidebar extends Component {
       more: false,
       rightpane: true,
       hashtagfeed:false,
+      searchlist:false
 
     });
   };
@@ -101,6 +105,7 @@ class Sidebar extends Component {
       more: false,
       rightpane: true,
       hashtagfeed:false,
+      searchlist:false
 
     });
     this.props.actions.clearchecks( (status, feeds) => {
@@ -119,6 +124,7 @@ class Sidebar extends Component {
       more: false,
       rightpane: true,
       hashtagfeed:false,
+      searchlist:false
 
     });
     this.props.actions.clearchecks( (status, feeds) => {
@@ -137,12 +143,12 @@ class Sidebar extends Component {
       more: false,
       rightpane: true,
       hashtagfeed:false,
+      searchlist:false
 
     });
     this.props.actions.clearchecks( (status, feeds) => {
     });
   };
-
 
 
   listcheck = () => {
@@ -157,6 +163,7 @@ class Sidebar extends Component {
       more: false,
       rightpane: true,
       hashtagfeed:false,
+      searchlist:false
 
     });
     this.props.actions.clearchecks( (status, feeds) => {
@@ -175,7 +182,8 @@ class Sidebar extends Component {
       profile: true,
       more: false,
       rightpane: true,
-      hashtagfeed:false
+      hashtagfeed:false,
+      searchlist:false
 
     });
     this.props.actions.clearchecks( (status, feeds) => {
@@ -193,7 +201,8 @@ class Sidebar extends Component {
       profile: false,
       more: false,
       rightpane: true,
-      hashtagfeed:true
+      hashtagfeed:true,
+      searchlist:false
 
     });
   };
@@ -210,7 +219,8 @@ class Sidebar extends Component {
       more: false,
       rightpane: true,
       deactivate:true,
-      logout:false
+      logout:false,
+      searchlist:false
     });
   }
    logoutcheck=()=>
@@ -226,37 +236,62 @@ class Sidebar extends Component {
       more: false,
       rightpane: false,
       deactivate:false,
-      logout:true
+      logout:true,
+      searchlist:false
+    });
+  }
+
+  searchlistcheck=()=>
+  {
+    this.setState({
+      home: false,
+      explore: false,
+      notifications: false,
+      messages: false,
+      bookmarks: false,
+      list: false,
+      profile: false,
+      more: false,
+      rightpane: false,
+      deactivate:false,
+      logout:false,
+      searchlist:true
     });
   }
 
   componentWillMount=()=>{
-     localStorage.setItem('searchuserid',localStorage.getItem('userid'));
-     localStorage.setItem('searchuserhandle',localStorage.getItem('userhandle'));
+     localStorage.setItem('searchuserid',localStorage.getItem('cookie1'));
+     localStorage.setItem('searchuserhandle',localStorage.getItem('cookie3'));
   }
 
   //Require map search to redux
 
   currentComponent = () => {
 
+     console.log('evry compo', localStorage.getItem('listcheck') );
+    
     let userid= localStorage.getItem('cookie1');
-   
-    if(this.props.profile)
-    // {{localStorage.getItem('searchuserid')
-     { return    <Profile userid={localStorage.getItem('searchuserid')}/>
-            
-    }
-    else if(this.props.list)
-    {
-         return    <List userid={localStorage.getItem('searchuserid')}/>
-    }
-    // {localStorage.getItem('hashtag')
-    else if(this.props.hashtagfeed)
-    {
-        return    <Hashtagfeed/>
+
+  if(localStorage.getItem('listcheck')==='true')
+ {  
+   this.searchlistcheck();
+  localStorage.setItem('listcheck','false');
+}
+     //console.log("here");
+    // return   <List/>}
+ 
+
+    else if(this.props.profile)
+    {  userid=localStorage.getItem('searchuserid');
+    return   <Redirect to={{ pathname: '/profile/'+userid}}/> 
     }
 
-  else  if (this.state.home ) return <MainPage />;
+    else if(this.props.hashtagfeed)
+    {   console.log("Hashtag is here");
+        return    <Hashtagfeed/>
+    }
+    else if(this.state.searchlist) return <Searchuserlist/>;
+    else if (this.state.home ) return <MainPage />;
     else if (this.state.bookmarks ) return <BookmarkComponent />;
     else if (this.state.explore) return <p>Explore Component</p>;
     else if (this.state.notifications) return <p>Notifications Component</p>;
@@ -266,6 +301,7 @@ class Sidebar extends Component {
     else if (this.state.list) return <List />;
     //<List />
      
+
   //   <Profile userid={localStorage.getItem('userid')}/>
     else if(this.state.hashtagfeed) return <Hashtagfeed  hashtag={localStorage.getItem('hashtag')}/>
     else if (this.state.profile)  return <Redirect to={{ pathname: '/profile/'+userid}}/> 
@@ -278,10 +314,6 @@ class Sidebar extends Component {
     }
     else return <MainPage />;
   };
-
-
-
-  
 
   render() {
 
@@ -395,6 +427,7 @@ class Sidebar extends Component {
             </ul>
           </div>
           {this.currentComponent()}
+         
           <div class="col-md-3 border">{rightcomponent}</div>
         </div>
       </div>

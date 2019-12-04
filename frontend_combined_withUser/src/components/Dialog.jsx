@@ -106,9 +106,9 @@ class ListDialog extends Component {
 
          
             const data = {
-                user_id: localStorage.getItem("user_id"),
-                username:localStorage.getItem("name"),
-                userhandle:localStorage.getItem('userhandle'),
+                user_id: localStorage.getItem("cookie1"),
+                username:localStorage.getItem("cookie2"),
+                userhandle:localStorage.getItem('cookie3'),
                 name: this.state.listName,
                 Description: this.state.listDescription,
                 members: userList,
@@ -119,7 +119,7 @@ class ListDialog extends Component {
                 .then(response => {
                     if (response.status === 200) {
                         console.log("List added Successfully");
-                        this.props.actions.getUserlists();
+                        this.props.actions.getUserlists((status,feed)=>{});
                     }
                 })
                 .catch(err => {

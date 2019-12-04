@@ -8,10 +8,10 @@ import Listfeed from './Listfeeds'
 import * as listActions from "../redux/actions/list-actions"; 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-//var url='http://localhost:3002';
+//var url='http://localhost:3001';
 var url = "http://54.153.73.30:3001";
 
-class List extends Component {
+export default class searchuserlist extends Component {
 
   constructor(props) {
     //Call the constrictor of Super class i.e The Component
@@ -23,80 +23,101 @@ class List extends Component {
       displaylistofuser: false,
       displaylistmembers: [],
     }
-
-    this.gettweets=this.gettweets.bind(this);
-    this.getlists=this.getlists.bind(this);
+       this.gettweets=this.gettweets.bind(this);
+       this.subscribe=this.subscribe.bind(this);
+   
   }
 
 
   componentWillMount() {
     //change will be required when changing the other users
-    console.log("");
-  this.getlists();
-  
-  }
+    console.log("")
 
-   // axios.post(url+'/getUserLists', data)
-    //   .then(response => {
-    //     if (response.status === 200) {
-    //       console.log(response.data)
-    //       this.setState(
-    //         {
-    //           userList: response.data,
-    //         }
-    //       )
-    //     }
-    //   })
-    //   .catch(err => {
-    //     console.log('getUserLists errors: 1')
-    //     console.log(' getUserLists :', err)
-    //   });
-
-
-getlists() {
-      console.log("list feeds here  ");
-      
-     this.props.actions.getUserlists( (status, feeds) => {
-
-        console.log("list feeds from response ")
-        console.log(feeds);
-        if (status === 'SUCCESS') {
-          console.log('CCCCC')
-        this.setState(
-          { 
-            userList: feeds,
-          }
-        )
-      } else {
-        this.setState({
-          userList: []
-        });
-      }
-    });
 
     const data = {
       userhandle: localStorage.getItem('searchuserhandle')
     }
 
-    axios.post(url+'/getSubscriberLists', data)
-    .then(response => {
-      if (response.status === 200) {
-        console.log(response.data)
-        this.setState(
-          {
-            subscriberList: response.data,
-          }
-        )
-      }
-    })
-    .catch(err => {
-      console.log('getUserLists errors: 1')
-      console.log(' getUserLists :', err)
-    });
 
+    axios.post(url+'/getUserLists', data)
+      .then(response => {
+        if (response.status === 200) { 
+          this.setState(
+            {
+              userList: response.data,
+            }
+          )
+        }
+      })
+      .catch(err => {
+        console.log('getUserLists errors: 1')
+        console.log(' getUserLists :', err)
+      });
+
+      axios.post(url+'/getSubscriberLists', data)
+      .then(response => {
+        if (response.status === 200) {
+          console.log(response.data)
+          this.setState(
+            {
+              subscriberList: response.data,
+            }
+          )
+        }
+      })
+      .catch(err => {
+        console.log('getUserLists errors: 1')
+        console.log(' getUserLists :', err)
+      });
+ }
+
+// getlists() {
+//       console.log("list feeds here  ");
+      
+//      this.props.actions.getUserlists( (status, feeds) => {
+
+//         console.log("list feeds from response ")
+//         console.log(feeds);
+//         if (status === 'SUCCESS') {
+//           console.log('CCCCC')
+//         this.setState(
+//           { 
+//             userList: feeds,
+//           }
+//         )
+//       } else {
+//         this.setState({
+//           userList: []
+//         });
+//       }
+//     });
+//   }
     
-  }
-    
+
+subscribe=(val)=>{
+
+const data={
+
+
+       list_id:  val,
+       user_id:localStorage.getItem('cookie1'),
+       name:localStorage.getItem('cookie2'),
+       handle:localStorage.getItem('cookie3')
+}
+
+  axios.post(url+'/subscibeList', data)
+  .then(response => {
+    if (response.status === 200) {
+      console.log(response.data)
+      
+    }
+  })
+  .catch(err => {
+    console.log('getUserLists errors: 1')
+    console.log(' getUserLists :', err)
+  });
+
+}
 
   gettweets=(val)=>{
 
@@ -120,29 +141,36 @@ getlists() {
     // });
 }
 
-
   render() {
 
-       let current;
+    console.log(this.props);
+    if(localStorage.getItem('searchuserhandle'))
+    localStorage.setItem('searchuserhandle',localStorage.getItem('cookie3'))
+    let current;
+    console.log('this.state.userList');
+    console.log(this.state.userList)
 
-      if(this.props.userList!=='Mongo Connection Error' && this.props.userList.length !== 0)
-    {current=this.props.userList.map(listitem => (
-      <li key={listitem._id} style={{borderBottom:'1px solid black',borderTop:'1px solid black'}} onClick={() => this.gettweets(listitem.members)} >
-        <div style={{display:'flex'}}>
-        <h5 style={{marginRight:'5%'}}>{listitem.username}</h5>
-        <h5 style={{fontStyle:'italic'}}>{listitem.userhandle}</h5>
-        </div>
-        <p>{listitem.name}</p>
-        <p>{listitem.description}</p>
-        <div style={{display:'flex'}}>
-        <p style={{marginRight:'10%'}}>members:{listitem.members.length}</p>
-        <p>subscibers:{listitem.subscribers.length}</p>
-        </div>
-      </li>
-    ))}
+  if(this.state.userList!=='Mongo Connection Error' && this.state.userList.length !== 0)
+  {current=this.state.userList.map(listitem => (
+    <li key={listitem._id} style={{borderBottom:'1px solid black',borderTop:'1px solid black'}}  >
+    <div style={{display:'flex'}} onClick={() => this.gettweets(listitem.members)}>
+    <h5 style={{marginRight:'5%'}}>{listitem.username}</h5>
+    <h5 style={{fontStyle:'italic'}}>{listitem.userhandle}</h5>
+    </div>
+    <p>{listitem.name}</p>
+    <p>{listitem.description}</p>
+    <div style={{display:'flex'}}>
+    <p style={{marginRight:'10%'}}>members:{listitem.members.length}</p>
+    <p>subscibers:{listitem.subscribers.length}</p>
+    <button onClick={() => {this.subscibe(listitem._id)}}>  Subscribe </button>
+    </div>
+  </li>
+ 
+))}
 
-    let current2;
-    if(this.state.subscriberList!=='Mongo Connection Error' && this.state.subscriberList.length !== 0)
+let current2;
+
+if(this.state.subscriberList!=='Mongo Connection Error' && this.state.subscriberList.length !== 0)
 {current2=this.state.subscriberList.map(listitem => (
   <li key={listitem._id} style={{borderBottom:'1px solid black',borderTop:'1px solid black'}} onClick={() => this.gettweets(listitem.members)} >
     <h5>{listitem.username}</h5>
@@ -154,28 +182,17 @@ getlists() {
     
   </li>
 ))}
-
-    console.log('this.props');
-    console.log(this.props);
-    if(localStorage.getItem('searchuserhandle'))
-    localStorage.setItem('searchuserhandle',localStorage.getItem('cookie3'))
-
-    let  subscribe
-    if(localStorage.getItem('searchuserhandle')!==localStorage.getItem('cookie3'))
-        subscribe=null
-    else
-     subscribe=<Dialog/>
-
     var display
     if (!this.state.displaylistofuser ) {
       
       display = <div>
         <div><p>List </p></div>
-        {subscribe}
+       
         <div class="">
 
   <br></br>
- <ul class="nav nav-pills" role="tablist">
+ 
+  <ul class="nav nav-pills" role="tablist">
     <li class="nav-item" className="width_li">
       <a class="nav-link active" data-toggle="pill" href="#owned">Owned</a>
     </li>
@@ -203,8 +220,11 @@ getlists() {
     {current2}
   </ul>
 </React.Fragment> 
-     </div>
+     
+    
+    </div>
 
+   
   </div>
 </div> 
   
@@ -218,7 +238,6 @@ getlists() {
     }
 
     return (
-      
       <div class='col-md-5' style={{padding:'1px'}}>
         {display}
       </div>
@@ -228,22 +247,3 @@ getlists() {
 }
 
 
-function mapStateToProps(state) {
-  return {
-    userList: state.list.userlist
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: {
-      clearFeeds:bindActionCreators(listActions.clearFeeds, dispatch),
-      getUserlists:bindActionCreators(listActions.getUserlists, dispatch)
-  }
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(List);
