@@ -50,7 +50,10 @@ class Newcomponentforsearch extends React.Component {
       console.log(' hasgtag :', err)
     });
   }
-
+   dashboardNavigate = (e) => {
+        e.stopPropagation();
+        this.props.history.push("/dashboard");
+    }
   updateLikeCount = e => {
     const tweetId = e.currentTarget.getAttribute("data-tweetId");
     const likeCount = e.currentTarget.getAttribute("data-count");
@@ -212,6 +215,10 @@ class Newcomponentforsearch extends React.Component {
           </div>
                 </div>
                 <div className="col-md-5"> 
+       <div class="row ml-4 mt-2" onClick={this.dashboardNavigate}>
+                                    <i class="fas fa-long-arrow-alt-left d-inline-block" style={{ fontSize: "3em" }}></i>
+                                    <h3 class="mt-2 ml-4">Tweet</h3>
+                                </div>
                   {current}
                 </div>
                 <div class="col-md-3 border">
