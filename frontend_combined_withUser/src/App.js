@@ -15,6 +15,7 @@ import Deactivate from "./components/Deactivate/Deactivate";
 import DeactivatedPage from "./components/Deactivate/DeactivatedPage";
 import followers from "./components/followers";
 import { Redirect } from 'react-router';
+import Newcomponentforsearch from './components/Newcomponentforsearch';
 function App() { 
   return (
     <div className="App">
@@ -34,6 +35,7 @@ function App() {
         <Route path="/Deactivate" component={Deactivate} />
         <Route path="/DeactivatedPage" component={DeactivatedPage} />
          <Route path="/followers" component={followers} />
+           <Route path="/Newcomponentforsearch" component={Newcomponentforsearch} />
       </Switch>
     </div>
   );
