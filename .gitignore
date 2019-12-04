@@ -1,2 +1,3 @@
 /USER_BACKEND_SERVICE
 /frontend_combined/node_modules/*
+/frontend_combined_withUser/node_modules/*
