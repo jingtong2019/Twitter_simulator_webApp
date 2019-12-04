@@ -37,8 +37,8 @@ export class FeedsComponent extends React.Component {
 
   getFeeds(pagenumber) {
       debugger;
-    // let userid= localStorage.getItem('cookie1');
-    var userid= this.props.signin.loginSuccess.userid;
+    let userid= localStorage.getItem('cookie1');
+    // var userid= this.props.signin.loginSuccess.userid;
     this.props.actions.getUserFeeds(parseInt(userid), pagenumber, (status, feeds) => {
       if (status === 'SUCCESS') {
         this.setState({
@@ -149,11 +149,10 @@ export class FeedsComponent extends React.Component {
   render() {
       debugger;
       if (this.state.clickedTweetBody.length > 0)
-        return <Redirect to={`/tweet/${this.state.clickedTweetBody}`} tweetId={this.state.clickedTweetBody}/>
+        return (<Redirect to={`/tweet/${this.state.clickedTweetBody}`} tweetId={this.state.clickedTweetBody}/>);
       if (this.state.profileIdToView > -1)
-        return <Redirect to={`/profile/${this.state.profileIdToView}`} userId={this.state.profileIdToView}/>
+        return (<Redirect to={`/profile/${this.state.profileIdToView}`} userId={this.state.profileIdToView}/>);
     return (
-        // <div class="col-md-5 border bg-dark text-white">
         <div>
             <InfiniteScroll
                   pageStart={1}

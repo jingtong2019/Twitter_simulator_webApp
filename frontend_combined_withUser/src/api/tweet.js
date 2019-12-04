@@ -16,3 +16,10 @@ export function unfollowUser(userId, unfollowedUserId) {
   }
   return axios.post(host + "/unfollow", data);
 }
+
+export function getLoggedInUserTweets(userId) {
+  var data = {
+    userid: userId
+  }
+  return axios.post(host + "/getAllTweetOfUser", data);
+}

@@ -2,13 +2,14 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
+import { Redirect } from 'react-router';
 import { Dialog, DialogActionsBar } from "@progress/kendo-react-dialogs";
 import { Input } from "@progress/kendo-react-inputs";
 import { Button } from "@progress/kendo-react-buttons";
 import { Ripple } from "@progress/kendo-react-ripple";
 import { savePDF } from "@progress/kendo-react-pdf";
-import { Link } from "react-router-dom";
-// import { DonutChartContainer } from "./components/DonutChartContainer";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import "@progress/kendo-theme-material/dist/all.css";
 import "./Analytics.css";
 import "bootstrap-4-grid/css/grid.min.css";
@@ -26,15 +27,14 @@ import {
 class AnalyticsPage extends React.Component {
   constructor(props) {
     super(props);
-    this.routeChange = this.routeChange.bind(this);
+    // this.routeChange = this.routeChange.bind(this);
     this.appContainer = React.createRef();
     this.state = {
-      showDialog: false
+      showDialog: false,
+      id: localStorage.getItem("cookie1"),
+      testId: 1,
+      dashboardNavigate: false
     };
-  }
-  routeChange() {
-    let path = "/profile";
-    this.props.history.push(path);
   }
   handlePDFExport = () => {
     this.props.dispatch({ type: "handlePDFExport" });
@@ -151,7 +151,8 @@ class BarChartTopViews extends React.Component {
     this.state = {
       top10Views: [],
       top10ViewsNum: [],
-      list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      id: 1
     };
   }
   componentDidMount() {
@@ -160,7 +161,7 @@ class BarChartTopViews extends React.Component {
         "http://ec2-13-52-238-151.us-west-1.compute.amazonaws.com:4010/api/getTopViewTweet",
         {
           params: {
-            userId: 1
+            userId: this.state.id
           }
         }
       )
@@ -180,7 +181,10 @@ class BarChartTopViews extends React.Component {
       <Chart style={{ height: 288 }} zoomable={false}>
         <ChartLegend visible={false} />
         <ChartCategoryAxis>
-          <ChartCategoryAxisItem categories={this.state.list} startAngle={45} />
+          <ChartCategoryAxisItem
+            categories={this.state.top10Views}
+            startAngle={45}
+          />
         </ChartCategoryAxis>
 
         <ChartSeries>
@@ -206,7 +210,8 @@ class BarChartTopLikes extends React.Component {
     this.state = {
       top10Likes: [],
       top10LikesNum: [],
-      list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      id: localStorage.getItem("cookie1")
     };
     console.log("top10LikesNum");
     console.log(this.state.top10LikesNum);
@@ -217,7 +222,7 @@ class BarChartTopLikes extends React.Component {
         "http://ec2-13-52-238-151.us-west-1.compute.amazonaws.com:4010/api/getTopLikeTweet",
         {
           params: {
-            userId: 1
+            userId: this.state.id
           }
         }
       )
@@ -237,7 +242,10 @@ class BarChartTopLikes extends React.Component {
       <Chart style={{ height: 288 }} zoomable={false}>
         <ChartLegend visible={false} />
         <ChartCategoryAxis>
-          <ChartCategoryAxisItem categories={this.state.list} startAngle={45} />
+          <ChartCategoryAxisItem
+            categories={this.state.top10Likes}
+            startAngle={45}
+          />
         </ChartCategoryAxis>
 
         <ChartSeries>
@@ -263,7 +271,8 @@ class BarChartTopRetweets extends React.Component {
     this.state = {
       top5Retweets: [],
       top5RetweetsNum: [],
-      list: [1, 2, 3, 4, 5]
+      list: [1, 2, 3, 4, 5],
+      id: localStorage.getItem("cookie1")
     };
     console.log("top5RetweetsNum");
     console.log(this.state.top5RetweetsNum);
@@ -274,7 +283,7 @@ class BarChartTopRetweets extends React.Component {
         "http://ec2-13-52-238-151.us-west-1.compute.amazonaws.com:4010/api/getTopRetweetTweet",
         {
           params: {
-            userId: 1
+            userId: this.state.id
           }
         }
       )
@@ -294,7 +303,10 @@ class BarChartTopRetweets extends React.Component {
       <Chart style={{ height: 288 }} zoomable={false}>
         <ChartLegend visible={false} />
         <ChartCategoryAxis>
-          <ChartCategoryAxisItem categories={this.state.list} startAngle={45} />
+          <ChartCategoryAxisItem
+            categories={this.state.top5Retweets}
+            startAngle={45}
+          />
         </ChartCategoryAxis>
 
         <ChartSeries>
@@ -319,7 +331,8 @@ class BarChartHourlyContainer extends React.Component {
     super(props);
     this.state = {
       hourOfDay: [],
-      value: []
+      value: [],
+      id: localStorage.getItem("cookie1")
     };
     console.log("HourlyContainer");
     console.log(this.state);
@@ -331,7 +344,7 @@ class BarChartHourlyContainer extends React.Component {
         "http://ec2-13-52-238-151.us-west-1.compute.amazonaws.com:4010/api/getTweetByHour",
         {
           params: {
-            userId: 1
+            userId: this.state.id
           }
         }
       )
@@ -379,7 +392,8 @@ class BarChartWeeklyContainer extends React.Component {
     super(props);
     this.state = {
       dayOfWeek: [],
-      value: []
+      value: [],
+      id: localStorage.getItem("cookie1")
     };
     console.log("top5RetweeBarChartHourlyContainertsNum");
     console.log(this.state);
@@ -390,7 +404,7 @@ class BarChartWeeklyContainer extends React.Component {
         "http://ec2-13-52-238-151.us-west-1.compute.amazonaws.com:4010/api/getTweetByWeek",
         {
           params: {
-            userId: 1
+            userId: this.state.id
           }
         }
       )
@@ -436,10 +450,10 @@ class BarChartDailyContainer extends React.Component {
     super(props);
     this.state = {
       dayOfMonth: [],
-      value: []
+      value: [],
+      id: localStorage.getItem("cookie1")
     };
-    console.log("top5RetweeBarChartHourlyContainertsNum");
-    console.log(this.state);
+    console.log("HourlyContainertsNum");
   }
   componentDidMount() {
     axios
@@ -447,7 +461,7 @@ class BarChartDailyContainer extends React.Component {
         "http://ec2-13-52-238-151.us-west-1.compute.amazonaws.com:4010/api/getTweetByDay",
         {
           params: {
-            userId: 1
+            userId: this.state.id
           }
         }
       )
@@ -468,7 +482,7 @@ class BarChartDailyContainer extends React.Component {
         <ChartLegend visible={true} />
         <ChartCategoryAxis>
           <ChartCategoryAxisItem
-            categories={this.state.dayOfWeek}
+            categories={this.state.dayOfMonth}
             startAngle={45}
           />
         </ChartCategoryAxis>
@@ -496,18 +510,22 @@ class BarChartViewsContainer extends React.Component {
     super(props);
     this.state = {
       dayOfMonth: [],
-      value: []
+      value: [],
+      id: localStorage.getItem("cookie1")
     };
     console.log("BarChartViewsContainer");
     console.log(this.state);
   }
   componentDidMount() {
+    var id2 = this.state.id;
     axios
       .get(
-        "http://ec2-35-161-86-90.us-west-2.compute.amazonaws.com:4010/api/profileViews/1/28",
+        "http://ec2-35-161-86-90.us-west-2.compute.amazonaws.com:4010/api/profileViews/" +
+          id2 +
+          "/28",
         {
           params: {
-            userId: 1
+            userId: this.state.id
           }
         }
       )
@@ -560,7 +578,5 @@ class BarChartViewsContainer extends React.Component {
     );
   }
 }
-// export default Analytics;
-// const connectedAnalytics = connect()(AnalyticsPage);
-// export { connectedAnalytics as AnalyticsPage };
-export default AnalyticsPage;
+
+export default connect()(AnalyticsPage);

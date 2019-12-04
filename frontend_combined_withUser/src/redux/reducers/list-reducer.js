@@ -44,18 +44,19 @@ export default function listReducer(state = initialState, action) {
                 }
             });
         case types.LIKE_TWEET_SUCCESS:
-            console.log("LIKE_TWEET_SUCCESS");
-            feedResult = { ...state.feeds };
-            listResult ={ ...state.userlist}
-            feedResult.docs.filter(function (obj) {
-                return obj._id === action.tweet._id;
-            })[0].num_likes = 8;
-            return Object.assign({}, state, {
-                error: "",
-                message: "GET_FEEDS_SUCCESS",
-                feeds: feedResult,
-                userlist:listResult
-            });
+            // console.log("LIKE_TWEET_SUCCESS");
+            // feedResult = { ...state.feeds };
+            // listResult ={ ...state.userlist}
+            // feedResult.docs.filter(function (obj) {
+            //     return obj._id === action.tweet._id;
+            // })[0].num_likes = 8;
+            // return Object.assign({}, state, {
+            //     error: "",
+            //     message: "GET_FEEDS_SUCCESS",
+            //     feeds: feedResult,
+            //     userlist:listResult
+            // });
+            return state;
         case types.LOGOUT_SUCCESS:
             return Object.assign(
                 {}, state, {

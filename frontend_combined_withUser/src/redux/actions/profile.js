@@ -1,6 +1,8 @@
 import { GET_PROFILE, UPDATE_PROFILE } from './action-types';
 import axios from 'axios';
 import { rooturl } from '../config/settings';
+import * as tweetApi from "../../api/tweet";
+import * as types from "./action-types";
 
 export const profileaction = (data) => async (dispatch) => {
     
@@ -33,4 +35,34 @@ export const updateProfile = (data) => async (dispatch) => {
             }
         )
 }
+
+export function getLoggedInUserTweets(userId, callback) {
+    return function(dispatch) {
+        debugger;
+      return tweetApi
+        .getLoggedInUserTweets(userId)
+        .then(response => {
+          console.log("Status Code : ", response.status);
+          if (response.status === 200) {
+            callback("SUCCESS", response.data);
+            dispatch(getLoggedInUserTweetsSuccess(response.data.result));
+          }
+        })
+        .catch(error => {
+          // if (error.message === "Network Error") {
+          //   dispatch(networkConnectionError());
+          // } else {
+            dispatch(getLoggedInUserTweetsFailure());
+          // }
+        });
+    };
+  }
+
+  export function getLoggedInUserTweetsSuccess(result) {
+    return { type: types.GET_USER_TWEET_SUCCESS, result };
+  }
+
+  export function getLoggedInUserTweetsFailure() {
+    return { type: types.GET_USER_TWEET_FAILURE };
+  }
 
