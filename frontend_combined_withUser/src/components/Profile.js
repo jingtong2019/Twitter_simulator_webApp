@@ -281,7 +281,20 @@ class Profile extends Component {
         
         this.props.history.push("/dashboard");
     }
+onFollow = async () => {
+        let data = {
+            "userid": localStorage.getItem('cookie1'),
+            "userid_to_follow": this.state.userid
+        }
+        await this.props.follow(data);
 
+        this.setState(
+            {
+                followDisplay: false
+            }
+        )
+        console.log("display is", this.state.followDisplay);
+    }
      
     render() {
         let redirectVar = null;
