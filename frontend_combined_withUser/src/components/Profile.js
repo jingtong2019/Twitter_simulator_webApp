@@ -433,7 +433,7 @@ onFollow = async () => {
                                             <span className="parafirstlastname2"> <b>City</b>           {this.state.userdetails.city}</span>
                                             <span className="parafirstlastname4"><b>State</b>           {this.state.userdetails.state} </span>
                                             <span className="parafirstlastname5"><b>Zipcode</b>         {this.state.userdetails.zipcode} </span>
-
+<br/> <h6>Tweets</h6>
                                         </div>
                                     </div>
                                     <div>
