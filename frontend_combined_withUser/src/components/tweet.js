@@ -17,6 +17,8 @@ class TweetComponent extends React.Component {
             files: [],
             imagesPreviewUrls: [],
             userid: localStorage.getItem('cookie1'),
+            UserName: localStorage.getItem('cookie2'),
+            UserHandle: localStorage.getItem('cookie3'),
             image: [],
             content: ""
         };
@@ -33,6 +35,8 @@ class TweetComponent extends React.Component {
         }
         data.append('userid', this.state.userid);
         data.append('content', this.state.content);
+        data.append('UserName', this.state.UserName);
+        data.append('UserHandle', this.state.UserHandle);
         
         const config = {
             headers: {

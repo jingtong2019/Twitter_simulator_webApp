@@ -12,6 +12,7 @@ import imgg from "../components/trends.png";
 import MainPage from "./main-page";
 import BookmarkComponent from "./bookmark";
 import TweetComponent from "./tweet";
+import AnalyticsComponent from "./Analytics/AnalyticsPage";
 import Hashtagfeed from "./Hashtagfeed"
 import Profile from './Profile';
 import Messages from './Messages/Messages';
@@ -31,6 +32,7 @@ class Sidebar extends Component {
      
       home: true,
       explore: false,
+      analytics:false,
       notifications: false,
       messages: false,
       bookmarks: false,
@@ -55,6 +57,7 @@ class Sidebar extends Component {
     this.bookmarkscheck = this.bookmarkscheck.bind(this);
     this.profilecheck = this.profilecheck.bind(this);
     this.hashtagcheck= this.hashtagcheck.bind(this);
+    this.analyticscheck = this.analyticscheck.bind(this);
 }
 
   homecheck = () => {
@@ -63,6 +66,7 @@ class Sidebar extends Component {
       explore: false,
       notifications: false,
       messages: false,
+      analytics:false,
       bookmarks: false,
       list: false,
       profile: false,
@@ -82,6 +86,7 @@ class Sidebar extends Component {
       explore: true,
       notifications: false,
       messages: false,
+      analytics:false,
       bookmarks: false,
       list: false,
       profile: false,
@@ -99,6 +104,7 @@ class Sidebar extends Component {
       explore: false,
       notifications: true,
       messages: false,
+      analytics:false,
       bookmarks: false,
       list: false,
       profile: false,
@@ -119,6 +125,7 @@ class Sidebar extends Component {
       notifications: false,
       messages: true,
       bookmarks: false,
+      analytics:false,
       list: false,
       profile: false,
       more: false,
@@ -138,6 +145,7 @@ class Sidebar extends Component {
       notifications: false,
       messages: false,
       bookmarks: true,
+      analytics:false,
       list: false,
       profile: false,
       more: false,
@@ -157,6 +165,7 @@ class Sidebar extends Component {
       explore: false,
       notifications: false,
       messages: false,
+      analytics:false,
       bookmarks: false,
       list: true,
       profile: false,
@@ -178,6 +187,7 @@ class Sidebar extends Component {
       notifications: false,
       messages: false,
       bookmarks: false,
+      analytics:false,
       list: false,
       profile: true,
       more: false,
@@ -196,6 +206,7 @@ class Sidebar extends Component {
       explore: false,
       notifications: false,
       messages: false,
+      analytics:false,
       bookmarks: false,
       list: false,
       profile: false,
@@ -214,6 +225,7 @@ class Sidebar extends Component {
       notifications: false,
       messages: false,
       bookmarks: false,
+      analytics:false,
       list: false,
       profile: false,
       more: false,
@@ -231,6 +243,7 @@ class Sidebar extends Component {
       notifications: false,
       messages: false,
       bookmarks: false,
+      analytics:false,
       list: false,
       profile: false,
       more: false,
@@ -250,6 +263,7 @@ class Sidebar extends Component {
       messages: false,
       bookmarks: false,
       list: false,
+      analytics:false,
       profile: false,
       more: false,
       rightpane: false,
@@ -258,6 +272,23 @@ class Sidebar extends Component {
       searchlist:true
     });
   }
+
+  analyticscheck = () => {
+    this.setState({
+      home: false,
+      explore: false,
+      notifications: false,
+      messages: false,
+      analytics: true,
+      bookmarks: false,
+      list: false,
+      profile: false,
+      more: false,
+      rightpane: true,
+      hashtagfeed: false
+    });
+    this.props.actions.clearchecks((status, feeds) => {});
+  };
 
   componentWillMount=()=>{
      localStorage.setItem('searchuserid',localStorage.getItem('cookie1'));
@@ -298,6 +329,7 @@ class Sidebar extends Component {
     else if (this.state.messages) return <p><Messages/></p>;
    // else if (this.state.bookmarks) return <p>Analytics component</p>;
     //analytic=s chnage
+    else if (this.state.analytics) return <AnalyticsComponent />;
     else if (this.state.list) return <List />;
     //<List />
      
@@ -398,7 +430,7 @@ class Sidebar extends Component {
                 </a>
               </li>
               <li class="m-4 h6 font-weight-bold">
-                <a>
+                <a onClick={this.analyticscheck}>
                   <div className="hoveritem">
                     <i class="far fa-chart-bar icon_pad"></i>Analytics
                   </div>

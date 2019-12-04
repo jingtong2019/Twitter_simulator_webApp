@@ -57,6 +57,7 @@ padding-top:4px;
     padding-left:12px;
     font-size:3px; 
     width:100%; 
+   border-bottom: gray solid;
 }
 .para4
 {
@@ -117,7 +118,7 @@ display: inline-flex;
 .parafirstlastname6
 {
     position: absolute;
-        right:200px;
+         right:140px;
         color:black;
         font-size: 15px;
        
